@@ -192,7 +192,7 @@ export default function PricingSection() {
                                     asChild
                                 >
                                     <Link
-                                        href={`https://wa.me/6289676111118?text=Halo Komukuna, saya mau booking paket *${tier.name} ${activeTab === 'photobooth' ? 'Photobooth' : 'Video 360'}*.`}
+                                        href={`https://wa.me/6283122866975?text=Halo Komukuna, saya mau booking paket *${tier.name} ${activeTab === 'photobooth' ? 'Photobooth' : 'Video 360'}*.`}
                                         target="_blank"
                                     >
                                         {tier.cta}
@@ -220,7 +220,7 @@ export default function PricingSection() {
                 </div>
 
                 <p className="text-center text-gray-500 text-sm mt-12 bg-white/5 inline-block px-6 py-3 rounded-full mx-auto backdrop-blur-sm border border-white/5 mx-4">
-                    💡 <span className="text-gray-300 font-medium">Butuh Paket Custom?</span> Hubungi kami di 0896-7611-1118
+                    💡 <span className="text-gray-300 font-medium">Butuh Paket Custom?</span> Hubungi kami di 0831-2286-6975
                 </p>
 
             </div>

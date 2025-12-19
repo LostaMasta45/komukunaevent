@@ -12,7 +12,7 @@ export default function FloatingCTA() {
             transition={{ delay: 2 }}
             className="fixed z-50 bottom-6 inset-x-4 md:inset-x-auto md:right-8 md:bottom-8 flex justify-center md:block"
         >
-            <Link href="https://wa.me/6289676111118?text=Halo Komukuna, saya mau tanya-tanya dulu dong." target="_blank" className="w-full md:w-auto">
+            <Link href="https://wa.me/6283122866975?text=Halo Komukuna, saya mau tanya-tanya dulu dong." target="_blank" className="w-full md:w-auto">
                 <div className="relative group w-full md:w-auto">
 
                     {/* Mobile: Wide Button */}

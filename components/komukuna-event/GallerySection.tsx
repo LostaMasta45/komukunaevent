@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Camera, Aperture, X, Maximize2, ChevronLeft, ChevronRight, Play } from 'lucide-react';
-import Image from 'next/image';
+import { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { Camera, Aperture, ArrowRight, Play, Layers, Maximize2 } from 'lucide-react';
 import BentoGridSpotlight, { PhotoboothItemProps } from '@/components/komukuna-event/BentoGridSpotlight';
+import PortfolioArchiveModal from '@/components/komukuna-event/PortfolioArchiveModal';
+import VideoPlayerModal from '@/components/komukuna-event/VideoPlayerModal';
+import VideoPreviewCard from '@/components/komukuna-event/VideoPreviewCard';
 
-// Photobooth Data
+// Photobooth Data (Only needed here for the array)
 const portfolioItems: PhotoboothItemProps[] = [
     {
         id: 1,
@@ -30,11 +32,6 @@ const portfolioItems: PhotoboothItemProps[] = [
         rawImage: "/komukuna-event/process/hasil-raw2.jpg",
         btsImage: "/komukuna-event/process/fotobts2.JPG",
     }
-];
-
-// Real Data for Photobooth (Masonry Grid - Existing)
-const photoItems: { id: number; title: string; image: string; ratio: string }[] = [
-    // Add more real selected photos here in the future
 ];
 
 // Real Data for Videobooth
@@ -73,307 +70,139 @@ const videoItems = [
 ];
 
 export default function GallerySection() {
-    const initialVideoCount = 8;
-    const [activeTab, setActiveTab] = useState<'photobooth' | 'videobooth'>('photobooth');
-    const [visibleVideoCount, setVisibleVideoCount] = useState(initialVideoCount);
-    const [selectedVideoIndex, setSelectedVideoIndex] = useState<number | null>(null);
+    const [isArchiveOpen, setIsArchiveOpen] = useState(false);
+    const [initialArchiveTab, setInitialArchiveTab] = useState<'photobooth' | 'videobooth'>('photobooth');
 
-    const handleLoadMore = () => {
-        setVisibleVideoCount(videoItems.length);
+    // Video Player Modal State
+    const [selectedVideoUrl, setSelectedVideoUrl] = useState<string | null>(null);
+
+    const openArchive = (tab: 'photobooth' | 'videobooth') => {
+        setInitialArchiveTab(tab);
+        setIsArchiveOpen(true);
     };
 
-    const handleOpenModal = (index: number) => {
-        setSelectedVideoIndex(index);
-        document.body.style.overflow = 'hidden';
-    };
-
-    const handleCloseModal = () => {
-        setSelectedVideoIndex(null);
-        document.body.style.overflow = 'auto';
-    };
-
-    const handleNextVideo = () => {
-        if (selectedVideoIndex !== null) {
-            setSelectedVideoIndex((prev) => (prev! + 1) % videoItems.length);
-        }
-    };
-
-    const handlePrevVideo = () => {
-        if (selectedVideoIndex !== null) {
-            setSelectedVideoIndex((prev) => (prev! - 1 + videoItems.length) % videoItems.length);
-        }
+    const handleMaximizeVideo = (src: string) => {
+        setSelectedVideoUrl(src);
     };
 
     return (
-        <section className="py-24 bg-[#0F0F0F] overflow-hidden">
+        <section className="py-24 bg-[#0F0F0F] relative overflow-hidden">
+            {/* Background Elements */}
+            <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-komukuna-pink/5 blur-[120px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-komukuna-purple/5 blur-[120px] rounded-full pointer-events-none" />
+
             <div className="container mx-auto px-4">
-
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Momen Terbaik yang <span className="text-komukuna-pink">Tak Terlupakan</span></h2>
-                    <p className="text-gray-400 max-w-2xl mx-auto">
-                        Ribuan senyuman dan tawa bahagia telah kami abadikan. Berikut adalah bukti nyata kebahagiaan klien kami.
+                <div className="text-center mb-16 md:mb-20">
+                    <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">Momen <span className="text-komukuna-pink">Eksklusif</span></h2>
+                    <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+                        Intip sekilas karya terbaik kami. Eksplorasi koleksi lengkap kami di arsip portfolio.
                     </p>
+                </div>
 
-                    {/* Tabs Switcher */}
-                    <div className="flex justify-center mt-8">
-                        <div className="bg-white/5 p-1 rounded-full flex relative">
-                            <motion.div
-                                className="absolute top-1 bottom-1 bg-gradient-to-r from-komukuna-pink to-komukuna-purple rounded-full shadow-lg"
-                                initial={false}
-                                animate={{
-                                    left: activeTab === 'photobooth' ? '4px' : '50%',
-                                    width: 'calc(50% - 4px)',
-                                    x: activeTab === 'videobooth' ? '0%' : '0'
-                                }}
-                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                            />
-
-                            <button
-                                onClick={() => setActiveTab('photobooth')}
-                                className={`relative z-10 px-8 py-2 rounded-full text-sm font-bold transition-colors ${activeTab === 'photobooth' ? 'text-white' : 'text-gray-400 hover:text-white'}`}
-                            >
-                                <span className="flex items-center gap-2"><Camera size={16} /> Photobooth</span>
-                            </button>
-                            <button
-                                onClick={() => setActiveTab('videobooth')}
-                                className={`relative z-10 px-8 py-2 rounded-full text-sm font-bold transition-colors ${activeTab === 'videobooth' ? 'text-white' : 'text-gray-400 hover:text-white'}`}
-                            >
-                                <span className="flex items-center gap-2"><Aperture size={16} /> Videobooth</span>
-                            </button>
+                {/* 1. FEATURED PHOTOBOOTH (Bento Grid) */}
+                <div className="mb-20">
+                    <div className="flex items-center justify-between mb-8 px-2">
+                        <div className="flex items-center gap-3">
+                            <div className="p-2 bg-white/5 rounded-full ring-1 ring-white/10">
+                                <Camera className="text-komukuna-pink" size={20} />
+                            </div>
+                            <h3 className="text-2xl font-bold text-white">Featured Event</h3>
                         </div>
+                        <button
+                            onClick={() => openArchive('photobooth')}
+                            className="group flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors"
+                        >
+                            View All Albums
+                            <span className="bg-white/10 p-1.5 rounded-full group-hover:bg-white/20 transition-colors">
+                                <ArrowRight size={14} />
+                            </span>
+                        </button>
+                    </div>
+
+                    {/* Show only the FIRST item as Featured */}
+                    <div className="border border-white/5 rounded-[2.5rem] bg-white/[0.02] overflow-hidden">
+                        <BentoGridSpotlight
+                            item={portfolioItems[0]}
+                            onMaximizeVideo={handleMaximizeVideo}
+                        />
                     </div>
                 </div>
 
-                <div className="min-h-[500px]">
-                    <AnimatePresence mode="wait">
-                        {activeTab === 'photobooth' ? (
-                            <motion.div
-                                key="photobooth"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.5 }}
-                            >
-                                {portfolioItems.map((item) => (
-                                    <BentoGridSpotlight key={item.id} item={item} />
-                                ))}
-
-                                <div className="columns-2 md:columns-3 gap-4 space-y-4">
-
-                                    {photoItems.map((item, i) => (
-                                        <motion.div
-                                            key={item.id}
-                                            initial={{ opacity: 0, y: 20 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: i * 0.1 }}
-                                            className={`break-inside-avoid group relative rounded-xl overflow-hidden bg-gray-900 ${item.ratio || 'aspect-square'} hover:scale-[1.02] transition-transform duration-300 border border-white/10`}
-                                        >
-                                            <Image
-                                                src={item.image}
-                                                alt={item.title}
-                                                fill
-                                                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                                sizes="(max-width: 768px) 50vw, 33vw"
-                                            />
-
-                                            {/* Overlay Info */}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                                                <p className="text-white text-sm font-bold tracking-wide">{item.title}</p>
-                                            </div>
-                                        </motion.div>
-                                    ))}
-                                </div>
-                            </motion.div>
-                        ) : (
-                            <div className="flex flex-col items-center space-y-8">
-                                <motion.div
-                                    key="videobooth"
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="w-full"
-                                >
-                                    {/* Responsive Container: Flex Slider on Mobile, Grid on Desktop */}
-                                    <div className="flex overflow-x-auto md:grid md:grid-cols-4 gap-4 pb-4 md:pb-0 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
-                                        {videoItems.slice(0, visibleVideoCount).map((item, index) => (
-                                            <VideoCard key={item.id} item={item} onExpand={() => handleOpenModal(index)} />
-                                        ))}
-                                    </div>
-                                </motion.div>
-
-                                {/* Load More Button */}
-                                {visibleVideoCount < videoItems.length && (
-                                    <button
-                                        onClick={handleLoadMore}
-                                        className="px-8 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-white font-medium transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
-                                    >
-                                        <span>Lihat Semua Portfolio ({videoItems.length})</span>
-                                        <div className="w-2 h-2 rounded-full bg-komukuna-pink animate-ping" />
-                                    </button>
-                                )}
+                {/* 2. RECENT VIDEOBOOTH (Horizontal Scroll / Grid) */}
+                <div className="mb-12">
+                    <div className="flex items-center justify-between mb-8 px-2">
+                        <div className="flex items-center gap-3">
+                            <div className="p-2 bg-white/5 rounded-full ring-1 ring-white/10">
+                                <Aperture className="text-komukuna-purple" size={20} />
                             </div>
-                        )}
-                    </AnimatePresence>
+                            <h3 className="text-2xl font-bold text-white">Latest Reels</h3>
+                        </div>
+                        <button
+                            onClick={() => openArchive('videobooth')}
+                            className="group flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors"
+                        >
+                            Open Video Archive
+                            <span className="bg-white/10 p-1.5 rounded-full group-hover:bg-white/20 transition-colors">
+                                <Layers size={14} />
+                            </span>
+                        </button>
+                    </div>
+
+                    {/* Display only first 4 videos */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                        {videoItems.slice(0, 4).map((item, index) => (
+                            <VideoPreviewCard
+                                key={item.id}
+                                item={item}
+                                onMaximize={() => handleMaximizeVideo(item.src)}
+                            />
+                        ))}
+                    </div>
+                </div>
+
+                {/* Call to Action for Archive */}
+                <div className="text-center mt-12 md:mt-16">
+                    <button
+                        onClick={() => openArchive('photobooth')}
+                        className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-komukuna-pink to-komukuna-purple text-white font-bold text-lg shadow-lg hover:shadow-komukuna-pink/25 hover:scale-105 transition-all duration-300"
+                    >
+                        <span>Jelajahi Semua Portfolio</span>
+                        <GridIcon />
+                    </button>
                 </div>
 
             </div>
 
-            {/* Fullscreen Video Modal */}
-            <AnimatePresence>
-                {selectedVideoIndex !== null && (
-                    <VideoModal
-                        isOpen={selectedVideoIndex !== null}
-                        video={videoItems[selectedVideoIndex]}
-                        onClose={handleCloseModal}
-                        onNext={handleNextVideo}
-                        onPrev={handlePrevVideo}
-                    />
-                )}
-            </AnimatePresence>
+            {/* Archive Modal System */}
+            <PortfolioArchiveModal
+                isOpen={isArchiveOpen}
+                onClose={() => setIsArchiveOpen(false)}
+                initialTab={initialArchiveTab}
+                photoItems={portfolioItems}
+                videoItems={videoItems}
+            />
+
+            {/* Individual Video Player Modal (Global) */}
+            <VideoPlayerModal
+                isOpen={!!selectedVideoUrl}
+                videoSrc={selectedVideoUrl || ''}
+                onClose={() => setSelectedVideoUrl(null)}
+            />
         </section>
     );
 }
 
-function VideoCard({ item, onExpand }: { item: any, onExpand: () => void }) {
-    const [isPlaying, setIsPlaying] = useState(false);
+// Sub-components for cleaner code
+// UPDATED: Now supports inline play and separate Maximize button
 
-    const togglePlay = (e: React.MouseEvent<HTMLDivElement>) => {
-        // Prevent click if clicking the maximize button
-        if ((e.target as HTMLElement).closest('.maximize-btn')) return;
 
-        const video = e.currentTarget.querySelector('video');
-        if (video) {
-            if (video.paused) {
-                video.play();
-                setIsPlaying(true);
-            } else {
-                video.pause();
-                setIsPlaying(false);
-            }
-        }
-    };
-
+function GridIcon() {
     return (
-        <div
-            onClick={togglePlay}
-            className="relative aspect-[9/16] bg-gray-900 rounded-xl border border-gray-800 overflow-hidden group cursor-pointer snap-center shrink-0 w-[80vw] md:w-auto"
-        >
-            <video
-                className="w-full h-full object-cover"
-                muted
-                loop
-                playsInline
-                preload="metadata"
-            >
-                <source src={item.src} type="video/mp4" />
-            </video>
-
-            {/* Play Overlay - Visible when NOT playing */}
-            {!isPlaying && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 transition-opacity duration-300">
-                    <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center mb-2 animate-pulse">
-                        <Play className="text-white ml-1 fill-white" size={20} />
-                    </div>
-                    <span className="text-white font-medium text-xs tracking-wider uppercase">Click to Play</span>
-                </div>
-            )}
-
-            {/* Maximize Button */}
-            <button
-                onClick={(e) => {
-                    e.stopPropagation();
-                    onExpand();
-                }}
-                className="maximize-btn absolute top-3 right-3 p-2 bg-black/50 hover:bg-black/70 rounded-full text-white/80 hover:text-white transition-all opacity-0 group-hover:opacity-100 z-10"
-                title="Fullscreen View"
-            >
-                <Maximize2 size={18} />
-            </button>
-
-
-            {/* Footer Overlay */}
-            <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/90 to-transparent pointer-events-none">
-                <p className="text-white text-xs font-bold line-clamp-2">{item.title}</p>
-            </div>
-        </div>
-    );
-}
-
-function VideoModal({ isOpen, video, onClose, onNext, onPrev }: {
-    isOpen: boolean;
-    video: typeof videoItems[0];
-    onClose: () => void;
-    onNext: () => void;
-    onPrev: () => void;
-}) {
-    // Handle keyboard navigation
-    if (typeof window !== 'undefined') {
-        window.onkeydown = (e) => {
-            if (e.key === 'Escape') onClose();
-            if (e.key === 'ArrowRight') onNext();
-            if (e.key === 'ArrowLeft') onPrev();
-        };
-    }
-
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4"
-            onClick={onClose}
-        >
-            {/* Close Button */}
-            <button
-                onClick={onClose}
-                className="absolute top-4 right-4 md:top-8 md:right-8 text-white/70 hover:text-white p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all z-50"
-            >
-                <X size={32} />
-            </button>
-
-            {/* Navigation Buttons (Desktop) */}
-            <button
-                onClick={(e) => { e.stopPropagation(); onPrev(); }}
-                className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white hidden md:block p-4"
-            >
-                <ChevronLeft size={48} />
-            </button>
-
-            <button
-                onClick={(e) => { e.stopPropagation(); onNext(); }}
-                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white hidden md:block p-4"
-            >
-                <ChevronRight size={48} />
-            </button>
-
-            {/* Main Content */}
-            <div
-                className="relative w-full max-w-sm md:max-w-md aspect-[9/16] bg-black rounded-2xl overflow-hidden shadow-2xl border border-white/10"
-                onClick={(e) => e.stopPropagation()}
-            >
-                <video
-                    key={video.id} // Key to force re-render/reset when video changes
-                    src={video.src}
-                    className="w-full h-full object-cover"
-                    autoPlay
-                    controls
-                    playsInline
-                />
-
-                {/* Info Bar */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none">
-                    <h3 className="text-white text-lg font-bold mb-1">{video.title}</h3>
-                    <p className="text-gray-300 text-sm">Videobooth Selection</p>
-                </div>
-            </div>
-
-            {/* Mobile Navigation Hints */}
-            <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-8 md:hidden text-white/50">
-                <ChevronLeft size={32} onClick={(e) => { e.stopPropagation(); onPrev(); }} />
-                <ChevronRight size={32} onClick={(e) => { e.stopPropagation(); onNext(); }} />
-            </div>
-
-        </motion.div>
-    );
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect width="7" height="7" x="3" y="3" rx="1" />
+            <rect width="7" height="7" x="14" y="3" rx="1" />
+            <rect width="7" height="7" x="14" y="14" rx="1" />
+            <rect width="7" height="7" x="3" y="14" rx="1" />
+        </svg>
+    )
 }

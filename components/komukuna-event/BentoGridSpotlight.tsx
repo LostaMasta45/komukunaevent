@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Play, Camera, Image as ImageIcon, Printer, Layers } from 'lucide-react';
+import { Play, Camera, Image as ImageIcon, Printer, Layers, Maximize2 } from 'lucide-react';
 import Image from 'next/image';
 
 export interface PhotoboothItemProps {
@@ -18,9 +18,11 @@ export interface PhotoboothItemProps {
 }
 
 export default function BentoGridSpotlight({
-    item
+    item,
+    onMaximizeVideo
 }: {
-    item: PhotoboothItemProps
+    item: PhotoboothItemProps;
+    onMaximizeVideo?: (src: string) => void;
 }) {
     return (
         <section className="py-12 md:py-16 border-b border-white/5 last:border-0">
@@ -51,7 +53,7 @@ export default function BentoGridSpotlight({
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90" />
 
                     {/* Content Overlay - Improved visibility */}
-                    <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
+                    <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 pointer-events-none">
                         <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center mb-6 border border-white/20 group-hover:scale-110 transition-transform shadow-lg">
                             <Play fill="white" className="text-white ml-1 w-6 h-6" />
                         </div>
@@ -65,6 +67,20 @@ export default function BentoGridSpotlight({
                             <p className="text-gray-300 text-sm font-medium">{item.subtitle}</p>
                         </div>
                     </div>
+
+                    {/* Maximize Button - Top Right */}
+                    {onMaximizeVideo && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onMaximizeVideo(item.videoSrc);
+                            }}
+                            className="absolute top-4 right-4 p-2 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full text-white/70 hover:text-white transition-all opacity-0 group-hover:opacity-100 z-10 pointer-events-auto"
+                            title="Fullscreen"
+                        >
+                            <Maximize2 size={20} />
+                        </button>
+                    )}
                 </motion.div>
 
                 {/* COLUMN 2: Photo Gallery - Spans 8 cols (2/3) */}

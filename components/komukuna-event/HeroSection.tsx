@@ -27,11 +27,31 @@ export default function HeroSection() {
         <section className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden">
 
             {/* Background - Animated Gradient */}
-            <div className="absolute inset-0 bg-komukuna-dark">
-                <div className="absolute inset-0 bg-gradient-to-br from-komukuna-purple/20 via-komukuna-dark to-komukuna-pink/10 opacity-60" />
+            {/* Background - Animated Gradient with Image & Pattern */}
+            <div className="absolute inset-0 bg-komukuna-dark overflow-hidden">
+
+
+                {/* 2. Gradient Overlay (Main Color) */}
+                <div className="absolute inset-0 bg-gradient-to-br from-komukuna-purple/30 via-komukuna-dark/90 to-komukuna-pink/20" />
+
+                {/* 3. Animated Blurs */}
                 <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-komukuna-purple/30 blur-[120px] animate-pulse-delayed" />
                 <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-komukuna-pink/20 blur-[120px] animate-pulse-delayed" style={{ animationDelay: '2s' }} />
-                <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
+
+                {/* 4. Pattern Overlay (Grid) */}
+                <div
+                    className="absolute inset-0 opacity-[0.15] mix-blend-screen pointer-events-none"
+                    style={{
+                        backgroundImage: `
+                            linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
+                        `,
+                        backgroundSize: '50px 50px'
+                    }}
+                />
+
+                {/* 5. Vignette for focus */}
+                <div className="absolute inset-0 bg-radial-gradient from-transparent via-transparent to-black/80" />
             </div>
 
             <div className="container relative z-10 px-4 text-center">
@@ -95,19 +115,19 @@ export default function HeroSection() {
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 3.4, duration: 0.5, type: "spring" }}
-                        className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4"
+                        className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pt-4"
                     >
-                        <div className="relative group">
+                        <div className="relative group w-full sm:w-auto">
                             <div className="absolute -inset-1 bg-gradient-to-r from-komukuna-pink to-komukuna-purple rounded-full blur opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
                             <Button
                                 variant="gradient"
                                 size="lg"
-                                className="relative h-14 px-8 text-lg overflow-hidden group-hover:scale-[1.02] transition-transform duration-300"
+                                className="relative w-full sm:w-auto h-12 px-6 text-base overflow-hidden group-hover:scale-[1.02] transition-transform duration-300"
                                 asChild
                             >
                                 <Link href="#pricing">
-                                    <span className="relative z-10 flex items-center">
-                                        Cek Ketersediaan <ChevronRight className="ml-2 w-5 h-5" />
+                                    <span className="relative z-10 flex items-center justify-center">
+                                        Cek Ketersediaan <ChevronRight className="ml-2 w-4 h-4" />
                                     </span>
                                     {/* Shine Effect */}
                                     <div className="absolute top-0 -left-[100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] animate-[shine_3s_infinite]" />
@@ -115,12 +135,16 @@ export default function HeroSection() {
                             </Button>
                         </div>
 
-                        <div className="flex items-center gap-3 text-white group cursor-pointer">
-                            <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center bg-white/5 group-hover:bg-white/10 transition-colors">
-                                <Play size={18} fill="white" className="ml-1" />
+                        <Button
+                            variant="ghost"
+                            size="lg"
+                            className="h-12 px-6 text-base border border-white/20 hover:bg-white/10 hover:text-white rounded-full flex items-center gap-2 w-full sm:w-auto justify-center group"
+                        >
+                            <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center transition-transform group-hover:scale-110">
+                                <Play size={10} fill="black" className="ml-0.5 text-black" />
                             </div>
-                            <span className="text-sm font-medium tracking-wide">Lihat Demo Video</span>
-                        </div>
+                            <span className="font-medium tracking-wide">Lihat Demo Video</span>
+                        </Button>
                     </motion.div>
 
                 </div>

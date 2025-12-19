@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Camera, Aperture, Check } from 'lucide-react';
-import PhotoboothProcess from '@/components/komukuna-event/PhotoboothProcess';
+import ExperienceStory from '@/components/komukuna-event/ExperienceStory'; // Updated Component
 
 export default function ServicesSection() {
     return (
@@ -68,7 +68,7 @@ export default function ServicesSection() {
                             transition={{ duration: 0.6 }}
                             className="order-1 lg:order-2 relative flex justify-center"
                         >
-                            <PhotoboothProcess />
+                            <ExperienceStory />
                         </motion.div>
                     </div>
 
