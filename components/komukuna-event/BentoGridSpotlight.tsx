@@ -4,9 +4,26 @@ import { motion } from 'framer-motion';
 import { Play, Camera, Image as ImageIcon, Printer, Layers } from 'lucide-react';
 import Image from 'next/image';
 
-export default function BentoGridSpotlight() {
+export interface PhotoboothItemProps {
+    id: string | number;
+    title: string; // e.g., "Fitrah & Okta Wedding"
+    subtitle: string; // e.g., "Live 360° Videobooth Experience"
+    badge?: string; // e.g., "New Portfolio"
+    videoSrc: string; // Vertical video
+    templateImage: string; // Vertical template
+    printImage: string; // Vertical print result
+    rawImage: string; // Landscape/Original raw
+    btsImage: string; // Landscape/Original BTS
+    reversed?: boolean; // Option to flip layout if needed
+}
+
+export default function BentoGridSpotlight({
+    item
+}: {
+    item: PhotoboothItemProps
+}) {
     return (
-        <section className="py-12 md:py-24">
+        <section className="py-12 md:py-16 border-b border-white/5 last:border-0">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
                 {/* COLUMN 1: Vertical Video (The Reel) - Spans 4 cols (1/3) */}
@@ -26,7 +43,7 @@ export default function BentoGridSpotlight() {
                             playsInline
                             preload="metadata"
                         >
-                            <source src="/komukuna-event/process/video-bts1.mp4" type="video/mp4" />
+                            <source src={item.videoSrc} type="video/mp4" />
                         </video>
                     </div>
 
@@ -39,11 +56,13 @@ export default function BentoGridSpotlight() {
                             <Play fill="white" className="text-white ml-1 w-6 h-6" />
                         </div>
                         <div className="space-y-2">
-                            <div className="inline-block px-3 py-1 rounded-full bg-komukuna-pink/20 border border-komukuna-pink/30 text-komukuna-pink text-xs font-bold uppercase tracking-wider mb-2">
-                                New Portfolio
-                            </div>
-                            <h3 className="text-white text-3xl font-bold leading-tight drop-shadow-lg">Fitrah & Okta<br />Wedding</h3>
-                            <p className="text-gray-300 text-sm font-medium">Live 360° Videobooth Experience</p>
+                            {item.badge && (
+                                <div className="inline-block px-3 py-1 rounded-full bg-komukuna-pink/20 border border-komukuna-pink/30 text-komukuna-pink text-xs font-bold uppercase tracking-wider mb-2">
+                                    {item.badge}
+                                </div>
+                            )}
+                            <h3 className="text-white text-3xl font-bold leading-tight drop-shadow-lg p-1" dangerouslySetInnerHTML={{ __html: item.title }} />
+                            <p className="text-gray-300 text-sm font-medium">{item.subtitle}</p>
                         </div>
                     </div>
                 </motion.div>
@@ -60,7 +79,7 @@ export default function BentoGridSpotlight() {
                         className="relative rounded-[2rem] overflow-hidden aspect-[2/3] group border border-white/10 shadow-xl"
                     >
                         <Image
-                            src="/komukuna-event/process/hasil-template1.jpg"
+                            src={item.templateImage}
                             alt="Premium Template Design"
                             fill
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -87,7 +106,7 @@ export default function BentoGridSpotlight() {
                         className="relative rounded-[2rem] overflow-hidden aspect-[2/3] group border border-white/10 shadow-xl"
                     >
                         <Image
-                            src="/komukuna-event/process/hasil-cetak1.jpg"
+                            src={item.printImage}
                             alt="Hasil Cetak Photo"
                             fill
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -107,9 +126,9 @@ export default function BentoGridSpotlight() {
                     </motion.div>
 
                     {/* ROW 2: Landscape Photos (Raw & BTS) */}
-                    {/* Note: User asked for "Ukuran aslinya" for the first two. 
-                        The original code had Raw & BTS as landscape (3:2) but labeled them as aspect-[3/2] which is landscape.
-                        Assuming these are correct.
+                    {/* Note: User asked for "Ukuran aslinya" (Original Size/Ratio)
+                        We keep aspect-[3/2] as default for Landscape photos, but use object-cover to ensuring filling.
+                        Ideally we'd detect orientation, but for grid consistency, forcing a shape is better UI.
                     */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -119,7 +138,7 @@ export default function BentoGridSpotlight() {
                         className="relative rounded-[2rem] overflow-hidden aspect-[3/2] group border border-white/10 shadow-xl"
                     >
                         <Image
-                            src="/komukuna-event/process/hasil-raw1.jpg"
+                            src={item.rawImage}
                             alt="Raw Photo File"
                             fill
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -140,7 +159,7 @@ export default function BentoGridSpotlight() {
                         className="relative rounded-[2rem] overflow-hidden aspect-[3/2] group border border-white/10 shadow-xl"
                     >
                         <Image
-                            src="/komukuna-event/process/fotobts1.jpg"
+                            src={item.btsImage}
                             alt="BTS Photographer"
                             fill
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -158,3 +177,4 @@ export default function BentoGridSpotlight() {
         </section>
     );
 }
+

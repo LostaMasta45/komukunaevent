@@ -4,9 +4,35 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Camera, Aperture, X, Maximize2, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import Image from 'next/image';
-import BentoGridSpotlight from '@/components/komukuna-event/BentoGridSpotlight';
+import BentoGridSpotlight, { PhotoboothItemProps } from '@/components/komukuna-event/BentoGridSpotlight';
 
-// Real Data for Photobooth
+// Photobooth Data
+const portfolioItems: PhotoboothItemProps[] = [
+    {
+        id: 1,
+        badge: "Featured Wedding",
+        title: "Fitrah & Okta<br />Wedding",
+        subtitle: "Live 360° Videobooth Experience",
+        videoSrc: "/komukuna-event/process/video-bts1.mp4",
+        templateImage: "/komukuna-event/process/hasil-template1.jpg",
+        printImage: "/komukuna-event/process/hasil-cetak1.jpg",
+        rawImage: "/komukuna-event/process/hasil-raw1.jpg",
+        btsImage: "/komukuna-event/process/fotobts1.jpg",
+    },
+    {
+        id: 2,
+        badge: "New Release",
+        title: "EX3 Basketball<br />Competition",
+        subtitle: "Sport Event Photobooth & 360°",
+        videoSrc: "/komukuna-event/process/video-bts2.mp4",
+        templateImage: "/komukuna-event/process/hasil-template2.jpg",
+        printImage: "/komukuna-event/process/hasil-cetak2.jpeg",
+        rawImage: "/komukuna-event/process/hasil-raw2.jpg",
+        btsImage: "/komukuna-event/process/fotobts2.JPG",
+    }
+];
+
+// Real Data for Photobooth (Masonry Grid - Existing)
 const photoItems: { id: number; title: string; image: string; ratio: string }[] = [
     // Add more real selected photos here in the future
 ];
@@ -128,9 +154,12 @@ export default function GallerySection() {
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.5 }}
                             >
-                                <BentoGridSpotlight />
+                                {portfolioItems.map((item) => (
+                                    <BentoGridSpotlight key={item.id} item={item} />
+                                ))}
 
                                 <div className="columns-2 md:columns-3 gap-4 space-y-4">
+
                                     {photoItems.map((item, i) => (
                                         <motion.div
                                             key={item.id}
