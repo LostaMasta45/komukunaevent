@@ -4,7 +4,7 @@ export const metadata: Metadata = {
     title: 'Komukuna Event | Photobooth & 360 Videobooth Services',
     description: 'Premium Photobooth and 360 Videobooth services for weddings, corporate events, and parties. Featuring customizable templates and instant sharing. Part of Komukuna Studio.',
     icons: {
-        icon: '/komukuna-event/logo-badge.png', // Use the badge/icon for favicon if appropriate
+        icon: '/komukuna-event/logo-circle.png',
     },
 };
 

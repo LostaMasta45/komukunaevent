@@ -13,30 +13,43 @@ const steps = [
         icon: Users,
         type: 'video',
         src: '/komukuna-event/process/exp-crowd.mp4',
+        duration: 8000,
     },
     {
-        id: 'direction',
-        title: 'Pro Directed',
-        description: 'Gaya mati gaya? Crew kami arahkan sampai kece.',
-        icon: Camera,
+        id: 'template',
+        title: 'Template Eksklusif',
+        description: 'Desain frame custom yang bikin fotomu otomatis aesthetic.',
+        icon: Palette,
         type: 'image',
-        src: '/komukuna-event/process/exp-direction.jpg'
+        src: '/komukuna-event/process/exp-template.jpg',
+        duration: 4000,
+    },
+    {
+        id: 'quality',
+        title: 'Auto-Glowing',
+        description: 'Lighting studio pro & kamera DSLR. Hasilnya tajam & flawless.',
+        icon: Sparkles,
+        type: 'image',
+        src: '/komukuna-event/process/exp-quality.jpg',
+        duration: 4000,
     },
     {
         id: 'speed',
-        title: 'Kilat 15 Detik',
+        title: 'Cetak 15 Detik',
         description: 'Foto & cetak secepat update status.',
         icon: Zap,
         type: 'image',
-        src: '/komukuna-event/process/exp-print.jpg'
+        src: '/komukuna-event/process/exp-print.jpg',
+        duration: 4000,
     },
     {
-        id: 'branding',
-        title: 'Exclusive Branding',
-        description: 'Template desain premium sesuai tema acara.',
-        icon: Palette,
+        id: 'queue',
+        title: 'Antrian Panjang',
+        description: 'Bukti acara sukses: Tamu rela antri demi souvenir ini.',
+        icon: Users,
         type: 'image',
-        src: '/komukuna-event/process/exp-template.jpg'
+        src: '/komukuna-event/process/exp-queue.jpg',
+        duration: 4000,
     }
 ];
 
@@ -44,12 +57,13 @@ export default function ExperienceStory() {
     const [currentStep, setCurrentStep] = useState(0);
 
     useEffect(() => {
-        const timer = setInterval(() => {
+        const stepDuration = steps[currentStep].duration;
+        const timer = setTimeout(() => {
             setCurrentStep((prev) => (prev + 1) % steps.length);
-        }, 3500); // Slightly slower for better reading
+        }, stepDuration);
 
-        return () => clearInterval(timer);
-    }, []);
+        return () => clearTimeout(timer);
+    }, [currentStep]);
 
     return (
         <div className="relative mx-auto w-full max-w-sm aspect-[3/4] rounded-[2.5rem] overflow-hidden shadow-2xl border-[6px] border-gray-900 bg-gray-900 group ring-1 ring-white/10">
@@ -62,7 +76,7 @@ export default function ExperienceStory() {
                             className="h-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)]"
                             initial={{ width: "0%" }}
                             animate={{ width: index === currentStep ? "100%" : index < currentStep ? "100%" : "0%" }}
-                            transition={{ duration: index === currentStep ? 3.5 : 0, ease: "linear" }}
+                            transition={{ duration: index === currentStep ? step.duration / 1000 : 0, ease: "linear" }}
                         />
                     </div>
                 ))}

@@ -19,9 +19,9 @@ export const metadata: Metadata = {
   title: "Komukuna Event - Premium Event Organizer",
   description: "Event organizer profesional untuk acara spesial Anda. Wedding, Birthday, Corporate Events, dan lainnya.",
   icons: {
-    icon: "/komukunaevent/favicon.ico",
-    shortcut: "/komukunaevent/favicon.ico",
-    apple: "/komukunaevent/favicon.ico",
+    icon: "/komukuna-event/logo-circle.png",
+    shortcut: "/komukuna-event/logo-circle.png",
+    apple: "/komukuna-event/logo-circle.png",
   },
 };
 
@@ -53,7 +53,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body 
+      <body
         className={`${inter.variable} ${poppins.variable} antialiased dark`}
         style={{ fontFamily: 'var(--font-inter), system-ui, sans-serif' }}
         suppressHydrationWarning
