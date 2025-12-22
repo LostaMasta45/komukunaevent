@@ -25,7 +25,7 @@ export default function BentoGridSpotlight({
     onMaximizeVideo?: (src: string) => void;
 }) {
     return (
-        <section className="py-12 md:py-16 border-b border-white/5 last:border-0">
+        <section className="py-12 md:py-16 border-b border-white/5 last:border-0 relative">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
                 {/* COLUMN 1: Vertical Video (The Reel) - Spans 4 cols (1/3) */}
@@ -142,10 +142,6 @@ export default function BentoGridSpotlight({
                     </motion.div>
 
                     {/* ROW 2: Landscape Photos (Raw & BTS) */}
-                    {/* Note: User asked for "Ukuran aslinya" (Original Size/Ratio)
-                        We keep aspect-[3/2] as default for Landscape photos, but use object-cover to ensuring filling.
-                        Ideally we'd detect orientation, but for grid consistency, forcing a shape is better UI.
-                    */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -183,7 +179,7 @@ export default function BentoGridSpotlight({
                         <div className="absolute bottom-4 left-4 right-4">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
                                 <Camera size={14} className="text-yellow-400" />
-                                <span className="text-white text-xs font-bold">Studio Lighting</span>
+                                <span className="text-white text-xs font-bold">BTS</span>
                             </div>
                         </div>
                     </motion.div>
@@ -193,4 +189,3 @@ export default function BentoGridSpotlight({
         </section>
     );
 }
-

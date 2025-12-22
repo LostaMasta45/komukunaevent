@@ -5,10 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
 
 const faqs = [
-    {
-        q: "Berapa kebutuhan listrik untuk Photobooth/Videobooth?",
-        a: "Untuk keamanan alat, kami membutuhkan daya minimal 1500-2000 Watt. Pastikan venue menyediakan satu stopkontak khusus dekat area booth."
-    },
+
     {
         q: "Apakah butuh space/ruangan yang luas?",
         a: "Idealnya kami membutuhkan area kosong ukuran 3x3 meter agar tamu leluasa bergaya dan antrian tetap rapi."

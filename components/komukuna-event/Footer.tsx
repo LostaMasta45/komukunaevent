@@ -37,10 +37,16 @@ export default function Footer() {
                         <ul className="space-y-3 text-sm text-gray-400">
                             <li className="flex items-center gap-2">
                                 <Phone size={16} className="text-komukuna-pink" />
-                                <a href="https://wa.me/6289676111118" target="_blank" className="hover:text-white">0896-7611-1118</a>
+                                <a href="https://wa.me/6283122866975" target="_blank" className="hover:text-white transition-colors">0831-2286-6975</a>
                             </li>
-                            <li className="flex items-center gap-2"><Mail size={16} /> studio@komukuna.com</li>
-                            <li className="flex items-center gap-2"><MapPin size={16} /> Jakarta, Indonesia</li>
+                            <li className="flex items-center gap-2">
+                                <Mail size={16} />
+                                <a href="mailto:komukuna@gmail.com" className="hover:text-white transition-colors">komukuna@gmail.com</a>
+                            </li>
+                            <li className="flex items-center gap-2">
+                                <MapPin size={16} />
+                                <a href="https://maps.google.com/?q=Jombang,Indonesia" target="_blank" className="hover:text-white transition-colors">Jombang, Indonesia</a>
+                            </li>
                         </ul>
                     </div>
 
@@ -50,7 +56,7 @@ export default function Footer() {
                             <Link href="https://instagram.com/komukunastudio" target="_blank" className="p-3 rounded-full bg-white/5 hover:bg-gradient-to-br hover:from-komukuna-pink hover:to-orange-500 hover:text-white transition-all group">
                                 <Instagram size={20} className="text-gray-400 group-hover:text-white" />
                             </Link>
-                            <Link href="#" className="p-3 rounded-full bg-white/5 hover:bg-komukuna-purple hover:text-white transition-all group">
+                            <Link href="https://www.tiktok.com/@komukunastudio" target="_blank" className="p-3 rounded-full bg-white/5 hover:bg-komukuna-purple hover:text-white transition-all group">
                                 <Camera size={20} className="text-gray-400 group-hover:text-white" />
                             </Link>
                         </div>

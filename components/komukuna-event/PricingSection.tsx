@@ -219,9 +219,11 @@ export default function PricingSection() {
                     </AnimatePresence>
                 </div>
 
-                <p className="text-center text-gray-500 text-sm mt-12 bg-white/5 inline-block px-6 py-3 rounded-full mx-auto backdrop-blur-sm border border-white/5 mx-4">
-                    💡 <span className="text-gray-300 font-medium">Butuh Paket Custom?</span> Hubungi kami di 0831-2286-6975
-                </p>
+                <div className="mt-12 flex justify-center">
+                    <p className="text-gray-500 text-sm bg-white/5 inline-flex items-center gap-2 px-6 py-3 rounded-full backdrop-blur-sm border border-white/5">
+                        💡 <span className="text-gray-300 font-medium">Butuh Paket Custom?</span> Hubungi kami di 0831-2286-6975
+                    </p>
+                </div>
 
             </div>
         </section>

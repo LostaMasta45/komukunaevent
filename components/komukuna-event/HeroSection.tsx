@@ -5,6 +5,8 @@ import { Button } from './ui/Button';
 import Link from 'next/link';
 import { ChevronRight, Play } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import PortfolioArchiveModal from './PortfolioArchiveModal';
+import { portfolioItems, videoItems } from './portfolio-data';
 
 const headlines = [
     "Konten Viral.",
@@ -15,6 +17,7 @@ const headlines = [
 
 export default function HeroSection() {
     const [index, setIndex] = useState(0);
+    const [isDemoOpen, setIsDemoOpen] = useState(false);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -135,15 +138,17 @@ export default function HeroSection() {
                             </Button>
                         </div>
 
+
                         <Button
                             variant="ghost"
                             size="lg"
                             className="h-12 px-6 text-base border border-white/20 hover:bg-white/10 hover:text-white rounded-full flex items-center gap-2 w-full sm:w-auto justify-center group"
+                            onClick={() => setIsDemoOpen(true)}
                         >
                             <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center transition-transform group-hover:scale-110">
                                 <Play size={10} fill="black" className="ml-0.5 text-black" />
                             </div>
-                            <span className="font-medium tracking-wide">Lihat Demo Video</span>
+                            <span className="font-medium tracking-wide">Lihat Portfolio</span>
                         </Button>
                     </motion.div>
 
@@ -159,6 +164,15 @@ export default function HeroSection() {
                 <span className="text-xs md:text-sm font-medium tracking-widest text-white/50 animate-pulse">Lihat Bukti Viralnya 👇</span>
                 <div className="w-[1px] h-12 bg-gradient-to-b from-gray-500 to-transparent" />
             </motion.div>
+
+            {/* Portfolio Modal */}
+            <PortfolioArchiveModal
+                isOpen={isDemoOpen}
+                initialTab="photobooth"
+                photoItems={portfolioItems}
+                videoItems={videoItems}
+                onClose={() => setIsDemoOpen(false)}
+            />
         </section>
     );
 }

@@ -51,7 +51,7 @@ export default function ServicesSection() {
                                     'Kamera DSLR & Lighting Studio Professional',
                                     'Cetak 4R High-Quality dalam 15 Detik',
                                     'Unlimited Session & Print',
-                                    'Softcopy Full via Google Drive'
+                                    'Soft File Full Via Barcode'
                                 ].map((item, i) => (
                                     <li key={i} className="flex items-start text-gray-300">
                                         <Check className="w-5 h-5 text-komukuna-pink mr-3 shrink-0" />
