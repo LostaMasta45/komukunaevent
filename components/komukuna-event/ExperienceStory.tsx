@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Camera, Zap, Sparkles, Users, Palette } from 'lucide-react';
+import { cloudinaryProcessVideos } from '@/lib/cloudinary-videos';
 
 const steps = [
     {
@@ -12,7 +13,7 @@ const steps = [
         description: 'Bikin acara pecah & tamu antri panjang!',
         icon: Users,
         type: 'video',
-        src: '/komukuna-event/process/exp-crowd.mp4',
+        src: cloudinaryProcessVideos['exp-crowd'],
         duration: 8000,
     },
     {

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Camera, Layers, Image as ImageIcon, Printer, Video } from 'lucide-react';
+import { cloudinaryProcessVideos } from '@/lib/cloudinary-videos';
 
 const steps = [
     {
@@ -12,7 +13,7 @@ const steps = [
         description: 'Serunya Suasana Antrian & Gaya',
         icon: Video,
         type: 'video',
-        src: '/komukuna-event/process/video-bts1.mp4',
+        src: cloudinaryProcessVideos['video-bts1'],
         poster: ''
     },
     {

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Aperture, Check, QrCode, Zap, Smartphone, Music } from 'lucide-react';
 import Image from 'next/image';
+import { cloudinaryVideoboothVideos } from '@/lib/cloudinary-videos';
 
 export default function VideoboothSpotlight() {
     return (
@@ -35,7 +36,7 @@ export default function VideoboothSpotlight() {
                                 loop
                                 playsInline
                             >
-                                <source src="/portofolio/videobooth/MAJAPAHIT RUN MJK - 22 JUNI 2025 - Videobooth by @komukunastudio.mp4" type="video/mp4" />
+                                <source src={cloudinaryVideoboothVideos['majapahit-run']} type="video/mp4" />
                             </video>
                         </div>
 

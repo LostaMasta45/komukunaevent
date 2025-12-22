@@ -37,3 +37,10 @@ next-env.d.ts
 # OS
 .DS_Store
 Thumbs.db
+
+# Large video files (hosted on Cloudinary CDN)
+public/komukuna-event/process/*.mp4
+public/portofolio/videobooth/*.mp4
+
+# Upload script
+upload-videos.ps1
