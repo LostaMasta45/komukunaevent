@@ -8,10 +8,10 @@ export default function Preloader() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        // Standard loading simulation
+        // Reduced timer for better PageSpeed - was 3500ms
         const timer = setTimeout(() => {
             setIsLoading(false);
-        }, 3500);
+        }, 1200);
 
         return () => clearTimeout(timer);
     }, []);
@@ -24,7 +24,7 @@ export default function Preloader() {
                 <motion.div
                     key="preloader"
                     className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-black"
-                    exit={{ opacity: 0, transition: { duration: 0.8 } }}
+                    exit={{ opacity: 0, transition: { duration: 0.3 } }}
                 >
                     <div className="relative z-10 flex flex-col items-center">
                         {/* Spotlight Background Effect */}
@@ -37,7 +37,7 @@ export default function Preloader() {
                                     "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2) 0%, transparent 60%)"
                                 ]
                             }}
-                            transition={{ duration: 3, repeat: Infinity }}
+                            transition={{ duration: 1, repeat: Infinity }}
                         />
 
                         {/* Logo Reveal */}
@@ -45,7 +45,7 @@ export default function Preloader() {
                             className="relative w-48 h-48 mb-8 filter drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]"
                             initial={{ opacity: 0, scale: 0.5 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 1.5, type: "spring" }}
+                            transition={{ duration: 0.6, type: "spring" }}
                         >
                             <Image
                                 src="/komukuna-event/logo-circle.png"
@@ -63,7 +63,7 @@ export default function Preloader() {
                                 className="text-white text-lg tracking-[0.3em] font-light"
                                 initial={{ opacity: 0, filter: "blur(10px)" }}
                                 animate={{ opacity: 1, filter: "blur(0px)" }}
-                                transition={{ delay: 0.5, duration: 1 }}
+                                transition={{ delay: 0.2, duration: 0.4 }}
                             >
                                 KOMUKUNA STUDIO
                             </motion.span>
@@ -71,7 +71,7 @@ export default function Preloader() {
                                 className="text-komukuna-pink text-sm"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                transition={{ delay: 1 }}
+                                transition={{ delay: 0.4 }}
                             >
                                 {hashtag}
                             </motion.span>
