@@ -47,7 +47,14 @@ export default function Preloader() {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 1.5, type: "spring" }}
                         >
-                            <Image src="/komukuna-event/logo-circle.png" alt="Logo" fill className="object-contain" />
+                            <Image
+                                src="/komukuna-event/logo-circle.png"
+                                alt="Logo"
+                                fill
+                                priority
+                                sizes="192px"
+                                className="object-contain"
+                            />
                         </motion.div>
 
                         {/* Text Reveal */}

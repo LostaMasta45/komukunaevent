@@ -52,6 +52,7 @@ export default function PartnerLogos({ logos }: PartnerLogosProps) {
                                     src={partner.logo}
                                     alt={partner.name}
                                     fill
+                                    sizes="(max-width: 768px) 128px, 160px"
                                     className="object-contain p-1"
                                 />
                             </div>
