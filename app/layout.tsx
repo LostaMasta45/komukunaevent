@@ -33,6 +33,10 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning>
       <head>
+        {/* Preconnect to Cloudinary CDN for faster video/image loading */}
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+
         <script
           dangerouslySetInnerHTML={{
             __html: `

@@ -43,7 +43,7 @@ export default function BentoGridSpotlight({
                             muted
                             loop
                             playsInline
-                            preload="metadata"
+                            preload="none"
                         >
                             <source src={item.videoSrc} type="video/mp4" />
                         </video>
@@ -98,6 +98,8 @@ export default function BentoGridSpotlight({
                             src={item.templateImage}
                             alt="Premium Template Design"
                             fill
+                            priority
+                            sizes="(max-width: 768px) 100vw, 33vw"
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60" />
@@ -125,6 +127,7 @@ export default function BentoGridSpotlight({
                             src={item.printImage}
                             alt="Hasil Cetak Photo"
                             fill
+                            sizes="(max-width: 768px) 100vw, 33vw"
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60" />
@@ -153,6 +156,7 @@ export default function BentoGridSpotlight({
                             src={item.rawImage}
                             alt="Raw Photo File"
                             fill
+                            sizes="(max-width: 768px) 100vw, 25vw"
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                         <div className="absolute bottom-4 left-4 right-4">
@@ -174,6 +178,7 @@ export default function BentoGridSpotlight({
                             src={item.btsImage}
                             alt="BTS Photographer"
                             fill
+                            sizes="(max-width: 768px) 100vw, 25vw"
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                         <div className="absolute bottom-4 left-4 right-4">

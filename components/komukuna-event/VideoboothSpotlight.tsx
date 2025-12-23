@@ -28,13 +28,14 @@ export default function VideoboothSpotlight() {
                         {/* Phone Frame */}
                         <div className="relative aspect-[9/16] rounded-[2rem] border-[6px] border-gray-900 bg-black shadow-2xl overflow-hidden ring-1 ring-white/10 z-10">
 
-                            {/* Video Content */}
+                            {/* Video Content - Lazy loaded for PageSpeed */}
                             <video
                                 className="w-full h-full object-cover"
                                 autoPlay
                                 muted
                                 loop
                                 playsInline
+                                preload="none"
                             >
                                 <source src={cloudinaryVideoboothVideos['majapahit-run']} type="video/mp4" />
                             </video>
