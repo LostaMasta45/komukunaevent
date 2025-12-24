@@ -61,12 +61,7 @@ export default function HeroSection() {
                 <div className="space-y-8 max-w-5xl mx-auto">
 
                     {/* Tagline */}
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.8, duration: 0.8 }}
-                        className="flex justify-center"
-                    >
+                    <div className="flex justify-center animate-fade-in-up delay-800">
                         <div className="px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2">
                             <span className="relative flex h-2 w-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-komukuna-pink opacity-75"></span>
@@ -74,18 +69,13 @@ export default function HeroSection() {
                             </span>
                             <span className="text-gray-300 text-xs md:text-sm font-medium tracking-wide uppercase">New Era of Event Experience</span>
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* Mega Headline (Updated per Plan) */}
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] text-white min-h-[3.3em] md:min-h-[2.2em]">
-                        <motion.span
-                            initial={{ opacity: 0, y: 50 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.0, duration: 0.8 }}
-                            className="block"
-                        >
+                        <span className="block animate-fade-in-up delay-1000">
                             Tamu Pulang Membawa
-                        </motion.span>
+                        </span>
 
                         <div className="relative h-[1.1em] overflow-hidden">
                             <AnimatePresence mode="wait">
@@ -103,23 +93,13 @@ export default function HeroSection() {
                         </div>
                     </h1>
 
-                    {/* Subheader (Updated per Plan - Universal Hype) */}
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1.2, duration: 1 }}
-                        className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
-                    >
+                    {/* Subheader POINTER: LCP ELEMENT */}
+                    <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed animate-fade-in-up delay-1200">
                         Bikin <span className="text-white font-semibold">Corporate Gathering, Wedding, atau Party</span> Anda pecah! Hadirkan pengalaman
                         <span className="text-white font-semibold"> Photobooth & Video 360°</span> yang seru, personal, dan langsung tayang di Instagram Story.
-                    </motion.p>
+                    </p>
 
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 1.4, duration: 0.5, type: "spring" }}
-                        className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pt-4"
-                    >
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pt-4 animate-fade-in-up delay-1500">
                         <div className="relative group w-full sm:w-auto">
                             <div className="absolute -inset-1 bg-gradient-to-r from-komukuna-pink to-komukuna-purple rounded-full blur opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
                             <Button
@@ -150,7 +130,7 @@ export default function HeroSection() {
                             </div>
                             <span className="font-medium tracking-wide">Lihat Portfolio</span>
                         </Button>
-                    </motion.div>
+                    </div>
 
                 </div>
             </div>
