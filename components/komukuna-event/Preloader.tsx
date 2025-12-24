@@ -11,7 +11,7 @@ export default function Preloader() {
         // Reduced timer for better PageSpeed - was 3500ms
         const timer = setTimeout(() => {
             setIsLoading(false);
-        }, 1200);
+        }, 800);
 
         return () => clearTimeout(timer);
     }, []);

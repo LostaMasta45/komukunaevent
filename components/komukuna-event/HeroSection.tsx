@@ -64,7 +64,7 @@ export default function HeroSection() {
                     <motion.div
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1.3, duration: 0.8 }}
+                        transition={{ delay: 0.8, duration: 0.8 }}
                         className="flex justify-center"
                     >
                         <div className="px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2">
@@ -81,7 +81,7 @@ export default function HeroSection() {
                         <motion.span
                             initial={{ opacity: 0, y: 50 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.5, duration: 0.8 }}
+                            transition={{ delay: 1.0, duration: 0.8 }}
                             className="block"
                         >
                             Tamu Pulang Membawa
@@ -107,7 +107,7 @@ export default function HeroSection() {
                     <motion.p
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        transition={{ delay: 1.7, duration: 1 }}
+                        transition={{ delay: 1.2, duration: 1 }}
                         className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
                     >
                         Bikin <span className="text-white font-semibold">Corporate Gathering, Wedding, atau Party</span> Anda pecah! Hadirkan pengalaman
@@ -117,7 +117,7 @@ export default function HeroSection() {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 1.9, duration: 0.5, type: "spring" }}
+                        transition={{ delay: 1.4, duration: 0.5, type: "spring" }}
                         className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pt-4"
                     >
                         <div className="relative group w-full sm:w-auto">
