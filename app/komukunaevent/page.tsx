@@ -1,22 +1,24 @@
 import Link from 'next/link';
 import Navbar from '@/components/komukuna-event/Navbar';
 import HeroSection from '@/components/komukuna-event/HeroSection';
-import TrustBar from '@/components/komukuna-event/TrustBar';
-import PartnerLogos from '@/components/komukuna-event/PartnerLogos';
-import ServicesSection from '@/components/komukuna-event/ServicesSection';
-import USPSection from '@/components/komukuna-event/USPSection';
-import VideoboothSpotlight from '@/components/komukuna-event/VideoboothSpotlight';
-import GallerySection from '@/components/komukuna-event/GallerySection';
-import PricingSection from '@/components/komukuna-event/PricingSection';
-import HowItWorksSection from '@/components/komukuna-event/HowItWorksSection';
-import FAQSection from '@/components/komukuna-event/FAQSection';
-import Footer from '@/components/komukuna-event/Footer';
 import Preloader from '@/components/komukuna-event/Preloader';
-import FloatingCTA from '@/components/komukuna-event/FloatingCTA';
-
-
+import dynamic from 'next/dynamic';
 import fs from 'fs';
 import path from 'path';
+
+// Lazy Load components below the fold to reduce initial bundle size (LCP optimization)
+const TrustBar = dynamic(() => import('@/components/komukuna-event/TrustBar'));
+const PartnerLogos = dynamic(() => import('@/components/komukuna-event/PartnerLogos'));
+const ServicesSection = dynamic(() => import('@/components/komukuna-event/ServicesSection'));
+const USPSection = dynamic(() => import('@/components/komukuna-event/USPSection'));
+const VideoboothSpotlight = dynamic(() => import('@/components/komukuna-event/VideoboothSpotlight'));
+const GallerySection = dynamic(() => import('@/components/komukuna-event/GallerySection'));
+const PricingSection = dynamic(() => import('@/components/komukuna-event/PricingSection'));
+const HowItWorksSection = dynamic(() => import('@/components/komukuna-event/HowItWorksSection'));
+const FAQSection = dynamic(() => import('@/components/komukuna-event/FAQSection'));
+const Footer = dynamic(() => import('@/components/komukuna-event/Footer'));
+const FloatingCTA = dynamic(() => import('@/components/komukuna-event/FloatingCTA'));
+
 
 function getLogos() {
     const logoDir = path.join(process.cwd(), 'public', 'komukuna-event', 'logo');
