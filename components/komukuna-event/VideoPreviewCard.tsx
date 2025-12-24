@@ -50,6 +50,7 @@ export default function VideoPreviewCard({ item, onMaximize }: VideoPreviewCardP
                 muted
                 playsInline
                 loop
+                preload="none"
             />
             {/* Gradient Overlay */}
             <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/90 to-transparent pointer-events-none" />

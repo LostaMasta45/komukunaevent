@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
         hostname: "placehold.co",
       },
     ],
-    formats: ['image/webp'],
+    formats: ['image/avif', 'image/webp'],
   },
 
   experimental: {
