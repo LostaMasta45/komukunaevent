@@ -61,7 +61,7 @@ export default function HeroSection() {
                 <div className="space-y-8 max-w-5xl mx-auto">
 
                     {/* Tagline */}
-                    <div className="flex justify-center animate-fade-in-up delay-100">
+                    <div className="flex justify-center animate-fast-fade">
                         <div className="px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2">
                             <span className="relative flex h-2 w-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-komukuna-pink opacity-75"></span>
@@ -73,7 +73,7 @@ export default function HeroSection() {
 
                     {/* Mega Headline (Updated per Plan) */}
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] text-white min-h-[3.3em] md:min-h-[2.2em]">
-                        <span className="block animate-fade-in-up delay-200">
+                        <span className="block">
                             Tamu Pulang Membawa
                         </span>
 
