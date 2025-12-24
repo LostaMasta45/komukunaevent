@@ -87,6 +87,9 @@
     opacity: 0.01; /* Start logically visible for LCP */
   }
 
+  .delay-100 { animation-delay: 100ms; }
+  .delay-200 { animation-delay: 200ms; }
+  .delay-300 { animation-delay: 300ms; }
   .delay-800 { animation-delay: 800ms; }
   .delay-1000 { animation-delay: 1000ms; }
   .delay-1200 { animation-delay: 1200ms; }
