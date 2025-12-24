@@ -73,7 +73,7 @@
   /* LCP Optimization: CSS-only animations */
   @keyframes fadeInUp {
     from {
-      opacity: 0;
+      opacity: 0.01;
       transform: translateY(20px);
     }
     to {
@@ -84,7 +84,7 @@
 
   .animate-fade-in-up {
     animation: fadeInUp 0.8s ease-out forwards;
-    opacity: 0; /* Start hidden */
+    opacity: 0.01; /* Start logically visible for LCP */
   }
 
   .delay-800 { animation-delay: 800ms; }
