@@ -97,6 +97,7 @@
   
   .animate-fast-fade {
     animation: fadeIn 0.3s ease-out forwards;
+    opacity: 0; /* Starts invisible, becomes visible */
   }
   
   @keyframes fadeIn {
