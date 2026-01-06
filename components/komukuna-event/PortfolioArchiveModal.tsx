@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, Layers } from 'lucide-react';
 import BentoGridSpotlight, { PhotoboothItemProps } from '@/components/komukuna-event/BentoGridSpotlight';
@@ -51,87 +52,104 @@ export default function PortfolioArchiveModal({
         setSelectedVideoUrl(src);
     };
 
-    return (
+    // For SSR compatibility - only render portal on client
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) return null;
+
+    return createPortal(
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center">
-                    {/* Backdrop */}
+                <div className="fixed inset-0 z-[9999] flex items-center justify-center" style={{ isolation: 'isolate' }}>
+                    {/* Backdrop - Solid black to fully hide landing page */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 bg-black/90 backdrop-blur-xl"
+                        className="absolute inset-0 bg-black"
                     />
 
-                    {/* Modal Container */}
+                    {/* Modal Container - Full screen on mobile, centered on desktop */}
                     <motion.div
                         initial={{ y: "100%" }}
                         animate={{ y: 0 }}
                         exit={{ y: "100%" }}
                         transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                        className="relative w-full h-full md:h-[95vh] md:w-[95vw] md:max-w-7xl md:rounded-t-3xl md:rounded-b-xl bg-[#0F0F0F] flex flex-col overflow-hidden shadow-2xl border border-white/10"
+                        className="relative w-screen h-screen md:h-[95vh] md:w-[95vw] md:max-w-7xl md:rounded-3xl bg-[#0F0F0F] flex flex-col overflow-hidden shadow-2xl md:border md:border-white/10"
                     >
-                        {/* Header */}
-                        <div className="flex-none p-4 md:p-6 border-b border-white/10 flex items-center justify-between bg-[#0F0F0F]/80 backdrop-blur-md z-10">
-                            <div className="flex items-center gap-4">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-komukuna-pink to-komukuna-purple flex items-center justify-center shadow-lg shadow-komukuna-pink/20">
-                                        <Layers className="text-white" size={20} />
+                        {/* Header - Clean and organized */}
+                        <div className="flex-none bg-[#0F0F0F] pt-[env(safe-area-inset-top)]">
+                            <div className="px-4 py-3 md:px-6 md:py-4 border-b border-white/10 flex items-center gap-4">
+                                {/* Title */}
+                                <div className="flex items-center gap-3 flex-1 min-w-0">
+                                    <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-komukuna-pink to-komukuna-purple flex items-center justify-center shadow-lg shadow-komukuna-pink/20 flex-shrink-0">
+                                        <Layers className="text-white" size={18} />
                                     </div>
-                                    <div>
-                                        <h2 className="text-xl font-bold text-white tracking-tight">Portfolio Archive</h2>
-                                        <p className="text-xs text-gray-400 font-medium">Explore our best moments</p>
+                                    <div className="min-w-0">
+                                        <h2 className="text-base md:text-xl font-bold text-white tracking-tight truncate">Portfolio</h2>
+                                        <p className="text-[10px] md:text-xs text-gray-400 font-medium hidden md:block">Explore our best moments</p>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Tabs */}
-                            <div className="hidden md:flex bg-white/5 p-1 rounded-full relative">
-                                <motion.div
-                                    className="absolute top-1 bottom-1 bg-komukuna-pink rounded-full shadow-lg"
-                                    initial={false}
-                                    animate={{
-                                        left: activeTab === 'photobooth' ? '4px' : '50%',
-                                        width: 'calc(50% - 4px)',
-                                    }}
-                                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                                />
+                                {/* Desktop Tabs */}
+                                <div className="hidden md:flex bg-white/5 p-1 rounded-full relative flex-shrink-0">
+                                    <motion.div
+                                        className="absolute top-1 bottom-1 bg-komukuna-pink rounded-full shadow-lg"
+                                        initial={false}
+                                        animate={{
+                                            left: activeTab === 'photobooth' ? '4px' : '50%',
+                                            width: 'calc(50% - 4px)',
+                                        }}
+                                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                    />
+                                    <button
+                                        onClick={() => setActiveTab('photobooth')}
+                                        className={`relative z-10 px-6 py-1.5 rounded-full text-sm font-bold transition-colors ${activeTab === 'photobooth' ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+                                    >
+                                        Photobooth
+                                    </button>
+                                    <button
+                                        onClick={() => setActiveTab('videobooth')}
+                                        className={`relative z-10 px-6 py-1.5 rounded-full text-sm font-bold transition-colors ${activeTab === 'videobooth' ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+                                    >
+                                        Videobooth
+                                    </button>
+                                </div>
+
+                                {/* Close Button */}
                                 <button
-                                    onClick={() => setActiveTab('photobooth')}
-                                    className={`relative z-10 px-6 py-1.5 rounded-full text-sm font-bold transition-colors ${activeTab === 'photobooth' ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+                                    onClick={onClose}
+                                    className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors flex items-center justify-center flex-shrink-0"
+                                    aria-label="Close"
                                 >
-                                    Photobooth
-                                </button>
-                                <button
-                                    onClick={() => setActiveTab('videobooth')}
-                                    className={`relative z-10 px-6 py-1.5 rounded-full text-sm font-bold transition-colors ${activeTab === 'videobooth' ? 'text-white' : 'text-gray-400 hover:text-white'}`}
-                                >
-                                    Videobooth
+                                    <X size={20} />
                                 </button>
                             </div>
-
-                            <button
-                                onClick={onClose}
-                                className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
-                            >
-                                <X size={24} />
-                            </button>
                         </div>
 
                         {/* Mobile Tabs */}
-                        <div className="md:hidden flex p-2 bg-black border-b border-white/10">
+                        <div className="md:hidden flex bg-[#0F0F0F] border-b border-white/5">
                             <button
                                 onClick={() => setActiveTab('photobooth')}
-                                className={`flex-1 py-2 text-center text-sm font-bold border-b-2 transition-colors ${activeTab === 'photobooth' ? 'border-komukuna-pink text-white' : 'border-transparent text-gray-500'}`}
+                                className={`flex-1 py-3 text-center text-sm font-semibold transition-all relative ${activeTab === 'photobooth' ? 'text-white' : 'text-gray-500'}`}
                             >
-                                Photobooth
+                                📸 Photobooth
+                                {activeTab === 'photobooth' && (
+                                    <motion.div layoutId="mobile-tab-indicator" className="absolute bottom-0 left-6 right-6 h-0.5 bg-gradient-to-r from-komukuna-pink to-komukuna-purple rounded-full" />
+                                )}
                             </button>
                             <button
                                 onClick={() => setActiveTab('videobooth')}
-                                className={`flex-1 py-2 text-center text-sm font-bold border-b-2 transition-colors ${activeTab === 'videobooth' ? 'border-komukuna-purple text-white' : 'border-transparent text-gray-500'}`}
+                                className={`flex-1 py-3 text-center text-sm font-semibold transition-all relative ${activeTab === 'videobooth' ? 'text-white' : 'text-gray-500'}`}
                             >
-                                Videobooth
+                                🎬 Videobooth
+                                {activeTab === 'videobooth' && (
+                                    <motion.div layoutId="mobile-tab-indicator" className="absolute bottom-0 left-6 right-6 h-0.5 bg-gradient-to-r from-komukuna-pink to-komukuna-purple rounded-full" />
+                                )}
                             </button>
                         </div>
 
@@ -210,6 +228,7 @@ export default function PortfolioArchiveModal({
                     />
                 </div>
             )}
-        </AnimatePresence>
+        </AnimatePresence>,
+        document.body
     );
 }

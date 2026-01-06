@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Play, Camera, Image as ImageIcon, Printer, Layers, Maximize2 } from 'lucide-react';
 import Image from 'next/image';
+import { getVideoThumbnail } from '@/lib/cloudinary-videos';
 
 export interface PhotoboothItemProps {
     id: string | number;
@@ -44,6 +45,7 @@ export default function BentoGridSpotlight({
                             loop
                             playsInline
                             preload="none"
+                            poster={getVideoThumbnail(item.videoSrc)}
                         >
                             <source src={item.videoSrc} type="video/mp4" />
                         </video>
@@ -98,9 +100,9 @@ export default function BentoGridSpotlight({
                             src={item.templateImage}
                             alt="Premium Template Design"
                             fill
-                            priority
                             sizes="(max-width: 768px) 100vw, 33vw"
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
+                            loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60" />
                         <div className="absolute bottom-6 left-6 right-6">

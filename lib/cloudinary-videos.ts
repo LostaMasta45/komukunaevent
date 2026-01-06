@@ -49,3 +49,27 @@ export const cloudinaryVideoboothVideos = {
     'jombang-fest-2': `${BASE_URL}/komukuna/videobooth/jombang-fest-2.mp4`,
     'sd-muhammadiyah-copy': `${BASE_URL}/komukuna/videobooth/sd-muhammadiyah-copy.mp4`,
 };
+
+// Helper function to generate video thumbnail URL from Cloudinary video URL
+// Uses Cloudinary's on-the-fly video transformation to extract a poster frame
+export function getVideoThumbnail(videoUrl: string): string {
+    // Transform: start at 1s, resize to 200x356 (smaller for faster load), WebP format, auto quality
+    return videoUrl
+        .replace('/video/upload/', '/video/upload/so_1,w_200,h_356,c_fill,f_webp,q_60/')
+        .replace('.mp4', '.webp');
+}
+
+// Tiny blur placeholder for instant display while real thumbnail loads
+export function getVideoThumbnailBlur(videoUrl: string): string {
+    // Very small (20px) blurred placeholder
+    return videoUrl
+        .replace('/video/upload/', '/video/upload/so_1,w_20,h_36,c_fill,e_blur:500,f_webp,q_10/')
+        .replace('.mp4', '.webp');
+}
+
+// Higher quality thumbnail for when image is in view (lazy load this)
+export function getVideoThumbnailHQ(videoUrl: string): string {
+    return videoUrl
+        .replace('/video/upload/', '/video/upload/so_1,w_400,h_711,c_fill,f_webp,q_70/')
+        .replace('.mp4', '.webp');
+}
