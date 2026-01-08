@@ -55,7 +55,7 @@ export const cloudinaryVideoboothVideos = {
 export function getVideoThumbnail(videoUrl: string): string {
     // Transform: start at 1s, resize to 200x356 (smaller for faster load), WebP format, auto quality
     return videoUrl
-        .replace('/video/upload/', '/video/upload/so_1,w_200,h_356,c_fill,f_webp,q_60/')
+        .replace('/video/upload/', '/video/upload/so_auto,w_200,h_356,c_fill,f_webp,q_60/')
         .replace('.mp4', '.webp');
 }
 

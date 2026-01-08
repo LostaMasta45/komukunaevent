@@ -76,7 +76,7 @@ export default function GallerySection() {
                             <div className="p-2 bg-white/5 rounded-full ring-1 ring-white/10">
                                 <Aperture className="text-komukuna-purple" size={20} />
                             </div>
-                            <h3 className="text-2xl font-bold text-white">Latest Reels</h3>
+                            <h3 className="text-2xl font-bold text-white">Videobooth 360</h3>
                         </div>
                         <button
                             onClick={() => openArchive('videobooth')}
