@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Aperture, Check, QrCode, Zap, Smartphone, Music } from 'lucide-react';
 import Image from 'next/image';
-import { cloudinaryVideoboothVideos } from '@/lib/cloudinary-videos';
+import { cloudinaryVideoboothVideos, getOptimizedVideoUrl } from '@/lib/cloudinary-videos';
 
 export default function VideoboothSpotlight() {
     return (
@@ -35,9 +35,9 @@ export default function VideoboothSpotlight() {
                                 muted
                                 loop
                                 playsInline
-                                preload="none"
+                                preload="auto"
                             >
-                                <source src={cloudinaryVideoboothVideos['majapahit-run']} type="video/mp4" />
+                                <source src={getOptimizedVideoUrl(cloudinaryVideoboothVideos['majapahit-run'])} type="video/mp4" />
                             </video>
                         </div>
 

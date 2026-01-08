@@ -73,3 +73,8 @@ export function getVideoThumbnailHQ(videoUrl: string): string {
         .replace('/video/upload/', '/video/upload/so_1,w_400,h_711,c_fill,f_webp,q_70/')
         .replace('.mp4', '.webp');
 }
+
+// Optimized video URL for web playback (smaller size, auto format)
+export function getOptimizedVideoUrl(videoUrl: string, width: number = 450): string {
+    return videoUrl.replace('/video/upload/', `/video/upload/f_auto,q_auto,w_${width},c_limit/`);
+}
