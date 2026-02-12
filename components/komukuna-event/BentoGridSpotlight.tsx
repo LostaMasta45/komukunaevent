@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from 'framer-motion';
-import { Play, Camera, Image as ImageIcon, Printer, Layers, Maximize2 } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Play, Camera, Image as ImageIcon, Printer, Layers, Maximize2, X } from 'lucide-react';
 import Image from 'next/image';
 import { getVideoThumbnail } from '@/lib/cloudinary-videos';
 
@@ -16,6 +17,7 @@ export interface PhotoboothItemProps {
     rawImage: string; // Landscape/Original raw
     btsImage: string; // Landscape/Original BTS
     reversed?: boolean; // Option to flip layout if needed
+    isLandscape?: boolean; // If true, Template and Print images use landscape aspect ratio
 }
 
 export default function BentoGridSpotlight({
@@ -25,6 +27,13 @@ export default function BentoGridSpotlight({
     item: PhotoboothItemProps;
     onMaximizeVideo?: (src: string) => void;
 }) {
+    // Determine aspect ratio based on item.isLandscape
+    // Default is Portrait (2/3), Landscape can be 3/2 or 4/3
+    const galleryAspectRatio = item.isLandscape ? "aspect-[3/2]" : "aspect-[2/3]";
+
+    // Local state for image lightbox
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
     return (
         <section className="py-12 md:py-16 border-b border-white/5 last:border-0 relative">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -88,13 +97,14 @@ export default function BentoGridSpotlight({
                 {/* COLUMN 2: Photo Gallery - Spans 8 cols (2/3) */}
                 <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
 
-                    {/* ROW 1: Vertical Photos (Premium Template & Cetak) */}
+                    {/* ROW 1: Photos (Template & Print) - Responsive Aspect Ratio */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="relative rounded-[2rem] overflow-hidden aspect-[2/3] group border border-white/10 shadow-xl"
+                        className={`relative rounded-[2rem] overflow-hidden ${galleryAspectRatio} group border border-white/10 shadow-xl cursor-zoom-in`}
+                        onClick={() => setSelectedImage(item.templateImage)}
                     >
                         <Image
                             src={item.templateImage}
@@ -104,8 +114,8 @@ export default function BentoGridSpotlight({
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                             loading="lazy"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60" />
-                        <div className="absolute bottom-6 left-6 right-6">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 pointer-events-none" />
+                        <div className="absolute bottom-6 left-6 right-6 pointer-events-none">
                             <div className="bg-black/40 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/10 flex items-center gap-3">
                                 <div className="p-2 bg-komukuna-pink/20 rounded-full text-komukuna-pink">
                                     <Layers size={18} />
@@ -123,7 +133,8 @@ export default function BentoGridSpotlight({
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.3 }}
-                        className="relative rounded-[2rem] overflow-hidden aspect-[2/3] group border border-white/10 shadow-xl"
+                        className={`relative rounded-[2rem] overflow-hidden ${galleryAspectRatio} group border border-white/10 shadow-xl cursor-zoom-in`}
+                        onClick={() => setSelectedImage(item.printImage)}
                     >
                         <Image
                             src={item.printImage}
@@ -132,8 +143,8 @@ export default function BentoGridSpotlight({
                             sizes="(max-width: 768px) 100vw, 33vw"
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60" />
-                        <div className="absolute bottom-6 left-6 right-6">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 pointer-events-none" />
+                        <div className="absolute bottom-6 left-6 right-6 pointer-events-none">
                             <div className="bg-black/40 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/10 flex items-center gap-3">
                                 <div className="p-2 bg-komukuna-purple/20 rounded-full text-komukuna-purple">
                                     <Printer size={18} />
@@ -152,7 +163,8 @@ export default function BentoGridSpotlight({
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.4 }}
-                        className="relative rounded-[2rem] overflow-hidden aspect-[3/2] group border border-white/10 shadow-xl"
+                        className="relative rounded-[2rem] overflow-hidden aspect-[3/2] group border border-white/10 shadow-xl cursor-zoom-in"
+                        onClick={() => setSelectedImage(item.rawImage)}
                     >
                         <Image
                             src={item.rawImage}
@@ -161,7 +173,7 @@ export default function BentoGridSpotlight({
                             sizes="(max-width: 768px) 100vw, 25vw"
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
-                        <div className="absolute bottom-4 left-4 right-4">
+                        <div className="absolute bottom-4 left-4 right-4 pointer-events-none">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
                                 <ImageIcon size={14} className="text-blue-400" />
                                 <span className="text-white text-xs font-bold">File Asli (Raw)</span>
@@ -174,7 +186,8 @@ export default function BentoGridSpotlight({
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.5 }}
-                        className="relative rounded-[2rem] overflow-hidden aspect-[3/2] group border border-white/10 shadow-xl"
+                        className="relative rounded-[2rem] overflow-hidden aspect-[3/2] group border border-white/10 shadow-xl cursor-zoom-in"
+                        onClick={() => setSelectedImage(item.btsImage)}
                     >
                         <Image
                             src={item.btsImage}
@@ -183,7 +196,7 @@ export default function BentoGridSpotlight({
                             sizes="(max-width: 768px) 100vw, 25vw"
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
-                        <div className="absolute bottom-4 left-4 right-4">
+                        <div className="absolute bottom-4 left-4 right-4 pointer-events-none">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
                                 <Camera size={14} className="text-yellow-400" />
                                 <span className="text-white text-xs font-bold">BTS</span>
@@ -193,6 +206,41 @@ export default function BentoGridSpotlight({
 
                 </div>
             </div>
+
+            {/* Lightbox Modal */}
+            {/* Using standard conditional rendering instead of AnimatePresence for simplicity if not imported, 
+                but based on previous file AnimatePresence wasn't imported. 
+                I will duplicate the logic or check imports. 
+                Wait, I see motion is imported. I should import AnimatePresence.
+            */}
+            {selectedImage && (
+                <div
+                    className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 cursor-zoom-out"
+                    onClick={() => setSelectedImage(null)}
+                >
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        className="relative w-full max-w-5xl h-[85vh] flex items-center justify-center"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <Image
+                            src={selectedImage}
+                            alt="Full Preview"
+                            fill
+                            className="object-contain"
+                        />
+
+                        <button
+                            onClick={() => setSelectedImage(null)}
+                            className="absolute top-4 right-4 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white transition-colors border border-white/10"
+                        >
+                            <X size={24} />
+                        </button>
+                    </motion.div>
+                </div>
+            )}
         </section>
     );
 }

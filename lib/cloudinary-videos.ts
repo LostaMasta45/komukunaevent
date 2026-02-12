@@ -6,14 +6,16 @@ const BASE_URL = `https://res.cloudinary.com/${CLOUD_NAME}/video/upload`;
 
 // Process Videos
 export const cloudinaryProcessVideos = {
-    'exp-crowd': `${BASE_URL}/komukuna/process/exp-crowd.mp4`,
+    'exp-crowd': `${BASE_URL}/e_accelerate:-15/komukuna/process/exp-crowd.mp4`,
     'video-bts1': `${BASE_URL}/komukuna/process/video-bts1.mp4`,
     'video-bts2': `${BASE_URL}/komukuna/process/video-bts2.mp4`,
     'video-bts3': `${BASE_URL}/komukuna/process/video-bts3.mp4`,
+    'video-bts4': `${BASE_URL}/komukuna/process/video-bts4_pnpnzf.mp4`,
 };
 
 // Videobooth Portfolio Videos
 export const cloudinaryVideoboothVideos = {
+    '20260208_121636610': `${BASE_URL}/komukuna/videobooth/20260208_121636610_vk1aen.mp4`,
     'aksara-27-april': `${BASE_URL}/komukuna/videobooth/aksara-27-april.mp4`,
     'aksara-janari': `${BASE_URL}/komukuna/videobooth/aksara-janari.mp4`,
     'campusfair-2025': `${BASE_URL}/komukuna/videobooth/campusfair-2025.mp4`,

@@ -96,7 +96,8 @@ export default function PhotoboothProcess() {
                                 muted
                                 loop
                                 playsInline
-                                preload="none"
+                                preload="metadata"
+                                poster={steps[currentStep].poster}
                             >
                                 <source src={steps[currentStep].src} type="video/mp4" />
                             </video>

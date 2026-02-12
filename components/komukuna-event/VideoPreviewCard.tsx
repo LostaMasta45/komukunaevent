@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Play, Maximize2 } from 'lucide-react';
 import { getVideoThumbnail, getVideoThumbnailBlur } from '@/lib/cloudinary-videos';
@@ -63,12 +64,13 @@ export default function VideoPreviewCard({ item, onMaximize }: VideoPreviewCardP
             />
 
             {/* Main thumbnail image */}
-            <img
+            <Image
                 src={thumbnailUrl}
                 alt={item.title}
-                loading="lazy"
+                fill
+                sizes="(max-width: 768px) 50vw, 25vw"
                 onLoad={() => setIsLoaded(true)}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${isLoaded ? 'opacity-80 group-hover:opacity-100' : 'opacity-0'}`}
+                className={`object-cover transition-opacity duration-500 ${isLoaded ? 'opacity-80 group-hover:opacity-100' : 'opacity-0'}`}
             />
 
             {/* Video element - hidden until play */}

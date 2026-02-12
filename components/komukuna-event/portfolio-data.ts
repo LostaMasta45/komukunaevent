@@ -15,8 +15,20 @@ export const portfolioItems: PhotoboothItemProps[] = [
         btsImage: "/komukuna-event/process/fotobts1.jpg",
     },
     {
-        id: 2,
+        id: 4,
         badge: "New Release",
+        title: "Tsanil & Titis<br />Wedding",
+        subtitle: "Moment Spesial Pernikahan",
+        videoSrc: cloudinaryProcessVideos['video-bts4'],
+        templateImage: "/komukuna-event/process/hasil-template4.jpg",
+        printImage: "/komukuna-event/process/hasil-cetak4.jpg",
+        rawImage: "/komukuna-event/process/hasil-raw4.JPG",
+        btsImage: "/komukuna-event/process/fotobts4.JPG",
+        isLandscape: true,
+    },
+    {
+        id: 2,
+        badge: "Popular",
         title: "EX3 Basketball<br />Competition",
         subtitle: "Sport Event Photobooth & 360°",
         videoSrc: cloudinaryProcessVideos['video-bts2'],
@@ -40,6 +52,7 @@ export const portfolioItems: PhotoboothItemProps[] = [
 
 // Real Data for Videobooth - All served from Cloudinary CDN
 export const videoItems = [
+    { id: 99, title: 'New Event 2026', src: cloudinaryVideoboothVideos['20260208_121636610'] },
     { id: 1, title: 'Aksara 27 April 2025', src: cloudinaryVideoboothVideos['aksara-27-april'] },
     { id: 2, title: 'Aksara Janari Majapahit', src: cloudinaryVideoboothVideos['aksara-janari'] },
     { id: 3, title: 'CAMPUSFAIR 2025 MAN 2 Mojokerto', src: cloudinaryVideoboothVideos['campusfair-2025'] },
