@@ -33,7 +33,7 @@ export default function BentoGridSpotlight({
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, amount: 0.1 }}
                     transition={{ delay: 0.1 }}
                     className="lg:col-span-4 relative rounded-[2rem] overflow-hidden group aspect-[9/16] shadow-2xl border border-white/10"
                 >
@@ -44,7 +44,7 @@ export default function BentoGridSpotlight({
                             muted
                             loop
                             playsInline
-                            preload="none"
+                            preload="metadata"
                             poster={getVideoThumbnail(item.videoSrc)}
                         >
                             <source src={item.videoSrc} type="video/mp4" />

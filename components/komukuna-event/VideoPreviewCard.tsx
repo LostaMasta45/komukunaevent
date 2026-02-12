@@ -45,6 +45,9 @@ export default function VideoPreviewCard({ item, onMaximize }: VideoPreviewCardP
     return (
         <motion.div
             whileHover={{ y: -5 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
             className="group relative aspect-[9/16] rounded-2xl overflow-hidden bg-gray-900 border border-white/10 cursor-pointer shadow-lg"
             onClick={togglePlay}
         >

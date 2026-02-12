@@ -21,7 +21,7 @@ export default function VideoboothSpotlight() {
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.1 }}
                         transition={{ duration: 0.8 }}
                         className="flex-1 w-full max-w-[320px] lg:max-w-[400px] relative mx-auto lg:mx-0"
                     >
@@ -56,7 +56,7 @@ export default function VideoboothSpotlight() {
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.1 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                         className="flex-1 text-center lg:text-left"
                     >
