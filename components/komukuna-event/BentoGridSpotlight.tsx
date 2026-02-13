@@ -115,6 +115,15 @@ export default function BentoGridSpotlight({
                             loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 pointer-events-none" />
+
+                        {/* Zoom Hint Overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <div className="bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20 flex items-center gap-2">
+                                <Maximize2 size={16} className="text-white" />
+                                <span className="text-white text-sm font-medium">Klik Zoom</span>
+                            </div>
+                        </div>
+
                         <div className="absolute bottom-6 left-6 right-6 pointer-events-none">
                             <div className="bg-black/40 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/10 flex items-center gap-3">
                                 <div className="p-2 bg-komukuna-pink/20 rounded-full text-komukuna-pink">
@@ -144,6 +153,15 @@ export default function BentoGridSpotlight({
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60 pointer-events-none" />
+
+                        {/* Zoom Hint Overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <div className="bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20 flex items-center gap-2">
+                                <Maximize2 size={16} className="text-white" />
+                                <span className="text-white text-sm font-medium">Klik Zoom</span>
+                            </div>
+                        </div>
+
                         <div className="absolute bottom-6 left-6 right-6 pointer-events-none">
                             <div className="bg-black/40 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/10 flex items-center gap-3">
                                 <div className="p-2 bg-komukuna-purple/20 rounded-full text-komukuna-purple">
@@ -173,6 +191,15 @@ export default function BentoGridSpotlight({
                             sizes="(max-width: 768px) 100vw, 25vw"
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
+
+                        {/* Zoom Hint Overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <div className="bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/20 flex items-center gap-2">
+                                <Maximize2 size={14} className="text-white" />
+                                <span className="text-white text-xs font-medium">Klik Zoom</span>
+                            </div>
+                        </div>
+
                         <div className="absolute bottom-4 left-4 right-4 pointer-events-none">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
                                 <ImageIcon size={14} className="text-blue-400" />
@@ -196,6 +223,15 @@ export default function BentoGridSpotlight({
                             sizes="(max-width: 768px) 100vw, 25vw"
                             className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
+
+                        {/* Zoom Hint Overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                            <div className="bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/20 flex items-center gap-2">
+                                <Maximize2 size={14} className="text-white" />
+                                <span className="text-white text-xs font-medium">Klik Zoom</span>
+                            </div>
+                        </div>
+
                         <div className="absolute bottom-4 left-4 right-4 pointer-events-none">
                             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
                                 <Camera size={14} className="text-yellow-400" />
