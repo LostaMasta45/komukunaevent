@@ -11,15 +11,17 @@ const photoboothTiers = [
         name: 'SILVER',
         price: 'Rp 1.250.000',
         originalPrice: 'Rp 1.750.000',
-        description: 'Paket hemat untuk keseruan instan.',
+        savings: 'Hemat Rp 500.000',
+        description: 'Paket hemat untuk dokumentasi event sederhana dan seru.',
         features: [
-            'Durasi Sewa Selama 2 Jam',
+            'Durasi 2 Jam',
             '4x Sesi Foto',
-            'Free 1x Cetak 4R / 1x Photostrip per Sesi',
-            'Tersedia 8 Template Photostrip',
-            'Free Fun Property',
-            'Free All Soft File Foto',
-            'Free Request Background Banner'
+            'Free 1x Cetak 4R atau Photostrip per Sesi',
+            '8 Template Photostrip',
+            'Premium Backdrop Glitter Gold atau Silver',
+            'Fun Property',
+            'Free All Soft File',
+            'Request Background Basic'
         ],
         cta: 'Booking Silver Photobooth',
         isPopular: false,
@@ -29,16 +31,21 @@ const photoboothTiers = [
         name: 'GOLD',
         price: 'Rp 1.750.000',
         originalPrice: 'Rp 2.250.000',
-        description: 'Paket lengkap dengan opsi cetak lebih banyak & kostum.',
+        savings: 'Hemat Rp 500.000',
+        description: 'Paket favorit dengan hasil lebih eksklusif, lebih banyak variasi cetak, dan pengalaman yang lebih berkesan.',
         features: [
-            'Durasi Sewa Selama 3 Jam',
+            'Durasi 3 Jam',
             '4x Sesi Foto',
-            'Free 1x Cetak 4R / 1x Photostrip / 3x Cetak 2R per Sesi',
-            'Tersedia 16 Template Photostrip',
-            'Desain Template Custom (Logo Perusahaan/Event)',
-            'Special Property + 3 Kostum Karakter',
-            'Free All Soft File Foto',
-            'Free Request Background Warna/Banner'
+            'Free 1x Cetak 4R',
+            'Free 1x Photostrip',
+            'Free 3x Cetak 2R per Sesi',
+            '16 Template Photostrip',
+            'Premium Backdrop Glitter Gold atau Silver',
+            'Template Custom Logo / Nama Event',
+            'Special Property',
+            '3 Kostum Karakter',
+            'Free All Soft File',
+            'Request Background Full Custom'
         ],
         cta: 'Booking Gold Photobooth',
         isPopular: true,
@@ -48,34 +55,40 @@ const photoboothTiers = [
 
 const videoboothTiers = [
     {
-        name: 'SILVER',
+        name: 'SILVER 360',
         price: 'Rp 1.250.000',
-        originalPrice: 'Rp 1.750.000',
-        description: 'Video 360 standard dengan template ready-to-use.',
+        originalPrice: undefined,
+        savings: undefined,
+        description: 'Paket videobooth praktis untuk membuat event lebih seru dan interaktif.',
         features: [
-            'Durasi Sewa Selama 2 Jam',
+            'Durasi 2 Jam',
             'Lighting 4 Spot',
-            'Lighting RGB 2 Spot',
-            'File Video Sharing / QR Code',
-            'Desain Template & Lagu Sudah Disediakan',
-            'Fun Property'
+            'RGB Lighting 2 Spot',
+            'QR Sharing System',
+            'Template Ready',
+            'Music Ready',
+            'Fun Property',
+            'Semua Video Dikirim Digital'
         ],
         cta: 'Booking Silver 360',
         isPopular: false,
         theme: 'silver',
     },
     {
-        name: 'GOLD',
+        name: 'GOLD 360',
         price: 'Rp 1.500.000',
-        originalPrice: 'Rp 2.000.000',
-        description: 'Video 360 premium dengan template & lagu custom.',
+        originalPrice: undefined,
+        savings: undefined,
+        description: 'Paket videobooth premium dengan hasil lebih personal dan profesional.',
         features: [
-            'Durasi Sewa Selama 3 Jam',
+            'Durasi 3 Jam',
             'Lighting 4 Spot',
-            'Lighting RGB 2 Spot',
-            'File Video Sharing / QR Code',
-            'Desain Template & Lagu Bisa Request',
-            'Fun Property'
+            'RGB Lighting 2 Spot',
+            'QR Sharing System',
+            'Template Custom',
+            'Music Custom',
+            'Fun Property',
+            'Semua Video Dikirim Digital'
         ],
         cta: 'Booking Gold 360',
         isPopular: true,
@@ -152,17 +165,23 @@ export default function PricingSection() {
                                 <div className="mb-8 text-center md:text-left">
                                     <h3 className={`text-xl font-bold mb-2 tracking-wide ${tier.isPopular ? 'text-komukuna-pink' : 'text-gray-300'}`}>{tier.name}</h3>
                                     {/* Updated Pricing Display */}
-                                    <div className="flex flex-col items-center md:items-start mb-4 relative">
+                                    <div className="flex flex-col items-center md:items-start mb-4 relative min-h-[80px]">
                                         {/* Original Price */}
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-gray-500 text-lg font-medium line-through decoration-red-500/50 decoration-2">
-                                                {tier.originalPrice}
-                                            </span>
-                                            {/* Savings Badge */}
-                                            <span className="bg-red-500/10 text-red-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-red-500/20">
-                                                HEMAT 500K
-                                            </span>
-                                        </div>
+                                        {tier.originalPrice ? (
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-gray-500 text-lg font-medium line-through decoration-red-500/50 decoration-2">
+                                                    {tier.originalPrice}
+                                                </span>
+                                                {/* Savings Badge */}
+                                                {tier.savings && (
+                                                    <span className="bg-red-500/10 text-red-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-red-500/20">
+                                                        {tier.savings.toUpperCase()}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <div className="h-7"></div> // Placeholder to maintain alignment
+                                        )}
 
                                         {/* Main Price */}
                                         <div className="text-4xl md:text-5xl font-extrabold text-white tracking-tight flex items-baseline gap-1">
@@ -219,8 +238,43 @@ export default function PricingSection() {
                     </AnimatePresence>
                 </div>
 
-                <div className="mt-12 flex justify-center">
-                    <p className="text-gray-500 text-sm bg-white/5 inline-flex items-center gap-2 px-6 py-3 rounded-full backdrop-blur-sm border border-white/5">
+                {/* Add-ons Section */}
+                <div className="mt-20 max-w-4xl mx-auto">
+                    <div className="text-center mb-10">
+                        <h3 className="text-2xl font-bold text-white mb-3">🔥 Add-On Favorit Customer</h3>
+                        <p className="text-gray-400 text-sm">Tambahkan sentuhan premium untuk membuat hasil foto lebih berkesan.</p>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-3 gap-6">
+                        {/* Add-on 1 */}
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
+                            <div className="text-3xl mb-4">🖼️</div>
+                            <h4 className="text-white font-bold mb-2">Premium Photo Frame</h4>
+                            <div className="text-komukuna-pink font-bold text-lg mb-4">+ Rp 200.000</div>
+                            <ul className="space-y-2">
+                                <li className="text-xs text-gray-400 flex items-start gap-2"><Check size={12} className="mt-0.5 text-komukuna-pink shrink-0" /> Siap Dijadikan Pajangan</li>
+                                <li className="text-xs text-gray-400 flex items-start gap-2"><Check size={12} className="mt-0.5 text-komukuna-pink shrink-0" /> Tampilan Lebih Eksklusif</li>
+                            </ul>
+                        </div>
+                        {/* Add-on 2 */}
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
+                            <div className="text-3xl mb-4">⏰</div>
+                            <h4 className="text-white font-bold mb-2">Tambah Durasi</h4>
+                            <div className="text-white font-bold text-lg mb-4">By Request</div>
+                            <p className="text-xs text-gray-400">Cocok untuk event dengan jumlah tamu lebih banyak.</p>
+                        </div>
+                        {/* Add-on 3 */}
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
+                            <div className="text-3xl mb-4">🎨</div>
+                            <h4 className="text-white font-bold mb-2">Custom Request</h4>
+                            <div className="text-white font-bold text-lg mb-4">By Request</div>
+                            <p className="text-xs text-gray-400">Untuk kebutuhan branding perusahaan atau konsep acara khusus.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="mt-16 flex justify-center">
+                    <p className="text-gray-500 text-sm bg-white/5 inline-flex items-center gap-2 px-6 py-3 rounded-full backdrop-blur-sm border border-white/5 shadow-lg">
                         💡 <span className="text-gray-300 font-medium">Butuh Paket Custom?</span> Hubungi kami di 0831-2286-6975
                     </p>
                 </div>
