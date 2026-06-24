@@ -14,6 +14,8 @@ export const cloudinaryProcessVideos = {
     'video-bts5': `${BASE_URL}/komukuna/process/video-bts5.mp4`,
     'video-bts6': `${BASE_URL}/komukuna/process/video-bts6.mp4`,
     'video-bts7': `${BASE_URL}/komukuna/process/video-bts7.mov`,
+    'video-bts8': `${BASE_URL}/komukuna/process/video-bts8.mov`,
+    'video-bts9': `${BASE_URL}/komukuna/process/video-bts9.mov`,
 };
 
 // Videobooth Portfolio Videos

@@ -80,6 +80,28 @@ export const portfolioItems: PhotoboothItemProps[] = [
         printImage: "/komukuna-event/process/hasil-cetak7.jpeg",
         rawImage: "/komukuna-event/process/hasil-raw7.jpg",
         btsImage: "/komukuna-event/process/fotobts7.png",
+    },
+    {
+        id: 8,
+        badge: "Recent",
+        title: "Birthday<br />Bash",
+        subtitle: "Photobooth & 360° Videobooth",
+        videoSrc: cloudinaryProcessVideos['video-bts8'],
+        templateImage: "/komukuna-event/process/hasil-template8.jpg",
+        printImage: "/komukuna-event/process/hasil-cetak8.jpg",
+        rawImage: "/komukuna-event/process/hasil-raw8.jpg",
+        btsImage: "/komukuna-event/process/fotobts8.png",
+    },
+    {
+        id: 9,
+        badge: "Highlight",
+        title: "Corporate<br />Event",
+        subtitle: "Photobooth & 360° Videobooth",
+        videoSrc: cloudinaryProcessVideos['video-bts9'],
+        templateImage: "/komukuna-event/process/hasil-template9.jpg",
+        printImage: "/komukuna-event/process/hasil-cetak9.jpg",
+        rawImage: "/komukuna-event/process/hasil-raw9.jpg",
+        btsImage: "/komukuna-event/process/fotobts9.png",
     }
 ];
 
