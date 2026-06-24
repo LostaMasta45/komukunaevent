@@ -3,24 +3,16 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Camera, Aperture, ArrowRight, Play, Layers, Maximize2 } from 'lucide-react';
+import Link from 'next/link';
 import BentoGridSpotlight, { PhotoboothItemProps } from '@/components/komukuna-event/BentoGridSpotlight';
-import PortfolioArchiveModal from '@/components/komukuna-event/PortfolioArchiveModal';
 import VideoPlayerModal from '@/components/komukuna-event/VideoPlayerModal';
 import VideoPreviewCard from '@/components/komukuna-event/VideoPreviewCard';
 
 import { portfolioItems, videoItems } from '@/components/komukuna-event/portfolio-data';
 
 export default function GallerySection() {
-    const [isArchiveOpen, setIsArchiveOpen] = useState(false);
-    const [initialArchiveTab, setInitialArchiveTab] = useState<'photobooth' | 'videobooth'>('photobooth');
-
     // Video Player Modal State
     const [selectedVideoUrl, setSelectedVideoUrl] = useState<string | null>(null);
-
-    const openArchive = (tab: 'photobooth' | 'videobooth') => {
-        setInitialArchiveTab(tab);
-        setIsArchiveOpen(true);
-    };
 
     const handleMaximizeVideo = (src: string) => {
         setSelectedVideoUrl(src);
@@ -49,15 +41,15 @@ export default function GallerySection() {
                             </div>
                             <h3 className="text-2xl font-bold text-white">Featured Event</h3>
                         </div>
-                        <button
-                            onClick={() => openArchive('photobooth')}
+                        <Link
+                            href="/komukunaevent/portofolio"
                             className="group flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors"
                         >
                             View All Albums
                             <span className="bg-white/10 p-1.5 rounded-full group-hover:bg-white/20 transition-colors">
                                 <ArrowRight size={14} />
                             </span>
-                        </button>
+                        </Link>
                     </div>
 
                     {/* Show only the FIRST item as Featured */}
@@ -78,15 +70,15 @@ export default function GallerySection() {
                             </div>
                             <h3 className="text-2xl font-bold text-white">Videobooth 360</h3>
                         </div>
-                        <button
-                            onClick={() => openArchive('videobooth')}
+                        <Link
+                            href="/komukunaevent/portofolio"
                             className="group flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors"
                         >
                             Open Video Archive
                             <span className="bg-white/10 p-1.5 rounded-full group-hover:bg-white/20 transition-colors">
                                 <Layers size={14} />
                             </span>
-                        </button>
+                        </Link>
                     </div>
 
                     {/* Display only first 4 videos */}
@@ -103,25 +95,16 @@ export default function GallerySection() {
 
                 {/* Call to Action for Archive */}
                 <div className="text-center mt-12 md:mt-16">
-                    <button
-                        onClick={() => openArchive('photobooth')}
+                    <Link
+                        href="/komukunaevent/portofolio"
                         className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-komukuna-pink to-komukuna-purple text-white font-bold text-lg shadow-lg hover:shadow-komukuna-pink/25 hover:scale-105 transition-all duration-300"
                     >
                         <span>Jelajahi Semua Portfolio</span>
                         <GridIcon />
-                    </button>
+                    </Link>
                 </div>
 
             </div>
-
-            {/* Archive Modal System */}
-            <PortfolioArchiveModal
-                isOpen={isArchiveOpen}
-                onClose={() => setIsArchiveOpen(false)}
-                initialTab={initialArchiveTab}
-                photoItems={portfolioItems}
-                videoItems={videoItems}
-            />
 
             {/* Individual Video Player Modal (Global) */}
             <VideoPlayerModal
