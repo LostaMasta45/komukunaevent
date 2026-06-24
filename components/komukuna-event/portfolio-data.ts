@@ -47,6 +47,17 @@ export const portfolioItems: PhotoboothItemProps[] = [
         printImage: "/komukuna-event/process/hasil-cetak3.jpeg",
         rawImage: "/komukuna-event/process/hasil-raw3.jpg",
         btsImage: "/komukuna-event/process/fotobts3.jpg",
+    },
+    {
+        id: 5,
+        badge: "New Release",
+        title: "Rafi & Zula<br />Wedding",
+        subtitle: "Photobooth & 360° Videobooth",
+        videoSrc: cloudinaryProcessVideos['video-bts5'],
+        templateImage: "/komukuna-event/process/hasil-template5.jpg",
+        printImage: "/komukuna-event/process/hasil-cetak5.jpg",
+        rawImage: "/komukuna-event/process/hasil-raw5.jpg",
+        btsImage: "/komukuna-event/process/fotobts5.png",
     }
 ];
 
