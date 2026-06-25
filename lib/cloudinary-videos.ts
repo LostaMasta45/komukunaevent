@@ -55,6 +55,9 @@ export const cloudinaryVideoboothVideos = {
     'jombang-fest-1': `${BASE_URL}/komukuna/videobooth/jombang-fest-1.mp4`,
     'jombang-fest-2': `${BASE_URL}/komukuna/videobooth/jombang-fest-2.mp4`,
     'sd-muhammadiyah-copy': `${BASE_URL}/komukuna/videobooth/sd-muhammadiyah-copy.mp4`,
+    'aksara-tka-2026': `${BASE_URL}/komukuna/videobooth/aksara-tka-2026.mp4`,
+    'tk-aisyiyah-bustanul': `${BASE_URL}/komukuna/videobooth/tk-aisyiyah-bustanul.mp4`,
+    'graduation-sd-plus': `${BASE_URL}/komukuna/videobooth/graduation-sd-plus.mp4`,
 };
 
 // Helper function to generate video thumbnail URL from Cloudinary video URL

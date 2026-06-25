@@ -139,4 +139,7 @@ export const videoItems = [
     { id: 29, title: 'Wedding Lisa & Agus', src: cloudinaryVideoboothVideos['wedding-lisa'] },
     { id: 30, title: 'Wedding Reza & Yola', src: cloudinaryVideoboothVideos['wedding-reza'] },
     { id: 31, title: 'Wisuda Tahfidz Akbar', src: cloudinaryVideoboothVideos['wisuda-tahfidz'] },
+    { id: 32, title: 'Aksara TKA 2026', src: cloudinaryVideoboothVideos['aksara-tka-2026'] },
+    { id: 33, title: 'TK Aisyiyah Bustanul Athfal 9 Mjk', src: cloudinaryVideoboothVideos['tk-aisyiyah-bustanul'] },
+    { id: 34, title: 'Graduation SD Plus Muhammadiyah Brawijaya', src: cloudinaryVideoboothVideos['graduation-sd-plus'] },
 ];

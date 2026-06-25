@@ -46,6 +46,9 @@ const videoboothVideos = [
   { file: 'Jombang Fest @komukunastudio.mp4', id: 'jombang-fest-1' },
   { file: 'Jombang Fest @komukunastudio_2.mp4', id: 'jombang-fest-2' },
   { file: 'SD MUHAMMADIYAH BRAWIJAYA MJK 14 Juni 2025 @komukunastudio Copy.mp4', id: 'sd-muhammadiyah-copy' },
+  { file: 'aksara tka 2026 @komukunastudio.mp4', id: 'aksara-tka-2026' },
+  { file: 'TK Aisyiyah Bustanul Athfal 9 Mjk.mp4', id: 'tk-aisyiyah-bustanul' },
+  { file: 'GRADUATION SD PLUS MUHAMMADIYAH BRAWIJAYA.mp4', id: 'graduation-sd-plus' },
 ];
 
 const baseDir = 'public/portofolio/videobooth';
