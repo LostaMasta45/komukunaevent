@@ -102,6 +102,17 @@ export const portfolioItems: PhotoboothItemProps[] = [
         printImage: "/komukuna-event/process/hasil-cetak9.jpg",
         rawImage: "/komukuna-event/process/hasil-raw9.jpg",
         btsImage: "/komukuna-event/process/fotobts9.png",
+    },
+    {
+        id: 10,
+        badge: "New Release",
+        title: "Photobooth<br />Event",
+        subtitle: "Photobooth & 360° Videobooth",
+        videoSrc: cloudinaryProcessVideos['video-bts10'],
+        templateImage: "/komukuna-event/process/hasil-template10.jpg",
+        printImage: "/komukuna-event/process/hasil-cetak10.jpeg",
+        rawImage: "/komukuna-event/process/hasil-raw10.jpg",
+        btsImage: "/komukuna-event/process/fotobts10.png",
     }
 ];
 
