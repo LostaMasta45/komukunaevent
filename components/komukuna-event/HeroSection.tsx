@@ -15,11 +15,11 @@ export default function HeroSection() {
                     muted
                     loop
                     playsInline
-                    poster="/komukuna-event/hero-bg-new.jpg"
+                    poster="https://res.cloudinary.com/rezanurhamami/video/upload/so_0,w_1280,c_fill,f_auto,q_auto/komukuna/process/video-bts1.jpg"
                     preload="auto"
                 >
-                    {/* Menggunakan video bts1 yang sudah dikompresi khusus untuk hero (tanpa audio, resolusi web) */}
-                    <source src="/komukuna-event/process/video-bts1-hero.mp4" type="video/mp4" />
+                    {/* Menggunakan video dari CDN Cloudinary dengan optimasi on-the-fly (q_auto:eco) agar loading instan di HP */}
+                    <source src="https://res.cloudinary.com/rezanurhamami/video/upload/f_auto,q_auto:eco,w_1280,c_limit/komukuna/process/video-bts1.mp4" type="video/mp4" />
                 </video>
 
                 {/* 2. Gradient Overlay to ensure text readability */}
