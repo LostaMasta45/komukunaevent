@@ -7,31 +7,40 @@ export default function HeroSection() {
     return (
         <section className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden">
 
-            {/* Background - Animated Gradient */}
-            {/* Background - Animated Gradient with Image & Pattern */}
-            <div className="absolute inset-0 bg-komukuna-dark overflow-hidden">
+            {/* Cinematic Video Background */}
+            <div className="absolute inset-0 overflow-hidden bg-komukuna-dark">
+                {/* 1. Video Element (Optimized for PageSpeed with poster) */}
+                <video
+                    className="absolute inset-0 w-full h-full object-cover opacity-60"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    poster="/komukuna-event/hero-bg-new.jpg"
+                    preload="auto"
+                >
+                    {/* Using an existing event crowd video as the hero cinematic background */}
+                    <source src="/komukuna-event/process/exp-crowd.mp4" type="video/mp4" />
+                </video>
 
+                {/* 2. Gradient Overlay to ensure text readability */}
+                <div className="absolute inset-0 bg-gradient-to-b from-komukuna-dark/80 via-komukuna-dark/50 to-komukuna-dark" />
+                <div className="absolute inset-0 bg-gradient-to-r from-komukuna-purple/30 to-komukuna-pink/20 mix-blend-multiply" />
 
-                {/* 2. Gradient Overlay (Main Color) */}
-                <div className="absolute inset-0 bg-gradient-to-br from-komukuna-purple/30 via-komukuna-dark/90 to-komukuna-pink/20" />
-
-                {/* 3. Animated Blurs */}
-                <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-komukuna-purple/30 blur-[120px] animate-pulse-delayed" />
-                <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-komukuna-pink/20 blur-[120px] animate-pulse-delayed" style={{ animationDelay: '2s' }} />
-
-                {/* 4. Pattern Overlay (Grid) */}
+                {/* 3. Pattern Overlay (Grid) */}
                 <div
-                    className="absolute inset-0 opacity-[0.15] mix-blend-screen pointer-events-none"
+                    className="absolute inset-0 opacity-[0.1] mix-blend-screen pointer-events-none"
                     style={{
                         backgroundImage: `
                             linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
                             linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
-                        `
+                        `,
+                        backgroundSize: '40px 40px'
                     }}
                 />
 
-                {/* 5. Vignette for focus */}
-                <div className="absolute inset-0 bg-radial-gradient from-transparent via-transparent to-black/80" />
+                {/* 4. Vignette for focus */}
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-transparent to-black/90" />
             </div>
 
             <div className="container relative z-10 px-4 text-center">
