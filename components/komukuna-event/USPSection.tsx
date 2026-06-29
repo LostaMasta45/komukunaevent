@@ -64,16 +64,16 @@ export default function USPSection() {
                         viewport={{ once: true }}
                         className="relative"
                     >
-                        <div className="relative aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-white/10 group">
+                        <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 group bg-komukuna-dark/50">
                             {/* The 3D Render Image */}
-                            {/* Replaced img tag with Next.js Image component */}
                             <Image
                                 src="/komukuna-event/template-showcase.png"
                                 alt="Komukuna Custom Templates Showcase"
-                                fill // Use fill to make it cover the parent div
-                                className="object-cover transform group-hover:scale-105 transition-transform duration-700"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Example sizes, adjust as needed
-                                priority // Load this image with high priority
+                                width={1200}
+                                height={1000}
+                                className="w-full h-auto object-contain transform group-hover:scale-105 transition-transform duration-700"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                priority
                             />
 
                             {/* Floating Overlay Badge */}
