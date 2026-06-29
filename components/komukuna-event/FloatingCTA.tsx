@@ -23,7 +23,7 @@ export default function FloatingCTA() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 2 }}
-                className="fixed z-50 bottom-6 right-4 md:right-8 md:bottom-8 flex flex-col items-end"
+                className="fixed z-50 bottom-6 inset-x-4 md:inset-x-auto md:right-8 md:bottom-8 flex flex-col md:items-end items-center"
             >
                 {/* Proactive Message Bubble */}
                 <AnimatePresence>
@@ -32,7 +32,7 @@ export default function FloatingCTA() {
                             initial={{ opacity: 0, y: 10, scale: 0.9 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: 10, scale: 0.9 }}
-                            className="mb-4 mr-2 bg-white text-gray-900 p-4 rounded-2xl rounded-br-sm shadow-xl max-w-[250px] relative"
+                            className="mb-4 bg-white text-gray-900 p-4 rounded-2xl rounded-bl-sm md:rounded-bl-2xl md:rounded-br-sm shadow-xl max-w-[280px] md:max-w-[250px] relative md:mr-2"
                         >
                             <button 
                                 onClick={(e) => { e.stopPropagation(); setShowBubble(false); }}
@@ -48,10 +48,11 @@ export default function FloatingCTA() {
                 <div onClick={() => { setIsModalOpen(true); setShowBubble(false); }} className="w-full md:w-auto cursor-pointer">
                     <div className="relative group w-full md:w-auto">
 
-                        {/* Mobile: Wide Button (if you want it full width on mobile, keep w-full, but since it's aligned right, let's make it floating circle on mobile too or keep pill) */}
-                        <button className="md:hidden relative bg-[#25D366] text-white p-4 rounded-full shadow-[0_4px_20px_rgba(37,211,102,0.4)] active:scale-95 transition-transform flex items-center justify-center">
+                        {/* Mobile: Wide Button */}
+                        <button className="md:hidden relative w-full bg-[#25D366] text-white py-3.5 px-6 rounded-full shadow-[0_4px_20px_rgba(37,211,102,0.4)] active:scale-95 transition-transform flex items-center justify-center gap-3 font-bold text-base">
                             <div className="absolute inset-0 bg-white/20 rounded-full animate-pulse z-0" />
-                            <MessageCircle size={28} fill="white" className="z-10" />
+                            <MessageCircle size={24} fill="white" className="z-10" />
+                            <span className="z-10">Tanya Jadwal & Pricelist</span>
                         </button>
 
                         {/* Desktop: Compact Expandable Pill */}
