@@ -9,7 +9,6 @@ export default function HeroSection() {
 
             {/* Cinematic Video Background */}
             <div className="absolute inset-0 overflow-hidden bg-komukuna-dark">
-                {/* 1. Video Element (Optimized for PageSpeed with poster) */}
                 <video
                     className="absolute inset-0 w-full h-full object-cover opacity-60"
                     autoPlay
@@ -19,8 +18,8 @@ export default function HeroSection() {
                     poster="/komukuna-event/hero-bg-new.jpg"
                     preload="auto"
                 >
-                    {/* Using an existing event crowd video as the hero cinematic background */}
-                    <source src="/komukuna-event/process/exp-crowd.mp4" type="video/mp4" />
+                    {/* Menggunakan video ringan (7MB) agar autoplay berjalan instan di HP */}
+                    <source src="/komukuna-event/process/video-bts5.mp4" type="video/mp4" />
                 </video>
 
                 {/* 2. Gradient Overlay to ensure text readability */}
