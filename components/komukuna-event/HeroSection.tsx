@@ -18,8 +18,8 @@ export default function HeroSection() {
                     poster="/komukuna-event/hero-bg-new.jpg"
                     preload="auto"
                 >
-                    {/* Menggunakan video ringan (7MB) agar autoplay berjalan instan di HP */}
-                    <source src="/komukuna-event/process/video-bts5.mp4" type="video/mp4" />
+                    {/* Menggunakan video bts1 yang sudah dikompresi khusus untuk hero (tanpa audio, resolusi web) */}
+                    <source src="/komukuna-event/process/video-bts1-hero.mp4" type="video/mp4" />
                 </video>
 
                 {/* 2. Gradient Overlay to ensure text readability */}
