@@ -185,7 +185,7 @@ function TestimonialCard({ testimonial, index, isActive, onPlay, onStop }: any) 
                 <Quote className="text-komukuna-pink/40 w-10 h-10 mb-2 transform -translate-x-2" />
                 
                 <h3 className="text-xl md:text-2xl font-bold text-white leading-tight mb-3">
-                    "{testimonial.quote}"
+                    &quot;{testimonial.quote}&quot;
                 </h3>
                 
                 <div className="flex items-center gap-1 mb-2">
