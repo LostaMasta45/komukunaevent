@@ -13,6 +13,7 @@ const ServicesSection = dynamic(() => import('@/components/komukuna-event/Servic
 const USPSection = dynamic(() => import('@/components/komukuna-event/USPSection'));
 const VideoboothSpotlight = dynamic(() => import('@/components/komukuna-event/VideoboothSpotlight'));
 const GallerySection = dynamic(() => import('@/components/komukuna-event/GallerySection'));
+const TestimonialSection = dynamic(() => import('@/components/komukuna-event/TestimonialSection'));
 const PricingSection = dynamic(() => import('@/components/komukuna-event/PricingSection'));
 const HowItWorksSection = dynamic(() => import('@/components/komukuna-event/HowItWorksSection'));
 const FAQSection = dynamic(() => import('@/components/komukuna-event/FAQSection'));
@@ -47,6 +48,7 @@ export default function KomukunaEventPage() {
             <VideoboothSpotlight />
             <USPSection />
             <GallerySection />
+            <TestimonialSection />
             <PricingSection />
             <HowItWorksSection />
             <FAQSection />
