@@ -1,13 +1,14 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { PencilRuler, Type, Image as ImageIcon, Layers } from 'lucide-react';
+import { PencilRuler, Type, Image as ImageIcon, Infinity as InfinityIcon } from 'lucide-react';
 import Image from 'next/image';
 
 const features = [
-    { icon: PencilRuler, title: 'Frame Custom', desc: 'Desain bingkai foto dan overlay video 100% mengikuti tema acara Anda.' },
-    { icon: Type, title: 'Teks Personal', desc: 'Tambahkan nama pengantin, tanggal, atau hashtag acara di setiap hasil.' },
-    { icon: ImageIcon, title: 'Integrasi Logo', desc: 'Tampilkan logo perusahaan atau monogram wedding Anda dengan elegan.' },
+    { icon: InfinityIcon, title: '100% True Unlimited Cetak', desc: 'Beda dari vendor lain yang membatasi 100 cetak, tamu Anda bebas berfoto & mencetak sepuasnya tanpa kuota buatan!' },
+    { icon: PencilRuler, title: 'Frame Custom Sesuai Event', desc: 'Desain bingkai foto dan overlay video 100% mengikuti tema acara Anda.' },
+    { icon: Type, title: 'Teks & Nama Personal', desc: 'Tambahkan nama pengantin, tanggal, atau hashtag acara di setiap hasil.' },
+    { icon: ImageIcon, title: 'Integrasi Logo & Branding', desc: 'Tampilkan logo perusahaan atau monogram wedding Anda dengan elegan.' },
 ];
 
 export default function USPSection() {

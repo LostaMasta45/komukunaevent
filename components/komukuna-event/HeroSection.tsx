@@ -47,12 +47,14 @@ export default function HeroSection() {
 
                     {/* Tagline */}
                     <div className="flex justify-center animate-fast-fade">
-                        <div className="px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2">
+                        <div className="px-5 py-2 rounded-full border border-komukuna-pink/30 bg-komukuna-pink/10 backdrop-blur-md flex items-center gap-2 shadow-[0_0_20px_rgba(232,92,144,0.2)]">
                             <span className="relative flex h-2 w-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-komukuna-pink opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-komukuna-pink"></span>
                             </span>
-                            <span className="text-gray-300 text-xs md:text-sm font-medium tracking-wide uppercase">New Era of Event Experience</span>
+                            <span className="text-white text-xs md:text-sm font-semibold tracking-wide">
+                                ♾️ 100% Unlimited Cetak Tanpa Kuota • Termurah se-Jombang & Mojokerto
+                            </span>
                         </div>
                     </div>
 

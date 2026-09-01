@@ -151,6 +151,50 @@ export default function PricingSection() {
                     </div>
                 </div>
 
+                {/* Pre-Pricing Value Anchor & Quick Contrast Strip */}
+                {activeTab === 'photobooth' && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="max-w-4xl mx-auto mb-8 p-4 md:p-6 rounded-2xl md:rounded-3xl bg-gradient-to-r from-komukuna-pink/10 via-white/5 to-komukuna-purple/10 border border-komukuna-pink/30 backdrop-blur-xl shadow-[0_0_40px_rgba(232,92,144,0.15)] relative overflow-hidden"
+                    >
+                        {/* Top Header Row */}
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 pb-3 mb-3 border-b border-white/10 text-center sm:text-left">
+                            <div className="flex items-center gap-2">
+                                <span className="p-1 rounded-lg bg-komukuna-pink/20 text-komukuna-pink font-bold text-xs md:text-sm">
+                                    ⚡
+                                </span>
+                                <h4 className="text-white font-extrabold text-sm md:text-base tracking-wide">
+                                    100% True Unlimited Sesi & Cetak
+                                </h4>
+                            </div>
+
+                            <span className="px-3 py-1 rounded-full bg-komukuna-pink/20 text-komukuna-pink text-[10px] md:text-xs font-bold uppercase tracking-wider border border-komukuna-pink/40 shadow-sm shrink-0">
+                                🏆 Termurah se-Jombang & Mojokerto
+                            </span>
+                        </div>
+
+                        {/* Contrast Comparison Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-left">
+                            {/* Vendor Lain */}
+                            <div className="flex items-center gap-2.5 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-200">
+                                <span className="w-5 h-5 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center font-bold text-[11px] shrink-0">✕</span>
+                                <span className="leading-snug">
+                                    <strong className="text-red-400">Vendor Lain:</strong> Dibatasi max 100 cetak (bayar ekstra jika lebih).
+                                </span>
+                            </div>
+
+                            {/* Komukuna */}
+                            <div className="flex items-center gap-2.5 p-3 rounded-xl bg-komukuna-pink/15 border border-komukuna-pink/30 text-white">
+                                <span className="w-5 h-5 rounded-full bg-komukuna-pink/30 text-komukuna-pink flex items-center justify-center font-bold text-[11px] shrink-0">✓</span>
+                                <span className="leading-snug">
+                                    <strong className="text-komukuna-pink">Komukuna:</strong> Bebas foto & cetak sepuasnya tanpa kuota!
+                                </span>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+
                 <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto min-h-[600px]">
                     <AnimatePresence mode="wait">
                         {currentTiers.map((tier, index) => (
@@ -257,69 +301,67 @@ export default function PricingSection() {
                     </AnimatePresence>
                 </div>
 
-                {/* Sistem Foto & Ketentuan Unlimited Section */}
+                {/* Streamlined Ketentuan & Sistem Foto Unlimited */}
                 {activeTab === 'photobooth' && (
-                    <div className="mt-16 max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
-                        {/* Sistem Foto */}
-                        <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 rounded-2xl p-6 md:p-8 relative overflow-hidden">
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="p-2.5 rounded-xl bg-komukuna-pink/20 text-komukuna-pink">
-                                    <Camera size={20} />
-                                </div>
+                    <div className="mt-12 max-w-4xl mx-auto">
+                        <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-5 md:p-8 backdrop-blur-md relative overflow-hidden">
+                            {/* Clean Header */}
+                            <div className="pb-5 mb-5 border-b border-white/10 text-center sm:text-left flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                                 <div>
-                                    <h3 className="text-lg font-bold text-white">📸 Sistem Foto</h3>
-                                    <p className="text-xs text-gray-400">Foto Berkali-kali Selama Durasi Sewa</p>
+                                    <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                                        <span className="p-1 rounded-lg bg-komukuna-pink/20 text-komukuna-pink font-bold text-xs">
+                                            📸
+                                        </span>
+                                        <h3 className="text-base md:text-xl font-bold text-white tracking-wide">
+                                            Ketentuan Cetak & Sesi Foto Unlimited
+                                        </h3>
+                                    </div>
+                                    <p className="text-xs text-gray-400">
+                                        Garansi Layanan Transparan Tanpa Biaya Tersembunyi
+                                    </p>
                                 </div>
-                            </div>
-                            <p className="text-sm text-gray-300 mb-4 leading-relaxed">
-                                Tamu dapat melakukan sesi foto berkali-kali selama durasi photobooth masih berlangsung.
-                            </p>
-                            <div className="bg-black/30 border border-white/10 rounded-xl p-4 mb-3">
-                                <p className="text-xs font-bold text-komukuna-pink uppercase tracking-wider mb-2">Setiap Sesi Mendapatkan:</p>
-                                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 text-xs md:text-sm text-white font-medium">
-                                    <span className="bg-white/10 px-3 py-1 rounded-md border border-white/10">✓ 1x Cetak 4R</span>
-                                    <span className="text-xs text-gray-400 font-normal">atau</span>
-                                    <span className="bg-white/10 px-3 py-1 rounded-md border border-white/10">✓ 1x Cetak Photostrip</span>
-                                </div>
-                            </div>
-                            <p className="text-xs text-gray-400 italic">
-                                *Jumlah jepretan mengikuti jumlah frame pada desain yang digunakan.
-                            </p>
-                        </div>
 
-                        {/* Ketentuan Unlimited */}
-                        <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="p-2.5 rounded-xl bg-komukuna-purple/20 text-komukuna-purple">
-                                    <ShieldCheck size={20} />
-                                </div>
-                                <div>
-                                    <h3 className="text-lg font-bold text-white">📌 Ketentuan Unlimited</h3>
-                                    <p className="text-xs text-gray-400">Sesi Foto Tanpa Batas</p>
+                                <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-full bg-komukuna-pink/15 border border-komukuna-pink/30 text-komukuna-pink text-[11px] font-semibold shrink-0 self-center sm:self-auto">
+                                    <span>💡 100% Cetak Sepuasnya Selama Sewa</span>
                                 </div>
                             </div>
-                            <ul className="space-y-2.5 text-xs md:text-sm text-gray-300">
-                                <li className="flex items-start gap-2.5">
-                                    <Check size={14} className="mt-0.5 text-komukuna-pink shrink-0" />
-                                    <span>Tidak ada batasan jumlah sesi foto per orang.</span>
-                                </li>
-                                <li className="flex items-start gap-2.5">
-                                    <Check size={14} className="mt-0.5 text-komukuna-pink shrink-0" />
-                                    <span>Tamu dapat kembali berfoto berkali-kali.</span>
-                                </li>
-                                <li className="flex items-start gap-2.5">
-                                    <Check size={14} className="mt-0.5 text-komukuna-pink shrink-0" />
-                                    <span>Berlaku selama durasi sewa masih berlangsung.</span>
-                                </li>
-                                <li className="flex items-start gap-2.5">
-                                    <Check size={14} className="mt-0.5 text-komukuna-pink shrink-0" />
-                                    <span>Jika tidak ada antrean, tamu dapat langsung foto kembali.</span>
-                                </li>
-                                <li className="flex items-start gap-2.5">
-                                    <Check size={14} className="mt-0.5 text-komukuna-pink shrink-0" />
-                                    <span>Jika ada antrean, sesi dilakukan secara bergantian.</span>
-                                </li>
-                            </ul>
+
+                            {/* 2 Cards Grid */}
+                            <div className="grid md:grid-cols-2 gap-4 text-xs md:text-sm text-gray-300">
+                                {/* Point 1: Sesi & Antrean */}
+                                <div className="space-y-2.5 bg-black/30 p-4 rounded-xl md:rounded-2xl border border-white/5">
+                                    <h4 className="text-white font-bold text-xs md:text-sm uppercase tracking-wider flex items-center gap-2">
+                                        <Check size={14} className="text-komukuna-pink" strokeWidth={3} /> Sesi & Antrean Foto
+                                    </h4>
+                                    <ul className="space-y-2 text-xs text-gray-300">
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-komukuna-pink font-bold">•</span>
+                                            <span><strong>Tanpa Batasan Sesi:</strong> Tamu bebas kembali foto berkali-kali selama sewa.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-komukuna-pink font-bold">•</span>
+                                            <span><strong>Sistem Antrean:</strong> Jika kosong bisa langsung foto lagi, jika ramai bergantian secara adil.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                {/* Point 2: Hasil Cetak & Soft File */}
+                                <div className="space-y-2.5 bg-black/30 p-4 rounded-xl md:rounded-2xl border border-white/5">
+                                    <h4 className="text-white font-bold text-xs md:text-sm uppercase tracking-wider flex items-center gap-2">
+                                        <Check size={14} className="text-komukuna-pink" strokeWidth={3} /> Hasil Cetak & Soft File
+                                    </h4>
+                                    <ul className="space-y-2 text-xs text-gray-300">
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-komukuna-pink font-bold">•</span>
+                                            <span><strong>1 Sesi = 1x Cetak 4R atau Photostrip</strong> (jumlah foto sesuai frame).</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-komukuna-pink font-bold">•</span>
+                                            <span><strong>Free Soft File:</strong> Semua foto digital siap download via QR code / link.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}
