@@ -307,22 +307,20 @@ export default function PricingSection() {
                         <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-5 md:p-8 backdrop-blur-md relative overflow-hidden">
                             {/* Clean Header */}
                             <div className="pb-5 mb-5 border-b border-white/10 text-center sm:text-left flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                                <div>
-                                    <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                                        <span className="p-1 rounded-lg bg-komukuna-pink/20 text-komukuna-pink font-bold text-xs">
-                                            📸
-                                        </span>
-                                        <h3 className="text-base md:text-xl font-bold text-white tracking-wide">
-                                            Ketentuan Cetak & Sesi Foto Unlimited
-                                        </h3>
+                                <div className="space-y-1">
+                                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-komukuna-pink/20 text-komukuna-pink text-[11px] font-bold uppercase tracking-wider mb-1">
+                                        📸 Sistem & Ketentuan Foto
                                     </div>
+                                    <h3 className="text-lg md:text-2xl font-extrabold text-white tracking-tight leading-tight">
+                                        100% Unlimited Sesi & Cetak
+                                    </h3>
                                     <p className="text-xs text-gray-400">
-                                        Garansi Layanan Transparan Tanpa Biaya Tersembunyi
+                                        Garansi Layanan Transparan • Tanpa Biaya Tersembunyi
                                     </p>
                                 </div>
 
-                                <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-full bg-komukuna-pink/15 border border-komukuna-pink/30 text-komukuna-pink text-[11px] font-semibold shrink-0 self-center sm:self-auto">
-                                    <span>💡 100% Cetak Sepuasnya Selama Sewa</span>
+                                <div className="shrink-0 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-komukuna-pink/15 border border-komukuna-pink/30 text-komukuna-pink text-xs font-bold self-center sm:self-auto shadow-sm">
+                                    <span>💡 Cetak Sepuasnya Selama Sewa</span>
                                 </div>
                             </div>
 

@@ -1,26 +1,30 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronRight, Play } from 'lucide-react';
 import HeroRotatingText from './HeroRotatingText';
 import HeroButtons from './HeroButtons';
+import HeroVideoBackground from './HeroVideoBackground';
 
 export default function HeroSection() {
     return (
         <section className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden">
 
-            {/* Cinematic Video Background */}
+            {/* Optimized Media Background */}
             <div className="absolute inset-0 overflow-hidden bg-komukuna-dark">
-                <video
-                    className="absolute inset-0 w-full h-full object-cover opacity-60"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    poster="https://res.cloudinary.com/rezanurhamami/video/upload/so_0,w_1280,c_fill,f_auto,q_auto/komukuna/process/video-bts1.jpg"
-                    preload="auto"
-                >
-                    {/* Menggunakan video dari CDN Cloudinary dengan optimasi on-the-fly (q_auto:eco) agar loading instan di HP */}
-                    <source src="https://res.cloudinary.com/rezanurhamami/video/upload/f_auto,q_auto:eco,w_1280,c_limit/komukuna/process/video-bts1.mp4" type="video/mp4" />
-                </video>
+                {/* Instant LCP Image poster for mobile & initial paint */}
+                <Image
+                    src="https://res.cloudinary.com/rezanurhamami/video/upload/so_0,w_1280,c_fill,f_auto,q_auto/komukuna/process/video-bts1.jpg"
+                    alt="Komukuna Photobooth Experience"
+                    fill
+                    priority
+                    fetchPriority="high"
+                    sizes="100vw"
+                    quality={75}
+                    className="object-cover opacity-60 pointer-events-none"
+                />
+
+                {/* Deferred Video Background */}
+                <HeroVideoBackground />
 
                 {/* 2. Gradient Overlay to ensure text readability */}
                 <div className="absolute inset-0 bg-gradient-to-b from-komukuna-dark/80 via-komukuna-dark/50 to-komukuna-dark" />
