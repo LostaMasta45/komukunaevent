@@ -20,6 +20,9 @@ Abadikan momen terbaikmu dengan pengalaman photobooth dan videobooth yang seru, 
 
 # PHOTOBOOTH PACKAGE
 
+Abadikan momen terbaik bersama orang-orang tersayang.
+Foto sesuka hati selama durasi sewa, cetak hasilnya, dan bawa pulang kenangannya.
+
 ---
 
 ## 🩶 SILVER PACKAGE
@@ -28,27 +31,27 @@ Abadikan momen terbaikmu dengan pengalaman photobooth dan videobooth yang seru, 
 
 ~~Rp 1.750.000~~
 
-### Hemat Rp 500.000
+### HEMAT Rp 500.000
 
-Paket hemat untuk dokumentasi event sederhana dan seru.
+Paket hemat untuk dokumentasi event yang seru dan berkesan.
+
+### ♾️ UNLIMITED SESI FOTO (Selama Durasi Sewa)
 
 ### Include
 
-✓ Durasi 2 Jam
+✓ Durasi Sewa Selama 2 Jam
 
-✓ 4x Sesi Foto
+✓ Unlimited Sesi Foto
 
 ✓ Free 1x Cetak 4R atau Photostrip per Sesi
 
-✓ 8 Template Photostrip
+✓ Request Desain Frame Sesuai Event
 
 ✓ Premium Backdrop Glitter Gold atau Silver
 
 ✓ Fun Property
 
-✓ Free All Soft File
-
-✓ Request Background Basic
+✓ Free All Soft File Foto
 
 ### Cocok Untuk
 
@@ -62,53 +65,37 @@ Paket hemat untuk dokumentasi event sederhana dan seru.
 
 ## 🥇 GOLD PACKAGE
 
-### BEST SELLER
+### ⭐ BEST SELLER
 
 ### Rp 1.750.000
 
 ~~Rp 2.250.000~~
 
-### Hemat Rp 500.000
+### HEMAT Rp 500.000
 
-Paket favorit dengan hasil lebih eksklusif, lebih banyak variasi cetak, dan pengalaman yang lebih berkesan.
+Paket favorit dengan durasi lebih lama dan pengalaman yang lebih lengkap.
+
+### ♾️ UNLIMITED SESI FOTO (Selama Durasi Sewa)
 
 ### Include
 
-✓ Durasi 3 Jam
+✓ Durasi Sewa Selama 3 Jam
 
-✓ 4x Sesi Foto
+✓ Unlimited Sesi Foto
 
-✓ Free 1x Cetak 4R
+✓ Free 1x Cetak 4R atau Photostrip per Sesi
 
-✓ Free 1x Photostrip
-
-✓ Free 3x Cetak 2R per Sesi
-
-✓ 16 Template Photostrip
+✓ Request Desain Frame Sesuai Event
 
 ✓ Premium Backdrop Glitter Gold atau Silver
-
-✓ Template Custom Logo / Nama Event
 
 ✓ Special Property
 
 ✓ 3 Kostum Karakter
 
-✓ Free All Soft File
+✓ Free All Soft File Foto
 
 ✓ Request Background Full Custom
-
-### Keunggulan
-
-✓ Lebih banyak hasil cetak
-
-✓ Lebih banyak pilihan template
-
-✓ Tampilan lebih premium
-
-✓ Cocok untuk Wedding dan Corporate Event
-
-✓ Paket paling banyak dipilih customer
 
 ### Cocok Untuk
 
@@ -118,6 +105,34 @@ Paket favorit dengan hasil lebih eksklusif, lebih banyak variasi cetak, dan peng
 * Reuni
 * Wisuda
 * Grand Opening
+
+---
+
+# 📸 SISTEM FOTO
+
+## Foto Berkali-kali Selama Durasi Sewa
+
+Tamu dapat melakukan sesi foto berkali-kali selama durasi photobooth masih berlangsung.
+
+### Setiap sesi mendapatkan:
+
+✓ **1x Cetak 4R** atau ✓ **1x Cetak Photostrip**
+
+*Jumlah jepretan mengikuti jumlah frame pada desain yang digunakan.*
+
+---
+
+# 📌 KETENTUAN UNLIMITED
+
+✓ Tidak ada batasan jumlah sesi foto per orang.
+
+✓ Tamu dapat kembali berfoto berkali-kali.
+
+✓ Berlaku selama durasi sewa masih berlangsung.
+
+✓ Jika tidak ada antrean, tamu dapat langsung melakukan sesi foto kembali.
+
+✓ Jika terdapat antrean, sesi dilakukan secara bergantian agar semua tamu mendapatkan kesempatan.
 
 ---
 

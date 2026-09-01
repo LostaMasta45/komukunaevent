@@ -39,7 +39,7 @@ export default function Navbar() {
     const navLinks = [
         { name: 'Layanan', href: '#services' },
         { name: 'Keunggulan', href: '#usp' },
-        { name: 'Testimoni', href: '#testimonials' },
+        // { name: 'Testimoni', href: '#testimonials' },
         { name: 'Harga', href: '#pricing' },
     ];
 

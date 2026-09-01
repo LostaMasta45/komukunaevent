@@ -48,7 +48,7 @@ export default function KomukunaEventPage() {
             <VideoboothSpotlight />
             <USPSection />
             <GallerySection />
-            <TestimonialSection />
+            {/* <TestimonialSection /> */}
             <PricingSection />
             <HowItWorksSection />
             <FAQSection />

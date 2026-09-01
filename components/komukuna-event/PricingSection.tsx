@@ -6,22 +6,35 @@ import { Check, Star, ShieldCheck, Camera, Aperture } from 'lucide-react';
 import { Button } from './ui/Button';
 import Link from 'next/link';
 
-const photoboothTiers = [
+interface PricingTier {
+    name: string;
+    price: string;
+    originalPrice?: string;
+    savings?: string;
+    description: string;
+    unlimitedHeader?: string;
+    features: string[];
+    cta: string;
+    isPopular: boolean;
+    theme: string;
+}
+
+const photoboothTiers: PricingTier[] = [
     {
         name: 'SILVER',
         price: 'Rp 1.250.000',
         originalPrice: 'Rp 1.750.000',
         savings: 'Hemat Rp 500.000',
-        description: 'Paket hemat untuk dokumentasi event sederhana dan seru.',
+        description: 'Paket hemat untuk dokumentasi event yang seru dan berkesan.',
+        unlimitedHeader: '♾️ UNLIMITED SESI FOTO',
         features: [
-            'Durasi 2 Jam',
-            '4x Sesi Foto',
+            'Durasi Sewa Selama 2 Jam',
+            'Unlimited Sesi Foto',
             'Free 1x Cetak 4R atau Photostrip per Sesi',
-            '8 Template Photostrip',
+            'Request Desain Frame Sesuai Event',
             'Premium Backdrop Glitter Gold atau Silver',
             'Fun Property',
-            'Free All Soft File',
-            'Request Background Basic'
+            'Free All Soft File Foto'
         ],
         cta: 'Booking Silver Photobooth',
         isPopular: false,
@@ -32,19 +45,17 @@ const photoboothTiers = [
         price: 'Rp 1.750.000',
         originalPrice: 'Rp 2.250.000',
         savings: 'Hemat Rp 500.000',
-        description: 'Paket favorit dengan hasil lebih eksklusif, lebih banyak variasi cetak, dan pengalaman yang lebih berkesan.',
+        description: 'Paket favorit dengan durasi lebih lama dan pengalaman yang lebih lengkap.',
+        unlimitedHeader: '♾️ UNLIMITED SESI FOTO',
         features: [
-            'Durasi 3 Jam',
-            '4x Sesi Foto',
-            'Free 1x Cetak 4R',
-            'Free 1x Photostrip',
-            'Free 3x Cetak 2R per Sesi',
-            '16 Template Photostrip',
+            'Durasi Sewa Selama 3 Jam',
+            'Unlimited Sesi Foto',
+            'Free 1x Cetak 4R atau Photostrip per Sesi',
+            'Request Desain Frame Sesuai Event',
             'Premium Backdrop Glitter Gold atau Silver',
-            'Template Custom Logo / Nama Event',
             'Special Property',
             '3 Kostum Karakter',
-            'Free All Soft File',
+            'Free All Soft File Foto',
             'Request Background Full Custom'
         ],
         cta: 'Booking Gold Photobooth',
@@ -53,7 +64,7 @@ const photoboothTiers = [
     },
 ];
 
-const videoboothTiers = [
+const videoboothTiers: PricingTier[] = [
     {
         name: 'SILVER 360',
         price: 'Rp 1.250.000',
@@ -164,6 +175,14 @@ export default function PricingSection() {
 
                                 <div className="mb-8 text-center md:text-left">
                                     <h3 className={`text-xl font-bold mb-2 tracking-wide ${tier.isPopular ? 'text-komukuna-pink' : 'text-gray-300'}`}>{tier.name}</h3>
+
+                                    {/* Unlimited Header Badge */}
+                                    {tier.unlimitedHeader && (
+                                        <div className="mb-3 py-1 px-3 rounded-full bg-komukuna-pink/10 border border-komukuna-pink/30 text-komukuna-pink text-xs font-semibold inline-flex items-center gap-1.5">
+                                            <span>{tier.unlimitedHeader}</span>
+                                        </div>
+                                    )}
+
                                     {/* Updated Pricing Display */}
                                     <div className="flex flex-col items-center md:items-start mb-4 relative min-h-[80px]">
                                         {/* Original Price */}
@@ -238,37 +257,112 @@ export default function PricingSection() {
                     </AnimatePresence>
                 </div>
 
+                {/* Sistem Foto & Ketentuan Unlimited Section */}
+                {activeTab === 'photobooth' && (
+                    <div className="mt-16 max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
+                        {/* Sistem Foto */}
+                        <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 rounded-2xl p-6 md:p-8 relative overflow-hidden">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="p-2.5 rounded-xl bg-komukuna-pink/20 text-komukuna-pink">
+                                    <Camera size={20} />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold text-white">📸 Sistem Foto</h3>
+                                    <p className="text-xs text-gray-400">Foto Berkali-kali Selama Durasi Sewa</p>
+                                </div>
+                            </div>
+                            <p className="text-sm text-gray-300 mb-4 leading-relaxed">
+                                Tamu dapat melakukan sesi foto berkali-kali selama durasi photobooth masih berlangsung.
+                            </p>
+                            <div className="bg-black/30 border border-white/10 rounded-xl p-4 mb-3">
+                                <p className="text-xs font-bold text-komukuna-pink uppercase tracking-wider mb-2">Setiap Sesi Mendapatkan:</p>
+                                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 text-xs md:text-sm text-white font-medium">
+                                    <span className="bg-white/10 px-3 py-1 rounded-md border border-white/10">✓ 1x Cetak 4R</span>
+                                    <span className="text-xs text-gray-400 font-normal">atau</span>
+                                    <span className="bg-white/10 px-3 py-1 rounded-md border border-white/10">✓ 1x Cetak Photostrip</span>
+                                </div>
+                            </div>
+                            <p className="text-xs text-gray-400 italic">
+                                *Jumlah jepretan mengikuti jumlah frame pada desain yang digunakan.
+                            </p>
+                        </div>
+
+                        {/* Ketentuan Unlimited */}
+                        <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="p-2.5 rounded-xl bg-komukuna-purple/20 text-komukuna-purple">
+                                    <ShieldCheck size={20} />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold text-white">📌 Ketentuan Unlimited</h3>
+                                    <p className="text-xs text-gray-400">Sesi Foto Tanpa Batas</p>
+                                </div>
+                            </div>
+                            <ul className="space-y-2.5 text-xs md:text-sm text-gray-300">
+                                <li className="flex items-start gap-2.5">
+                                    <Check size={14} className="mt-0.5 text-komukuna-pink shrink-0" />
+                                    <span>Tidak ada batasan jumlah sesi foto per orang.</span>
+                                </li>
+                                <li className="flex items-start gap-2.5">
+                                    <Check size={14} className="mt-0.5 text-komukuna-pink shrink-0" />
+                                    <span>Tamu dapat kembali berfoto berkali-kali.</span>
+                                </li>
+                                <li className="flex items-start gap-2.5">
+                                    <Check size={14} className="mt-0.5 text-komukuna-pink shrink-0" />
+                                    <span>Berlaku selama durasi sewa masih berlangsung.</span>
+                                </li>
+                                <li className="flex items-start gap-2.5">
+                                    <Check size={14} className="mt-0.5 text-komukuna-pink shrink-0" />
+                                    <span>Jika tidak ada antrean, tamu dapat langsung foto kembali.</span>
+                                </li>
+                                <li className="flex items-start gap-2.5">
+                                    <Check size={14} className="mt-0.5 text-komukuna-pink shrink-0" />
+                                    <span>Jika ada antrean, sesi dilakukan secara bergantian.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                )}
+
                 {/* Add-ons Section */}
                 <div className="mt-20 max-w-4xl mx-auto">
                     <div className="text-center mb-10">
-                        <h3 className="text-2xl font-bold text-white mb-3">🔥 Add-On Favorit Customer</h3>
+                        <h3 className="text-2xl font-bold text-white mb-3">🖼️ Add-On Favorit Customer</h3>
                         <p className="text-gray-400 text-sm">Tambahkan sentuhan premium untuk membuat hasil foto lebih berkesan.</p>
                     </div>
-                    
+
                     <div className="grid md:grid-cols-3 gap-6">
                         {/* Add-on 1 */}
-                        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
-                            <div className="text-3xl mb-4">🖼️</div>
-                            <h4 className="text-white font-bold mb-2">Premium Photo Frame</h4>
-                            <div className="text-komukuna-pink font-bold text-lg mb-4">+ Rp 200.000</div>
-                            <ul className="space-y-2">
-                                <li className="text-xs text-gray-400 flex items-start gap-2"><Check size={12} className="mt-0.5 text-komukuna-pink shrink-0" /> Siap Dijadikan Pajangan</li>
-                                <li className="text-xs text-gray-400 flex items-start gap-2"><Check size={12} className="mt-0.5 text-komukuna-pink shrink-0" /> Tampilan Lebih Eksklusif</li>
-                            </ul>
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors flex flex-col justify-between">
+                            <div>
+                                <div className="text-3xl mb-4">🖼️</div>
+                                <h4 className="text-white font-bold mb-1">Premium Photo Frame</h4>
+                                <div className="text-komukuna-pink font-bold text-lg mb-3">+ Rp 200.000</div>
+                                <p className="text-gray-400 text-xs mb-4">Jadikan hasil foto lebih eksklusif dan siap menjadi kenang-kenangan spesial.</p>
+                                <ul className="space-y-2">
+                                    <li className="text-xs text-gray-300 flex items-start gap-2"><Check size={12} className="mt-0.5 text-komukuna-pink shrink-0" /> Tampilan lebih premium</li>
+                                    <li className="text-xs text-gray-300 flex items-start gap-2"><Check size={12} className="mt-0.5 text-komukuna-pink shrink-0" /> Cocok sebagai pajangan / souvenir</li>
+                                    <li className="text-xs text-gray-300 flex items-start gap-2"><Check size={12} className="mt-0.5 text-komukuna-pink shrink-0" /> Ideal untuk Wedding, Anniversary & Event Spesial</li>
+                                </ul>
+                            </div>
                         </div>
                         {/* Add-on 2 */}
-                        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
-                            <div className="text-3xl mb-4">⏰</div>
-                            <h4 className="text-white font-bold mb-2">Tambah Durasi</h4>
-                            <div className="text-white font-bold text-lg mb-4">By Request</div>
-                            <p className="text-xs text-gray-400">Cocok untuk event dengan jumlah tamu lebih banyak.</p>
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors flex flex-col justify-between">
+                            <div>
+                                <div className="text-3xl mb-4">⏰</div>
+                                <h4 className="text-white font-bold mb-1">Tambah Durasi</h4>
+                                <div className="text-white font-bold text-lg mb-3">By Request</div>
+                                <p className="text-xs text-gray-400">Cocok untuk event dengan jumlah tamu lebih banyak.</p>
+                            </div>
                         </div>
                         {/* Add-on 3 */}
-                        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
-                            <div className="text-3xl mb-4">🎨</div>
-                            <h4 className="text-white font-bold mb-2">Custom Request</h4>
-                            <div className="text-white font-bold text-lg mb-4">By Request</div>
-                            <p className="text-xs text-gray-400">Untuk kebutuhan branding perusahaan atau konsep acara khusus.</p>
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors flex flex-col justify-between">
+                            <div>
+                                <div className="text-3xl mb-4">🎨</div>
+                                <h4 className="text-white font-bold mb-1">Custom Request</h4>
+                                <div className="text-white font-bold text-lg mb-3">By Request</div>
+                                <p className="text-xs text-gray-400">Untuk kebutuhan branding perusahaan atau konsep acara khusus.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
