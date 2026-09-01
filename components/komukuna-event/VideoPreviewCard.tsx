@@ -100,6 +100,7 @@ export default function VideoPreviewCard({ item, onMaximize }: VideoPreviewCardP
                     e.stopPropagation();
                     onMaximize();
                 }}
+                aria-label="Tampilkan Video Layar Penuh"
                 className="absolute top-2 right-2 p-2 bg-black/40 backdrop-blur-md rounded-full text-white/70 hover:text-white transition-opacity md:opacity-0 md:group-hover:opacity-100 z-10"
                 title="Fullscreen"
             >

@@ -211,6 +211,7 @@ export default function ExperienceStory() {
 
                             <button
                                 onClick={() => setIsPreviewOpen(false)}
+                                aria-label="Tutup Pratinjau Foto"
                                 className="absolute top-4 right-4 p-3 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white transition-colors border border-white/10"
                             >
                                 <X size={24} />
