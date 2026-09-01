@@ -50,7 +50,7 @@ export default function PartnerLogos({ logos }: PartnerLogosProps) {
                             <div className="relative w-full h-full">
                                 <Image
                                     src={partner.logo}
-                                    alt={partner.name}
+                                    alt={`Logo Klien Partner ${index + 1}`}
                                     fill
                                     sizes="(max-width: 768px) 128px, 160px"
                                     className="object-contain p-1"

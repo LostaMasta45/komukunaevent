@@ -51,7 +51,7 @@ export default function USPSection() {
                                     </div>
                                     <div>
                                         <h4 className="text-white font-bold text-lg">{f.title}</h4>
-                                        <p className="text-gray-500 text-sm">{f.desc}</p>
+                                        <p className="text-gray-400 text-sm">{f.desc}</p>
                                     </div>
                                 </div>
                             ))}

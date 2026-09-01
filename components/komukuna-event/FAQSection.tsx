@@ -41,12 +41,14 @@ export default function FAQSection() {
                         <div key={i} className="border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden">
                             <button
                                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                                aria-expanded={openIndex === i}
+                                aria-controls={`faq-answer-${i}`}
                                 className="w-full flex items-center justify-between p-5 text-left hover:bg-white/5 transition-colors"
                             >
                                 <span className={`font-medium ${openIndex === i ? 'text-komukuna-pink' : 'text-gray-200'}`}>
                                     {faq.q}
                                 </span>
-                                {openIndex === i ? <Minus size={18} className="text-komukuna-pink shrink-0" /> : <Plus size={18} className="text-gray-500 shrink-0" />}
+                                {openIndex === i ? <Minus size={18} className="text-komukuna-pink shrink-0" /> : <Plus size={18} className="text-gray-400 shrink-0" />}
                             </button>
 
                             <AnimatePresence>

@@ -53,23 +53,23 @@ export default function Footer() {
                     <div>
                         <h4 className="text-white font-bold mb-4">Ikuti Kami</h4>
                         <div className="flex gap-4">
-                            <Link href="https://instagram.com/komukunastudio" target="_blank" className="p-3 rounded-full bg-white/5 hover:bg-gradient-to-br hover:from-komukuna-pink hover:to-orange-500 hover:text-white transition-all group">
+                            <Link href="https://instagram.com/komukunastudio" target="_blank" aria-label="Instagram Komukuna Studio" className="p-3 rounded-full bg-white/5 hover:bg-gradient-to-br hover:from-komukuna-pink hover:to-orange-500 hover:text-white transition-all group">
                                 <Instagram size={20} className="text-gray-400 group-hover:text-white" />
                             </Link>
-                            <Link href="https://www.tiktok.com/@komukunastudio" target="_blank" className="p-3 rounded-full bg-white/5 hover:bg-komukuna-purple hover:text-white transition-all group">
+                            <Link href="https://www.tiktok.com/@komukunastudio" target="_blank" aria-label="TikTok Komukuna Studio" className="p-3 rounded-full bg-white/5 hover:bg-komukuna-purple hover:text-white transition-all group">
                                 <Camera size={20} className="text-gray-400 group-hover:text-white" />
                             </Link>
                         </div>
-                        <p className="text-xs text-gray-500 mt-4">@komukunastudio</p>
+                        <p className="text-xs text-gray-400 mt-4">@komukunastudio</p>
                     </div>
 
                 </div>
 
-                <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
+                <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
                     <p>&copy; {new Date().getFullYear()} Komukuna Studio. All rights reserved.</p>
                     <div className="flex gap-6 mt-4 md:mt-0">
-                        <Link href="#" className="hover:text-gray-400">Kebijakan Privasi</Link>
-                        <Link href="#" className="hover:text-gray-400">Syarat & Ketentuan</Link>
+                        <Link href="#" className="hover:text-gray-200">Kebijakan Privasi</Link>
+                        <Link href="#" className="hover:text-gray-200">Syarat & Ketentuan</Link>
                     </div>
                 </div>
             </div>

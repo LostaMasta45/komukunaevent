@@ -36,6 +36,7 @@ export default function FloatingCTA() {
                         >
                             <button 
                                 onClick={(e) => { e.stopPropagation(); setShowBubble(false); }}
+                                aria-label="Tutup Pesan"
                                 className="absolute top-2 right-2 text-gray-400 hover:text-gray-600"
                             >
                                 <X size={14} />
@@ -49,7 +50,10 @@ export default function FloatingCTA() {
                     <div className="relative group w-full md:w-auto">
 
                         {/* Mobile: Wide Button */}
-                        <button className="md:hidden relative w-full bg-[#25D366] text-white py-3.5 px-6 rounded-full shadow-[0_4px_20px_rgba(37,211,102,0.4)] active:scale-95 transition-transform flex items-center justify-center gap-3 font-bold text-base">
+                        <button 
+                            aria-label="Tanya Jadwal dan Pricelist WhatsApp"
+                            className="md:hidden relative w-full bg-[#25D366] text-white py-3.5 px-6 rounded-full shadow-[0_4px_20px_rgba(37,211,102,0.4)] active:scale-95 transition-transform flex items-center justify-center gap-3 font-bold text-base"
+                        >
                             <div className="absolute inset-0 bg-white/20 rounded-full animate-pulse z-0" />
                             <MessageCircle size={24} fill="white" className="z-10" />
                             <span className="z-10">Tanya Jadwal & Pricelist</span>
@@ -58,6 +62,7 @@ export default function FloatingCTA() {
                         {/* Desktop: Compact Expandable Pill */}
                         <div className="hidden md:flex justify-end">
                             <motion.button
+                                aria-label="Tanya Jadwal dan Pricelist WhatsApp"
                                 className="bg-[#25D366] text-white rounded-full shadow-[0_4px_20px_rgba(37,211,102,0.4)] flex items-center overflow-hidden group hover:bg-[#20b857] transition-colors"
                                 whileHover={{ width: 'auto' }}
                                 initial={{ width: '60px' }}

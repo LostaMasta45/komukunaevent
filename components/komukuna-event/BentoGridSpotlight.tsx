@@ -86,6 +86,7 @@ export default function BentoGridSpotlight({
                                 e.stopPropagation();
                                 onMaximizeVideo(item.videoSrc);
                             }}
+                            aria-label="Tampilkan Video Layar Penuh"
                             className="absolute top-4 right-4 p-2 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full text-white/70 hover:text-white transition-all opacity-0 group-hover:opacity-100 z-10 pointer-events-auto"
                             title="Fullscreen"
                         >

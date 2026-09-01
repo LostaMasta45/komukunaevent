@@ -35,7 +35,7 @@ export default function VideoboothSpotlight() {
                                 muted
                                 loop
                                 playsInline
-                                preload="auto"
+                                preload="none"
                             >
                                 <source src={getOptimizedVideoUrl(cloudinaryVideoboothVideos['majapahit-run'])} type="video/mp4" />
                             </video>

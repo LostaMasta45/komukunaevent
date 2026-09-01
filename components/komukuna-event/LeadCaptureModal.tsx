@@ -77,6 +77,7 @@ export default function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalPr
                         <div className="relative p-6 border-b border-gray-800 bg-gradient-to-r from-komukuna-pink/10 to-komukuna-yellow/10">
                             <button 
                                 onClick={onClose}
+                                aria-label="Tutup Modal"
                                 className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                             >
                                 <X size={20} />
@@ -147,12 +148,13 @@ export default function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalPr
                                             </div>
                                             <input
                                                 type="date"
+                                                aria-label="Rencana Tanggal Event"
                                                 value={eventDate}
                                                 onChange={(e) => setEventDate(e.target.value)}
                                                 className="w-full bg-gray-800 border border-gray-700 text-white rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-komukuna-pink focus:ring-1 focus:ring-komukuna-pink transition-colors"
                                             />
                                         </div>
-                                        <p className="text-xs text-gray-500 mt-2">*Kosongi jika belum ada tanggal pasti</p>
+                                        <p className="text-xs text-gray-400 mt-2">*Kosongi jika belum ada tanggal pasti</p>
                                         
                                         <div className="mt-6 flex justify-end">
                                             <button
@@ -179,6 +181,7 @@ export default function LeadCaptureModal({ isOpen, onClose }: LeadCaptureModalPr
                                             <input
                                                 type="text"
                                                 required
+                                                aria-label="Nama Panggilan"
                                                 placeholder="Nama panggilan..."
                                                 value={customerName}
                                                 onChange={(e) => setCustomerName(e.target.value)}

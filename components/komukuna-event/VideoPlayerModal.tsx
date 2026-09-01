@@ -41,10 +41,11 @@ export default function VideoPlayerModal({
                 {/* Close Button */}
                 <button
                     onClick={onClose}
+                    aria-label="Tutup Pemutar Video"
                     className="absolute top-4 right-4 md:top-8 md:right-8 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-all z-50 group"
                 >
                     <X size={28} />
-                    <span className="sr-only">Close</span>
+                    <span className="sr-only">Tutup</span>
                 </button>
 
                 {/* Video Container */}

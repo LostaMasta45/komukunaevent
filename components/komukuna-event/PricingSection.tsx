@@ -232,7 +232,7 @@ export default function PricingSection() {
                                         {/* Original Price */}
                                         {tier.originalPrice ? (
                                             <div className="flex items-center gap-2">
-                                                <span className="text-gray-500 text-lg font-medium line-through decoration-red-500/50 decoration-2">
+                                                <span className="text-gray-400 text-lg font-medium line-through decoration-red-500/50 decoration-2">
                                                     {tier.originalPrice}
                                                 </span>
                                                 {/* Savings Badge */}
