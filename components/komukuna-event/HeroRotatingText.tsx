@@ -22,7 +22,7 @@ export default function HeroRotatingText() {
 
     return (
         <div className="relative h-[1.1em] overflow-hidden">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" initial={false}>
                 <motion.span
                     key={headlines[index]}
                     initial={{ y: 50, opacity: 0 }}

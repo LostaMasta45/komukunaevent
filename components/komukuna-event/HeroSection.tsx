@@ -13,7 +13,7 @@ export default function HeroSection() {
             <div className="absolute inset-0 overflow-hidden bg-komukuna-dark">
                 {/* Instant LCP Image poster for mobile & initial paint */}
                 <Image
-                    src="https://res.cloudinary.com/rezanurhamami/video/upload/so_0,w_800,c_fill,f_auto,q_auto/komukuna/process/video-bts1.jpg"
+                    src="/komukuna-event/hero-bg.jpg"
                     alt="Komukuna Photobooth Experience"
                     fill
                     priority
