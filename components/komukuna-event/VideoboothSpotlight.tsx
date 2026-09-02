@@ -1,9 +1,100 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { Aperture, Check, QrCode, Zap, Smartphone, Music } from 'lucide-react';
+import { Aperture, Check, QrCode, Zap, Smartphone, Music, Play } from 'lucide-react';
 import Image from 'next/image';
+import { useEffect, useRef, useState } from 'react';
 import { cloudinaryVideoboothVideos, getOptimizedVideoUrl } from '@/lib/cloudinary-videos';
+
+function LazyVideo() {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const [isVisible, setIsVisible] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    const videoUrl = getOptimizedVideoUrl(cloudinaryVideoboothVideos['majapahit-run']);
+    // Generate poster from Cloudinary video transformation
+    const posterUrl = videoUrl
+        .replace('/video/upload/', '/video/upload/so_1,w_450,h_800,c_fill,f_auto,q_auto/')
+        .replace('.mp4', '.jpg');
+
+    useEffect(() => {
+        const el = containerRef.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                    observer.disconnect();
+                }
+            },
+            { rootMargin: '200px' }
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
+
+    const handlePlay = () => {
+        setIsPlaying(true);
+        // Small delay to let video element mount
+        setTimeout(() => {
+            videoRef.current?.play().catch(() => {});
+        }, 100);
+    };
+
+    // Auto-play on desktop when visible
+    useEffect(() => {
+        if (isVisible && typeof window !== 'undefined' && window.innerWidth >= 768) {
+            setIsPlaying(true);
+            setTimeout(() => {
+                videoRef.current?.play().catch(() => {});
+            }, 100);
+        }
+    }, [isVisible]);
+
+    return (
+        <div ref={containerRef} className="relative aspect-[9/16] rounded-[2rem] border-[6px] border-gray-900 bg-black shadow-2xl overflow-hidden ring-1 ring-white/10 z-10">
+            {/* Poster Image (always shown initially) */}
+            {!isPlaying && (
+                <>
+                    <Image
+                        src={posterUrl}
+                        alt="360 Videobooth Preview"
+                        fill
+                        sizes="320px"
+                        className="object-cover"
+                        loading="lazy"
+                    />
+                    {/* Play button overlay for mobile */}
+                    <button
+                        onClick={handlePlay}
+                        aria-label="Play video"
+                        className="absolute inset-0 flex items-center justify-center z-20 bg-black/20 group"
+                    >
+                        <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
+                            <Play size={24} fill="black" className="ml-1 text-black" />
+                        </div>
+                    </button>
+                </>
+            )}
+
+            {/* Video (only loads when visible and playing) */}
+            {isVisible && isPlaying && (
+                <video
+                    ref={videoRef}
+                    className="w-full h-full object-cover"
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    poster={posterUrl}
+                >
+                    <source src={videoUrl} type="video/mp4" />
+                </video>
+            )}
+        </div>
+    );
+}
 
 export default function VideoboothSpotlight() {
     return (
@@ -25,21 +116,8 @@ export default function VideoboothSpotlight() {
                         transition={{ duration: 0.8 }}
                         className="flex-1 w-full max-w-[320px] lg:max-w-[400px] relative mx-auto lg:mx-0"
                     >
-                        {/* Phone Frame */}
-                        <div className="relative aspect-[9/16] rounded-[2rem] border-[6px] border-gray-900 bg-black shadow-2xl overflow-hidden ring-1 ring-white/10 z-10">
-
-                            {/* Video Content - Lazy loaded for PageSpeed */}
-                            <video
-                                className="w-full h-full object-cover"
-                                autoPlay
-                                muted
-                                loop
-                                playsInline
-                                preload="none"
-                            >
-                                <source src={getOptimizedVideoUrl(cloudinaryVideoboothVideos['majapahit-run'])} type="video/mp4" />
-                            </video>
-                        </div>
+                        {/* Phone Frame with Lazy Video */}
+                        <LazyVideo />
 
                         {/* Floating Badge */}
                         <motion.div

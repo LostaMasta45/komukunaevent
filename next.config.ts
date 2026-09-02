@@ -26,6 +26,11 @@ const nextConfig: NextConfig = {
       },
     ],
     formats: ['image/avif', 'image/webp'],
+    // Optimized device sizes for mobile-first approach
+    deviceSizes: [640, 750, 828, 1080, 1200],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    // Cache optimized images for 1 year
+    minimumCacheTTL: 31536000,
   },
 
   experimental: {
@@ -37,3 +42,4 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+

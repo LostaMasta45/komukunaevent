@@ -4,8 +4,12 @@ import { Button } from './ui/Button';
 import Link from 'next/link';
 import { ChevronRight, Play } from 'lucide-react';
 import { useState } from 'react';
-import PortfolioArchiveModal from './PortfolioArchiveModal';
-import { portfolioItems, videoItems } from './portfolio-data';
+import dynamic from 'next/dynamic';
+
+// Lazy load the heavy modal - only downloads when user clicks "Lihat Portfolio"
+const PortfolioArchiveModal = dynamic(() => import('./PortfolioArchiveModal'), {
+    ssr: false,
+});
 
 export default function HeroButtons() {
     const [isDemoOpen, setIsDemoOpen] = useState(false);
@@ -25,8 +29,8 @@ export default function HeroButtons() {
                             <span className="relative z-10 flex items-center justify-center">
                                 Cek Ketersediaan <ChevronRight className="ml-2 w-4 h-4" />
                             </span>
-                            {/* Shine Effect */}
-                            <div className="absolute top-0 -left-[100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] animate-[shine_3s_infinite]" />
+                            {/* Shine Effect - using transform for composited animation */}
+                            <div className="absolute top-0 w-[50%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-25deg] animate-shine pointer-events-none" />
                         </Link>
                     </Button>
                 </div>
@@ -45,14 +49,30 @@ export default function HeroButtons() {
                 </Button>
             </div>
 
-            {/* Portfolio Modal */}
-            <PortfolioArchiveModal
-                isOpen={isDemoOpen}
-                initialTab="photobooth"
-                photoItems={portfolioItems}
-                videoItems={videoItems}
-                onClose={() => setIsDemoOpen(false)}
-            />
+            {/* Portfolio Modal - only rendered when opened, data loaded on demand */}
+            {isDemoOpen && (
+                <PortfolioArchiveModalWrapper
+                    isOpen={isDemoOpen}
+                    onClose={() => setIsDemoOpen(false)}
+                />
+            )}
         </>
     );
 }
+
+// Separate wrapper to dynamically import portfolio-data only when modal is opened
+function PortfolioArchiveModalWrapper({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+    // These imports happen in the component tree only when modal is rendered
+    const { portfolioItems, videoItems } = require('./portfolio-data');
+    
+    return (
+        <PortfolioArchiveModal
+            isOpen={isOpen}
+            initialTab="photobooth"
+            photoItems={portfolioItems}
+            videoItems={videoItems}
+            onClose={onClose}
+        />
+    );
+}
+

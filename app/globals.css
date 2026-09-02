@@ -104,6 +104,27 @@
     from { opacity: 0; }
     to { opacity: 1; }
   }
+
+  /* Composited shine animation using transform instead of left */
+  .animate-shine {
+    animation: shine 3s infinite;
+  }
+
+  @keyframes shine {
+    0% { transform: translateX(-200%) skewX(-25deg); }
+    100% { transform: translateX(400%) skewX(-25deg); }
+  }
+
+  /* Composited CTA glow using opacity only (GPU accelerated) */
+  .animate-cta-glow {
+    animation: ctaGlow 2s ease-in-out infinite;
+    will-change: opacity;
+  }
+
+  @keyframes ctaGlow {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
 }
 
 @layer base {

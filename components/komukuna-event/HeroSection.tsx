@@ -50,7 +50,7 @@ export default function HeroSection() {
                 <div className="space-y-8 max-w-5xl mx-auto">
 
                     {/* Tagline */}
-                    <div className="flex justify-center animate-fast-fade">
+                    <div className="flex justify-center">
                         <div className="px-5 py-2 rounded-full border border-komukuna-pink/30 bg-komukuna-pink/10 backdrop-blur-md flex items-center gap-2 shadow-[0_0_20px_rgba(232,92,144,0.2)]">
                             <span className="relative flex h-2 w-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-komukuna-pink opacity-75"></span>
@@ -73,7 +73,7 @@ export default function HeroSection() {
                     </h1>
 
                     {/* Subheader POINTER: LCP ELEMENT */}
-                    <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed animate-fast-fade">
+                    <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
                         Bikin <span className="text-white font-semibold">Corporate Gathering, Wedding, atau Party</span> Anda pecah! Hadirkan pengalaman
                         <span className="text-white font-semibold"> Photobooth & Video 360°</span> yang seru, personal, dan langsung tayang di Instagram Story.
                     </p>

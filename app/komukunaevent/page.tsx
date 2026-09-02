@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Navbar from '@/components/komukuna-event/Navbar';
 import HeroSection from '@/components/komukuna-event/HeroSection';
-import Preloader from '@/components/komukuna-event/Preloader';
 import dynamic from 'next/dynamic';
 import fs from 'fs';
 import path from 'path';
@@ -39,7 +38,6 @@ export default function KomukunaEventPage() {
 
     return (
         <main className="relative w-full overflow-hidden">
-            <Preloader />
             <Navbar />
             <HeroSection />
             <TrustBar />
@@ -57,3 +55,4 @@ export default function KomukunaEventPage() {
         </main>
     );
 }
+

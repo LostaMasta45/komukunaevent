@@ -47,15 +47,15 @@ export default function PartnerLogos({ logos }: PartnerLogosProps) {
                             key={index} // Index is safe here as it's a display-only list
                             className="bg-white rounded-xl p-4 md:p-5 w-32 h-20 md:w-40 md:h-24 flex items-center justify-center shadow-lg hover:scale-105 transition-transform duration-300 shrink-0"
                         >
-                            <div className="relative w-full h-full">
-                                <Image
-                                    src={partner.logo}
-                                    alt={`Logo Klien Partner ${index + 1}`}
-                                    fill
-                                    sizes="(max-width: 768px) 128px, 160px"
-                                    className="object-contain p-1"
-                                />
-                            </div>
+                            <Image
+                                src={partner.logo}
+                                alt={`Logo Klien Partner ${index + 1}`}
+                                width={128}
+                                height={80}
+                                loading="lazy"
+                                quality={60}
+                                className="object-contain w-full h-full"
+                            />
                         </div>
                     ))}
                 </motion.div>
