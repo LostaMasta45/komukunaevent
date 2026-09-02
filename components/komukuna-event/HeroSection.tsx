@@ -28,15 +28,15 @@ export default function HeroSection() {
 
                 {/* 2. Gradient Overlay to ensure text readability */}
                 <div className="absolute inset-0 bg-gradient-to-b from-komukuna-dark/80 via-komukuna-dark/50 to-komukuna-dark" />
-                <div className="absolute inset-0 bg-gradient-to-r from-komukuna-purple/30 to-komukuna-pink/20 mix-blend-multiply" />
+                <div className="absolute inset-0 bg-gradient-to-r from-komukuna-purple/20 to-komukuna-pink/10" />
 
                 {/* 3. Pattern Overlay (Grid) */}
                 <div
-                    className="absolute inset-0 opacity-[0.1] mix-blend-screen pointer-events-none"
+                    className="absolute inset-0 opacity-[0.05] pointer-events-none"
                     style={{
                         backgroundImage: `
-                            linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px)
+                            linear-gradient(rgba(255, 255, 255, 1) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(255, 255, 255, 1) 1px, transparent 1px)
                         `,
                         backgroundSize: '40px 40px'
                     }}
