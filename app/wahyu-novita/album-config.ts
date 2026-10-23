@@ -1,5 +1,5 @@
 // Ganti tautan ini saat album Wahyu & Novita sudah siap.
-export const ALBUM_URL = 'https://fotoshare.co/e/0zqaj5YmjfiCyfQHMIzgd';
+export const ALBUM_URL = 'https://fotoshare.co/e/gEp5wvu4yxZnqaxPYpZA-';
 
 export type SessionMedia = {
   id: string;
