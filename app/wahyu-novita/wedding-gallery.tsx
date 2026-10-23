@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowUpRight, Bookmark, CalendarDays, Camera, Check, Copy, Download, Heart, House, Image as ImageIcon, Maximize2, MessageCircle, Minimize2, Share2, Sparkles, X } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import NativeAlbum from './native-album';
 import WeddingWelcome from './wedding-welcome';
 import BrandLogo from '@/components/branding/BrandLogo';
@@ -174,6 +175,7 @@ export default function WeddingGallery() {
             <p className={styles.heroCaption}>Satu hari istimewa,<br />seribu kenangan yang tersimpan.</p>
             <a href="#galeri" className={styles.primaryButton} onClick={() => galleryRef.current?.focus({ preventScroll: true })}>Temukan Fotomu<ArrowDown size={16} aria-hidden="true" /></a>
             <div className={styles.heroFootnote}><Heart size={14} aria-hidden="true" />Terima kasih sudah menjadi bagian dari cerita kami.</div>
+            <Link href={STUDIO_PATH} className={styles.heroStudioLink}>Di balik senyum ini, ada Komukuna Booth.<span>Kenalan, yuk<ArrowUpRight size={13} aria-hidden="true" /></span></Link>
           </div>
           <span className={styles.heroNumber}>01 / OUR HAPPY MOMENTS</span>
         </section>
@@ -191,9 +193,24 @@ export default function WeddingGallery() {
             <NativeAlbum />
           </section>
 
-          <aside className={styles.portfolioNudge} aria-label="Inspirasi acara bersama Komukuna">
-            <span><Camera size={16} aria-hidden="true" />Suka keseruan seperti ini untuk acaramu?</span>
-            <Link href="/komukunaevent/portofolio">Intip portofolio Komukuna<ArrowUpRight size={15} aria-hidden="true" /></Link>
+          <aside className={styles.discoveryCard} aria-labelledby="discovery-title">
+            <div className={styles.discoveryVisual} aria-hidden="true">
+              <span className={styles.discoveryVisualLabel}>GOOD PEOPLE. GREAT MEMORIES.</span>
+              <div className={styles.discoveryCrowd}><Image src="/komukuna-event/process/exp-crowd.JPG" alt="" fill sizes="(max-width: 767px) 280px, 360px" /></div>
+              <div className={styles.discoveryPrint}><div><Image src="/komukuna-event/process/exp-print.jpg" alt="" fill sizes="(max-width: 767px) 140px, 180px" /></div><span>A LITTLE JOY TO KEEP.</span></div>
+              <span className={styles.discoveryVisualNote}><Camera size={14} />Cuplikan portofolio Komukuna</span>
+              <Sparkles className={styles.discoverySparkle} size={28} strokeWidth={1} />
+            </div>
+            <div className={styles.discoveryStory}>
+              <span className={styles.sectionEyebrow}>KENANGAN INI, BERSAMA KOMUKUNA BOOTH</span>
+              <h2 id="discovery-title">Keseruan hari ini,<br /><em>bisa hadir di acaramu.</em></h2>
+              <p>Dari pose spontan sampai foto yang dibawa pulang. Kalau kamu suka momen hari ini, temukan inspirasi untuk perayaanmu berikutnya bersama Komukuna Booth.</p>
+              <div className={styles.discoveryLinks}>
+                <Link href="/komukunaevent/portofolio" className={styles.discoveryPortfolio}><Camera size={21} strokeWidth={1.5} aria-hidden="true" /><span><strong>Lihat cerita acara lainnya</strong><small>Jelajahi foto, suasana, dan hasil booth kami.</small></span><ArrowUpRight size={20} aria-hidden="true" /></Link>
+                <Link href={STUDIO_PATH} className={styles.discoveryHome}><Sparkles size={21} strokeWidth={1.5} aria-hidden="true" /><span><strong>Temukan booth yang cocok</strong><small>Kenali layanan dan pilihan Komukuna Booth.</small></span><ArrowUpRight size={20} aria-hidden="true" /></Link>
+              </div>
+              <span className={styles.discoverySignoff}>Boleh cari inspirasi dulu. Siapa tahu, berikutnya acaramu.</span>
+            </div>
           </aside>
 
           <section className={styles.guide} aria-label="Cara menikmati album">
@@ -208,10 +225,10 @@ export default function WeddingGallery() {
 
           <section className={styles.studioCard} aria-labelledby="studio-title">
             <div className={styles.studioStory}>
-              <span className={styles.sectionEyebrow}><Sparkles size={13} aria-hidden="true" /> YOUR NEXT HAPPY MOMENT</span>
-              <h2 id="studio-title">Kali ini ikut berpose.<br /><em>Berikutnya, di acaramu sendiri.</em></h2>
-              <p>Bayangkan orang-orang tersayang tertawa lepas di acaramu. Hadirkan photobooth & videobooth dari Komukuna Studio untuk momen yang bisa mereka bawa pulang dan putar kembali.</p>
-              <Link href={STUDIO_PATH} className={styles.studioHome}>Kenalan dengan Komukuna Studio<ArrowUpRight size={15} aria-hidden="true" /></Link>
+              <span className={styles.sectionEyebrow}><Sparkles size={13} aria-hidden="true" /> DARI TAMU, JADI TUAN RUMAH</span>
+              <h2 id="studio-title">Hari ini ikut merayakan.<br /><em>Besok, kamu yang punya cerita.</em></h2>
+              <p>Pernikahan, ulang tahun, atau acara kantor—bawa keseruan photobooth & videobooth ke perayaanmu. Pilih gaya yang kamu suka, lalu ceritakan rencanamu ke Komukuna Booth.</p>
+              <Link href={STUDIO_PATH} className={styles.studioHome}>Lihat pilihan untuk acaramu<ArrowUpRight size={15} aria-hidden="true" /></Link>
             </div>
             <div className={styles.studioActions}>
               <span className={styles.studioPrompt}>Punya rencana acara?</span>

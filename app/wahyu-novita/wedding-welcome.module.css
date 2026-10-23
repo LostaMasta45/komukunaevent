@@ -17,7 +17,6 @@
 .topline, .bottomline { position: absolute; left: 44px; right: 44px; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 9px; letter-spacing: .22em; color: var(--color-decoration); }
 .topline { top: 38px; right: auto; gap: 18px; }
 .bottomline { bottom: 34px; }
-.welcome .motionToggle { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 8px; border: 0; border-radius: 8px; background: transparent; color: var(--color-hero-text); font: inherit; font-size: 10px; letter-spacing: 0; cursor: pointer; }
 .skip { position: absolute; top: 24px; right: 32px; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 10px 12px; border: 0; background: transparent; color: var(--color-hero-text); font: inherit; font-size: 11px; cursor: pointer; }
 .composition { width: min(100%, 660px); text-align: center; }
 .heading { animation: fadeIn 700ms var(--ease-out) both; transition: opacity 300ms var(--ease-out); }
@@ -127,11 +126,5 @@
   .welcome .envelopeFloat { animation: envelopeLiftReduced 5.6s ease-in-out infinite !important; }
   .welcome .envelopeDrift { animation: envelopeDriftReduced 5.6s -1.4s ease-in-out infinite !important; }
   .welcome .envelopeShadow { animation: shadowFloat 5.6s ease-in-out infinite !important; }
-  .welcome[data-motion] { transition: opacity 250ms linear !important; }
+  .welcome[data-phase] { transition: opacity 250ms linear !important; }
 }
-.welcome[data-motion='paused'] :is(.envelopeFloat, .envelopeDrift, .envelopeShadow),
-.welcome[data-motion='paused'] .ambient > span,
-.welcome[data-motion='paused'] .ambient::before,
-.welcome[data-motion='paused'] .seal::before,
-.welcome[data-motion='paused'] .seal::after,
-.welcome[data-motion='paused'] .envelopeFront::before { animation-play-state: paused !important; }

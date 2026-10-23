@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ArrowRight, Check, Heart, Pause, Play } from 'lucide-react';
+import { ArrowRight, Check, Heart } from 'lucide-react';
 import { WEDDING_EVENT } from './event-config';
 import styles from './wedding-welcome.module.css';
 
@@ -46,7 +46,6 @@ function OpeningProgress({ running, onComplete }: { running: boolean; onComplete
 
 export default function WeddingWelcome({ onEnter, onReveal }: { onEnter: () => void; onReveal: () => void }) {
   const [phase, setPhase] = useState<Phase>('idle');
-  const [motionPlaying, setMotionPlaying] = useState(true);
   const startedRef = useRef(false);
   const enteredRef = useRef(false);
   const revealingRef = useRef(false);
@@ -143,7 +142,7 @@ export default function WeddingWelcome({ onEnter, onReveal }: { onEnter: () => v
           : 'Sebuah album kecil untuk hari yang besar.';
 
   return (
-    <section className={styles.welcome} data-phase={phase} data-motion={motionPlaying ? 'on' : 'paused'} aria-labelledby="welcome-title">
+    <section className={styles.welcome} data-phase={phase} aria-labelledby="welcome-title">
       <div className={styles.backdrop} aria-hidden="true" />
       <div className={styles.ambient} aria-hidden="true"><span /><span /><span /><span /><span /><span /></div>
       <span className={styles.cornerTop} aria-hidden="true" />
@@ -199,10 +198,6 @@ export default function WeddingWelcome({ onEnter, onReveal }: { onEnter: () => v
       </div>
       <div className={styles.bottomline}>
         <span>WAHYU & NOVITA</span>
-        <button type="button" className={styles.motionToggle} onClick={() => setMotionPlaying((playing) => !playing)} aria-label={motionPlaying ? 'Jeda animasi dekorasi amplop' : 'Putar animasi dekorasi amplop'}>
-          {motionPlaying ? <Pause size={12} aria-hidden="true" /> : <Play size={12} aria-hidden="true" />}
-          {motionPlaying ? 'Jeda animasi' : 'Putar animasi'}
-        </button>
         <span>THE MEMORY COLLECTION</span>
       </div>
     </section>
