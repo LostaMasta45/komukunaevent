@@ -1,13 +1,12 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowUpRight, Bookmark, CalendarDays, Camera, Check, Copy, Download, Heart, House, Image as ImageIcon, Maximize2, MessageCircle, Minimize2, Share2, Sparkles, X } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Bookmark, Camera, Check, Copy, Download, Heart, House, Image as ImageIcon, Maximize2, MessageCircle, Minimize2, Share2, Sparkles, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import NativeAlbum from './native-album';
 import WeddingWelcome from './wedding-welcome';
 import BrandLogo from '@/components/branding/BrandLogo';
-import { ALBUM_URL } from './album-config';
 import { WEDDING_EVENT } from './event-config';
 import styles from './wedding-gallery.module.css';
 
@@ -28,7 +27,7 @@ export default function WeddingGallery() {
   const [shareUrl, setShareUrl] = useState('');
   const [copied, setCopied] = useState(false);
   const [notice, setNotice] = useState('');
-  const [galleryVisible, setGalleryVisible] = useState(false);
+  const [activeSection, setActiveSection] = useState<'album' | 'galeri' | null>('album');
 
   useEffect(() => {
     if (!welcomeOpen) return;
@@ -53,9 +52,19 @@ export default function WeddingGallery() {
 
   useEffect(() => {
     const gallery = galleryRef.current;
-    if (!gallery) return;
-    const observer = new IntersectionObserver(([entry]) => setGalleryVisible(entry.isIntersecting), { rootMargin: '-20% 0px -35% 0px' });
+    const hero = heroTitleRef.current?.closest('section');
+    if (!gallery || !hero) return;
+    let heroVisible = true;
+    let galleryVisible = false;
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.target === gallery) galleryVisible = entry.isIntersecting;
+        if (entry.target === hero) heroVisible = entry.isIntersecting;
+      }
+      setActiveSection(galleryVisible ? 'galeri' : heroVisible ? 'album' : null);
+    }, { rootMargin: '-15% 0px -35% 0px' });
     observer.observe(gallery);
+    observer.observe(hero);
     return () => observer.disconnect();
   }, []);
 
@@ -142,7 +151,7 @@ export default function WeddingGallery() {
       if (document.fullscreenElement) await document.exitFullscreen();
       else await galleryRef.current?.requestFullscreen();
     } catch {
-      setNotice('Layar penuh tidak tersedia. Gunakan tombol Buka album untuk tampilan terpisah.');
+      setNotice('Layar penuh tidak tersedia. Kamu tetap bisa melihat dan mengunduh foto di galeri ini.');
     }
   }
 
@@ -162,7 +171,7 @@ export default function WeddingGallery() {
       </header>
 
       <main>
-        <section className={styles.hero} aria-labelledby="couple-title">
+        <section id="cerita" className={styles.hero} aria-labelledby="couple-title">
           <span className={styles.cornerTop} aria-hidden="true" />
           <span className={styles.cornerBottom} aria-hidden="true" />
           <span className={styles.railLeft} aria-hidden="true" />
@@ -187,7 +196,6 @@ export default function WeddingGallery() {
               <div><span className={styles.sectionEyebrow}>OUR LITTLE GALLERY</span><h2 id="gallery-title">Kenangan yang <em>tersimpan.</em></h2><p>Semua momen photobooth dalam satu album.<br />Temukan, lihat, dan simpan fotomu.</p></div>
               <div className={styles.galleryActions}>
                 {canFullscreen && <button type="button" onClick={toggleFullscreen} className={styles.iconButton} aria-label={fullscreen ? 'Keluar layar penuh' : 'Tampilkan galeri layar penuh'} title={fullscreen ? 'Keluar layar penuh' : 'Layar penuh'}>{fullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}</button>}
-                <a href={ALBUM_URL} target="_blank" rel="noopener noreferrer" className={styles.externalButton}>Buka album<ArrowUpRight size={16} /><span className={styles.srOnly}> di tab baru</span></a>
               </div>
             </div>
             <NativeAlbum />
@@ -244,12 +252,11 @@ export default function WeddingGallery() {
       <footer className={styles.footer}><span>{WEDDING_EVENT.hashtag}<span aria-hidden="true">♡</span><time dateTime={WEDDING_EVENT.date}>{WEDDING_EVENT.dateLabel}</time></span><Link href="/komukunaevent" className={styles.footerBrand} aria-label="Captured with love by Komukuna Studio, kunjungi beranda"><span>Captured with love by</span><BrandLogo surface="dark" monochrome className={styles.footerLogo} sizes="88px" /><ArrowUpRight size={15} aria-hidden="true" /></Link></footer>
 
       <nav className={styles.mobileNav} aria-label="Navigasi cepat album">
-        <svg className={styles.dockShape} viewBox="0 0 400 88" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d="M30 4H145C155 4 158 10 161 20C166 39 179 49 200 49C221 49 234 39 239 20C242 10 245 4 255 4H370C385 4 396 15 396 30V58C396 74 385 84 370 84H30C15 84 4 74 4 58V30C4 15 15 4 30 4Z" /></svg>
-        <Link href={STUDIO_PATH} prefetch={false} className={styles.dockItem}><span className={styles.dockIcon}><House size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Beranda</span></Link>
-        <Link href="/komukunaevent/portofolio" prefetch={false} className={styles.dockItem}><span className={styles.dockIcon}><Sparkles size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Portofolio</span></Link>
-        <Link href={`${STUDIO_PATH}#pricing`} prefetch={false} className={styles.navBooking} aria-label="Booking, lihat pilihan paket di homepage Komukuna"><span className={styles.bookingOrb}><CalendarDays size={25} strokeWidth={1.7} aria-hidden="true" /><Sparkles className={styles.orbSparkle} size={11} aria-hidden="true" /></span><span className={styles.bookingLabel}>Booking</span></Link>
-        <a href="#galeri" className={styles.dockItem} data-active={galleryVisible || undefined} aria-current={galleryVisible ? 'location' : undefined} onClick={() => galleryRef.current?.focus({ preventScroll: true })}><span className={styles.dockIcon}><ImageIcon size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Galeri</span></a>
-        <button type="button" className={styles.dockItem} onClick={saveStudio} aria-haspopup="dialog" aria-expanded={shareOpen && savingStudio}><span className={styles.dockIcon}><Bookmark size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Simpan</span></button>
+        <a href="#cerita" className={styles.dockItem} data-active={activeSection === 'album' || undefined} aria-current={activeSection === 'album' ? 'location' : undefined} aria-label="Album, kembali ke cerita Wahyu dan Novita" onClick={() => heroTitleRef.current?.focus({ preventScroll: true })}><span className={styles.dockIcon}><Heart size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Album</span></a>
+        <a href="#galeri" className={styles.dockItem} data-active={activeSection === 'galeri' || undefined} aria-current={activeSection === 'galeri' ? 'location' : undefined} onClick={() => galleryRef.current?.focus({ preventScroll: true })}><span className={styles.dockIcon}><ImageIcon size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Galeri</span></a>
+        <Link href={STUDIO_PATH} prefetch={false} className={`${styles.dockItem} ${styles.dockStudio}`} aria-label="Komukuna, buka beranda Komukuna Booth"><span className={styles.dockIcon}><House size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Komukuna</span></Link>
+        <Link href="/komukunaevent/portofolio" prefetch={false} className={styles.dockItem} aria-label="Portofolio, lihat karya Komukuna Booth"><span className={styles.dockIcon}><Sparkles size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Portofolio</span></Link>
+        <button type="button" className={styles.dockItem} onClick={shareAlbum} aria-label="Bagikan album Wahyu dan Novita" aria-expanded={shareOpen && !savingStudio}><span className={styles.dockIcon}><Share2 size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Bagikan</span></button>
       </nav>
 
       {shareOpen && <div className={styles.modalBackdrop} onClick={(event) => { if (event.target === event.currentTarget) setShareOpen(false); }}>

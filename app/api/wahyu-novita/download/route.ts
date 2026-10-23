@@ -22,7 +22,7 @@ export async function GET(request: Request) {
     const photo = (await getAlbum()).photos.find((item) => item.id === id);
     if (!photo) return Response.json({ error: 'Foto tidak ditemukan.' }, { status: 404 });
     if (params.get('all') === '1') {
-      if (!photo.sessionComplete) return Response.json({ error: 'Isi sesi belum lengkap. Buka sesi asli untuk mengunduh seluruh berkas.' }, { status: 409 });
+      if (!photo.sessionComplete) return Response.json({ error: 'Isi sesi belum lengkap. Silakan unduh berkas yang sudah tersedia satu per satu.' }, { status: 409 });
       const files: { name: string; data: Buffer }[] = [];
       let totalBytes = 0;
       for (const [index, item] of photo.items.entries()) {

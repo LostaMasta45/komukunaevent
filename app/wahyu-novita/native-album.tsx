@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { ChevronLeft, ChevronRight, Download, ExternalLink, FileArchive, Images, LoaderCircle, Play, RefreshCw, X } from 'lucide-react';
-import { ALBUM_URL, type AlbumData } from './album-config';
+import { ChevronLeft, ChevronRight, Download, FileArchive, Images, LoaderCircle, Play, RefreshCw, X } from 'lucide-react';
+import type { AlbumData } from './album-config';
 import styles from './native-album.module.css';
 
 export default function NativeAlbum() {
@@ -14,6 +14,7 @@ export default function NativeAlbum() {
   const [selected, setSelected] = useState<number | null>(null);
   const [mediaIndex, setMediaIndex] = useState(0);
   const [imageState, setImageState] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [mediaAttempt, setMediaAttempt] = useState(0);
   const [mediaSize, setMediaSize] = useState<{ id: string; ratio: number } | null>(null);
   const [downloading, setDownloading] = useState<'file' | 'session' | null>(null);
   const [downloadError, setDownloadError] = useState('');
@@ -37,7 +38,7 @@ export default function NativeAlbum() {
     fetch('/api/wahyu-novita/album', { signal: controller.signal })
       .then(async (response) => { if (!response.ok) throw new Error(); return response.json() as Promise<AlbumData>; })
       .then(setAlbum)
-      .catch(() => { if (!controller.signal.aborted) setError('Album belum bisa dimuat. Coba lagi atau buka album langsung.'); });
+      .catch(() => { if (!controller.signal.aborted) setError('Album belum bisa dimuat. Tekan Coba lagi untuk memuat ulang foto di halaman ini.'); });
     return () => controller.abort();
   }, [attempt]);
 
@@ -97,7 +98,7 @@ export default function NativeAlbum() {
       const response = await fetch(`/api/wahyu-novita/download?id=${encodeURIComponent(photo.id)}&${query}`, { signal: controller.signal });
       if (!response.ok) {
         const failure = await response.json().catch(() => null);
-        throw new Error(failure?.error ?? 'Unduhan belum berhasil. Coba lagi atau buka sesi di album asli.');
+        throw new Error(failure?.error ?? 'Unduhan belum berhasil. Silakan coba lagi.');
       }
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
@@ -109,7 +110,7 @@ export default function NativeAlbum() {
       anchor.remove();
       window.setTimeout(() => URL.revokeObjectURL(url), 60000);
     } catch (error) {
-      if (!controller.signal.aborted) setDownloadError(error instanceof Error ? error.message : 'Unduhan belum berhasil. Coba lagi atau buka sesi di album asli.');
+      if (!controller.signal.aborted) setDownloadError(error instanceof Error ? error.message : 'Unduhan belum berhasil. Silakan coba lagi.');
     } finally {
       if (downloadController.current === controller) setDownloading(null);
     }
@@ -135,7 +136,7 @@ export default function NativeAlbum() {
       </div>
     </div>
     {!album && !error && <div className={styles.skeletons} data-columns={columns} aria-label="Memuat album" aria-busy="true">{Array.from({ length: 12 }, (_, index) => <div key={index} />)}<span className={styles.srOnly} role="status">Sedang memuat album…</span></div>}
-    {error && <div className={styles.empty} role="alert"><Images size={32} /><h3>Momennya belum terbuka.</h3><p>{error}</p><button type="button" onClick={() => setAttempt((value) => value + 1)}><RefreshCw size={16} />Coba lagi</button><a href={ALBUM_URL} target="_blank" rel="noopener noreferrer">Buka album langsung<ExternalLink size={15} /></a></div>}
+    {error && <div className={styles.empty} role="alert"><Images size={32} /><h3>Momennya belum terbuka.</h3><p>{error}</p><button type="button" onClick={() => setAttempt((value) => value + 1)}><RefreshCw size={16} />Coba lagi</button></div>}
     {album && album.photos.length === 0 && <div className={styles.empty}><Images size={32} /><h3>Belum ada foto.</h3><p>Momen akan muncul di sini setelah tersedia di album.</p><button type="button" onClick={() => setAttempt((value) => value + 1)}><RefreshCw size={16} />Muat ulang</button></div>}
     {album && <>
       <div ref={gridRef} className={styles.grid} data-columns={columns}>
@@ -156,9 +157,9 @@ export default function NativeAlbum() {
         <div className={styles.sessionSwitch}><button type="button" disabled={!!downloading || selected === 0} onClick={() => changeSession(-1)}><ChevronLeft size={16} />Sesi sebelumnya</button><span>{selected + 1} / {album?.photos.length}</span><button type="button" disabled={!!downloading || selected === (album?.photos.length ?? 0) - 1} onClick={() => changeSession(1)}>Sesi berikutnya<ChevronRight size={16} /></button></div>
         <div className={styles.viewer} onTouchStart={(event) => { if (event.touches.length !== 1 || event.target instanceof HTMLVideoElement) { touchRef.current = null; return; } touchRef.current = { x: event.touches[0].clientX, y: event.touches[0].clientY }; }} onTouchEnd={(event) => { const start = touchRef.current; touchRef.current = null; if (!start || !event.changedTouches[0]) return; const dx = event.changedTouches[0].clientX - start.x; const dy = event.changedTouches[0].clientY - start.y; if (Math.abs(dx) > 70 && Math.abs(dy) < 50) move(dx < 0 ? 1 : -1); }}>
           {imageState === 'loading' && <span className={styles.imageStatus} role="status"><LoaderCircle size={24} className={styles.spinner} /><span>Memuat berkas…</span></span>}
-          {imageState === 'error' && <span className={styles.imageStatus} role="alert">Berkas belum dapat ditampilkan.<a href={media.sourceUrl} target="_blank" rel="noopener noreferrer">Buka di album asli<ExternalLink size={16} /></a></span>}
+          {imageState === 'error' && <span className={styles.imageStatus} role="alert">Berkas belum dapat ditampilkan.<button type="button" onClick={() => { setImageState('loading'); setMediaAttempt((value) => value + 1); }}><RefreshCw size={16} />Muat ulang berkas</button></span>}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          {media.type === 'video' ? <video key={media.id} src={media.original} controls playsInline loop preload="metadata" onLoadedMetadata={(event) => { const video = event.currentTarget; if (video.videoWidth && video.videoHeight) setMediaSize({ id: media.id, ratio: video.videoWidth / video.videoHeight }); setImageState('ready'); }} onError={() => setImageState('error')} aria-label={`${media.label}, sesi ${selected + 1}`} style={{ opacity: imageState === 'ready' ? 1 : 0 }} /> : <img key={media.id} src={media.preview} alt={`${media.label}, sesi ${selected + 1}, berkas ${mediaIndex + 1}`} onLoad={(event) => { const image = event.currentTarget; if (image.naturalWidth && image.naturalHeight) setMediaSize({ id: media.id, ratio: image.naturalWidth / image.naturalHeight }); setImageState('ready'); }} onError={() => setImageState('error')} style={{ opacity: imageState === 'ready' ? 1 : 0 }} />}
+          {media.type === 'video' ? <video key={`${media.id}-${mediaAttempt}`} src={media.original} controls playsInline loop preload="metadata" onLoadedMetadata={(event) => { const video = event.currentTarget; if (video.videoWidth && video.videoHeight) setMediaSize({ id: media.id, ratio: video.videoWidth / video.videoHeight }); setImageState('ready'); }} onError={() => setImageState('error')} aria-label={`${media.label}, sesi ${selected + 1}`} style={{ opacity: imageState === 'ready' ? 1 : 0 }} /> : <img key={`${media.id}-${mediaAttempt}`} src={media.preview} alt={`${media.label}, sesi ${selected + 1}, berkas ${mediaIndex + 1}`} onLoad={(event) => { const image = event.currentTarget; if (image.naturalWidth && image.naturalHeight) setMediaSize({ id: media.id, ratio: image.naturalWidth / image.naturalHeight }); setImageState('ready'); }} onError={() => setImageState('error')} style={{ opacity: imageState === 'ready' ? 1 : 0 }} />}
         </div>
         <div className={styles.previewNav}><button type="button" disabled={mediaIndex === 0} onClick={() => move(-1)} aria-label="Berkas sebelumnya dalam sesi ini"><ChevronLeft size={22} /></button><p id="photo-help" aria-live="polite"><strong>{media.label} · {mediaIndex + 1}/{mediaCount}</strong><span>{mediaIndex === mediaCount - 1 ? 'Berkas terakhir dalam sesi ini' : 'Geser untuk melihat isi sesi ini'}</span></p><button type="button" disabled={mediaIndex === mediaCount - 1} onClick={() => move(1)} aria-label="Berkas berikutnya dalam sesi ini"><ChevronRight size={22} /></button></div>
         <div className={styles.filmstrip} role="group" aria-label="Pilih berkas dalam sesi ini">
@@ -169,8 +170,8 @@ export default function NativeAlbum() {
         </div>
         <footer className={styles.previewFooter}>
           <button className={styles.download} type="button" disabled={!!downloading || !photo.sessionComplete} onClick={() => downloadPhoto(true)}>{downloading === 'session' ? <LoaderCircle size={18} className={styles.spinner} /> : <FileArchive size={18} />}{downloading === 'session' ? 'Menyiapkan ZIP sesi ini…' : `Unduh semua sesi ini (${mediaCount})`}</button>
-          <div className={styles.fileActions}><button type="button" disabled={!!downloading} onClick={() => downloadPhoto()}>{downloading === 'file' ? <LoaderCircle size={15} className={styles.spinner} /> : <Download size={15} />}{downloading === 'file' ? 'Menyiapkan…' : 'Unduh berkas ini'}</button><a href={photo.sourceUrl} target="_blank" rel="noopener noreferrer">Buka sesi asli<ExternalLink size={14} /><span className={styles.srOnly}> di tab baru</span></a></div>
-          <p className={styles.zipHint} role="status">{downloading === 'session' ? 'Mengumpulkan semua berkas asli. Tunggu sebentar, ya.' : photo.sessionComplete ? 'Semua berkas asli sesi ini dalam satu ZIP.' : 'Isi sesi belum lengkap. Buka sesi asli untuk semua berkas.'}</p>
+          <div className={styles.fileActions}><button type="button" disabled={!!downloading} onClick={() => downloadPhoto()}>{downloading === 'file' ? <LoaderCircle size={15} className={styles.spinner} /> : <Download size={15} />}{downloading === 'file' ? 'Menyiapkan…' : 'Unduh berkas ini'}</button></div>
+          <p className={styles.zipHint} role="status">{downloading === 'session' ? 'Mengumpulkan semua berkas asli. Tunggu sebentar, ya.' : photo.sessionComplete ? 'Semua berkas asli sesi ini dalam satu ZIP.' : 'Sebagian berkas belum tersedia. Kamu masih bisa mengunduh berkas yang sudah tampil.'}</p>
           {downloadError && <p className={styles.downloadError} role="alert">{downloadError}</p>}
         </footer>
       </div>
