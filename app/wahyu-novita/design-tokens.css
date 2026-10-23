@@ -1,0 +1,22 @@
+[data-gallery-theme='maroon-romance'] {
+  --color-bg: #f9f6f0;
+  --color-surface: #fffdfc;
+  --color-surface-alt: #f5e8dd;
+  --color-text: #391716;
+  --color-text-muted: #75645f;
+  --color-primary: #6a0c12;
+  --color-primary-hover: #711820;
+  --color-border: #e3d6c8;
+  --color-hero-bg: #520305;
+  --color-hero-highlight: #69121a;
+  --color-hero-text: #fffcf8;
+  --color-wine-deep: #3f0206;
+  --color-decoration: #d9bc8e;
+  --color-decoration-muted: #cba679;
+  --color-overlay: rgba(35, 5, 7, .92);
+  --color-success: #2f684a;
+  --color-danger: #a32735;
+  --shadow-card: 0 6px 24px rgba(57, 23, 22, .05);
+  --font-display: var(--font-wedding-display), Georgia, serif;
+  --font-ui: var(--font-wedding-ui), system-ui, sans-serif;
+}
