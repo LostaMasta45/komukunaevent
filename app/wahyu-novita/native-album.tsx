@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { ChevronLeft, ChevronRight, Download, Images, LoaderCircle, Play, RefreshCw, X } from 'lucide-react';
 import type { AlbumData, SessionMedia } from './album-config';
 import styles from './native-album.module.css';
@@ -36,6 +36,13 @@ export default function NativeAlbum() {
   const dialogRef = useRef<HTMLDivElement>(null);
   const touchRef = useRef<{ x: number; y: number } | null>(null);
   const downloadController = useRef<AbortController | null>(null);
+  const selectedRef = useRef<number | null>(selected);
+  selectedRef.current = selected;
+  const albumRef = useRef<AlbumData | null>(album);
+  albumRef.current = album;
+  const downloadingRef = useRef(downloading);
+  downloadingRef.current = downloading;
+  const isFetchingRef = useRef(false);
   const photo = selected === null ? null : album?.photos[selected];
   const media = photo?.items[mediaIndex];
   const mediaCount = photo?.items.length ?? 0;
@@ -44,16 +51,78 @@ export default function NativeAlbum() {
   const activeThumbRef = useRef<HTMLButtonElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const fetchAlbumData = useCallback(async (isSilent = false) => {
+    if (isFetchingRef.current) return;
+    isFetchingRef.current = true;
+    if (!isSilent) {
+      setError('');
+      setAlbum(null);
+    }
     const controller = new AbortController();
-    setError('');
-    setAlbum(null);
-    fetch('/api/wahyu-novita/album', { signal: controller.signal })
-      .then(async (response) => { if (!response.ok) throw new Error(); return response.json() as Promise<AlbumData>; })
-      .then(setAlbum)
-      .catch(() => { if (!controller.signal.aborted) setError('Album belum bisa dimuat. Tekan Coba lagi untuk memuat ulang foto di halaman ini.'); });
-    return () => controller.abort();
-  }, [attempt]);
+    try {
+      const response = await fetch(`/api/wahyu-novita/album?_t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+        },
+        signal: controller.signal,
+      });
+      if (!response.ok) throw new Error();
+      const freshAlbum = (await response.json()) as AlbumData;
+
+      const curSelected = selectedRef.current;
+      const curAlbum = albumRef.current;
+      if (curSelected !== null && curAlbum?.photos[curSelected]) {
+        const activePhotoId = curAlbum.photos[curSelected].id;
+        const newIndex = freshAlbum.photos.findIndex((p) => p.id === activePhotoId);
+        if (newIndex === -1) {
+          setSelected(null);
+        } else if (newIndex !== curSelected) {
+          setSelected(newIndex);
+        }
+      }
+
+      setAlbum(freshAlbum);
+      setError('');
+    } catch {
+      if (!isSilent) {
+        setError('Album belum bisa dimuat. Tekan Coba lagi untuk memuat ulang foto di halaman ini.');
+      }
+    } finally {
+      isFetchingRef.current = false;
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchAlbumData(false);
+  }, [attempt, fetchAlbumData]);
+
+  useEffect(() => {
+    // Poll every 3 seconds while tab is active for ultra-fast sync
+    const pollInterval = window.setInterval(() => {
+      if (document.visibilityState === 'visible' && !downloadingRef.current) {
+        fetchAlbumData(true);
+      }
+    }, 3000);
+
+    // Instant sync when switching back to tab or focusing window
+    const handleSync = () => {
+      if (document.visibilityState === 'visible' && !downloadingRef.current) {
+        fetchAlbumData(true);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleSync);
+    window.addEventListener('focus', handleSync);
+
+    return () => {
+      window.clearInterval(pollInterval);
+      document.removeEventListener('visibilitychange', handleSync);
+      window.removeEventListener('focus', handleSync);
+    };
+  }, [fetchAlbumData]);
+
 
   useEffect(() => () => downloadController.current?.abort(), []);
 

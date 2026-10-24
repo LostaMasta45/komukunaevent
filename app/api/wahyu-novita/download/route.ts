@@ -2,6 +2,8 @@ import { getAlbum } from '@/app/wahyu-novita/album-source';
 import { createSessionZip } from '@/app/wahyu-novita/session-zip';
 
 export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 function filename(original: string, fallback: string) {
   return new URL(original).pathname.split('/').pop()?.replace(/[^a-zA-Z0-9._-]/g, '_') || fallback;

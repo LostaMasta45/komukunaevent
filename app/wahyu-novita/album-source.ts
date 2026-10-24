@@ -96,7 +96,15 @@ export function parseAlbum(html: string): AlbumData {
 }
 
 export async function getAlbum(): Promise<AlbumData> {
-  const response = await fetch(ALBUM_URL, { next: { revalidate: 60 }, signal: AbortSignal.timeout(15000) });
+  const url = `${ALBUM_URL}${ALBUM_URL.includes('?') ? '&' : '?'}_t=${Date.now()}`;
+  const response = await fetch(url, {
+    cache: 'no-store',
+    headers: {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+    },
+    signal: AbortSignal.timeout(10000),
+  });
   if (!response.ok) throw new Error('Album tidak dapat dimuat.');
   return parseAlbum(await response.text());
 }
