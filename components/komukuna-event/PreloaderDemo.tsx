@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { brandAssets } from '@/components/branding/brand-assets';
 import { Camera, Film, Aperture } from 'lucide-react'; // Icons for the variants
 
 interface PreloaderDemoProps {
@@ -117,7 +118,7 @@ export default function PreloaderDemo({ variant }: PreloaderDemoProps) {
                                     className="bg-white p-4 pb-12 shadow-2xl skew-y-1 w-64 md:w-80"
                                 >
                                     <div className="bg-black/5 w-full aspect-square relative overflow-hidden mb-4">
-                                        <Image src="/komukuna-event/logo.png" alt="Logo" fill className="object-contain p-4" />
+                                        <Image src={brandAssets.dark} alt="Logo" fill className="object-contain p-4" />
                                     </div>
                                     <p className="text-black font-handwriting text-center text-sm font-bold tracking-tight opacity-80">
                                         {hashtag}
@@ -164,7 +165,7 @@ export default function PreloaderDemo({ variant }: PreloaderDemoProps) {
                                         transition={{ delay: 0.2 }}
                                         className="flex items-center gap-4 bg-white/10 px-6 py-3 rounded-full backdrop-blur-md"
                                     >
-                                        <Image src="/komukuna-event/logo-circle.png" alt="Logo" width={30} height={30} />
+                                        <Image src={brandAssets.white} alt="Logo" width={30} height={30} />
                                         <span className="text-white text-xs tracking-widest">{hashtag}</span>
                                     </motion.div>
                                 </motion.div>
@@ -193,7 +194,7 @@ export default function PreloaderDemo({ variant }: PreloaderDemoProps) {
                                 className="flex flex-col items-center"
                             >
                                 <div className="relative w-40 h-40 mb-6">
-                                    <Image src="/komukuna-event/logo-circle.png" alt="Logo" fill className="object-contain" />
+                                    <Image src={brandAssets.white} alt="Logo" fill className="object-contain" />
                                 </div>
                                 <motion.div
                                     className="flex items-center gap-2 text-komukuna-pink"
@@ -232,7 +233,7 @@ export default function PreloaderDemo({ variant }: PreloaderDemoProps) {
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 1.5, type: "spring" }}
                             >
-                                <Image src="/komukuna-event/logo-circle.png" alt="Logo" fill className="object-contain" />
+                                <Image src={brandAssets.white} alt="Logo" fill className="object-contain" />
                             </motion.div>
 
                             <motion.div className="flex flex-col items-center gap-2">
@@ -267,7 +268,7 @@ export default function PreloaderDemo({ variant }: PreloaderDemoProps) {
                             <div className="absolute inset-0 bg-white flex items-center justify-center">
                                 <div className="flex flex-col items-center">
                                     <div className="relative w-48 h-48 mb-4">
-                                        <Image src="/komukuna-event/logo.png" alt="Logo" fill className="object-contain" />
+                                        <Image src={brandAssets.dark} alt="Logo" fill className="object-contain" />
                                     </div>
                                     <p className="text-black font-bold tracking-widest">{hashtag}</p>
                                 </div>
@@ -289,7 +290,7 @@ export default function PreloaderDemo({ variant }: PreloaderDemoProps) {
                                 transition={{ duration: 2, ease: "easeInOut" }}
                                 className="relative w-64 h-64"
                             >
-                                <Image src="/komukuna-event/logo.png" alt="Logo" fill className="object-contain" />
+                                <Image src={brandAssets.dark} alt="Logo" fill className="object-contain" />
                                 {/* Peaking Effect Overlay */}
                                 <motion.div
                                     className="absolute inset-0 border-2 border-green-500 rounded-lg opacity-0"
@@ -316,7 +317,7 @@ export default function PreloaderDemo({ variant }: PreloaderDemoProps) {
                             </AnimatePresence>
 
                             <div className="mb-12 relative w-40 h-40">
-                                <Image src="/komukuna-event/logo-circle.png" alt="Logo" fill className="object-contain opacity-20" />
+                                <Image src={brandAssets.white} alt="Logo" fill className="object-contain opacity-20" />
                             </div>
 
                             {/* Charge Bar */}
@@ -358,7 +359,7 @@ export default function PreloaderDemo({ variant }: PreloaderDemoProps) {
                                 transition={{ repeat: Infinity, duration: 0.2 }}
                             >
                                 <div className="relative w-56 h-56">
-                                    <Image src="/komukuna-event/logo-circle.png" alt="Logo" fill className="object-contain" />
+                                    <Image src={brandAssets.white} alt="Logo" fill className="object-contain" />
                                 </div>
                                 <p className="mt-4 text-white text-sm tracking-[0.5em] bg-black px-2">{hashtag}</p>
                             </motion.div>

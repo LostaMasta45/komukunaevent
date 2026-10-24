@@ -1,5 +1,5 @@
-export const ALBUM_URL = 'https://fotoshare.co/e/gEp5wvu4yxZnqaxPYpZA-';
-export const EMBED_IFRAME = '<iframe allow="web-share" src="https://fotoshare.co/e/gEp5wvu4yxZnqaxPYpZA-?embed=1" style="width:100%;height:100%;border:0;" frameborder="0"></iframe>';
+export const ALBUM_URL = 'https://fotoshare.co/e/gkIxT6P9khFR9HhdzP_Np';
+export const ALBUM_EMBED_URL = `${ALBUM_URL}?embed=1`;
 
 export type SessionMedia = {
   id: string;

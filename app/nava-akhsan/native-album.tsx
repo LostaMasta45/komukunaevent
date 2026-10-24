@@ -3,8 +3,9 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { ChevronLeft, ChevronRight, Download, Images, LoaderCircle, Play, RefreshCw, X } from 'lucide-react';
 import type { AlbumData, SessionMedia } from './album-config';
-import MediaPreview from './media-preview';
+import { ALBUM_EMBED_URL } from './album-config';
 import styles from './native-album.module.css';
+import MediaPreview from './media-preview';
 
 function triggerBlobDownload(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob);
@@ -18,7 +19,15 @@ function triggerBlobDownload(blob: Blob, filename: string) {
   window.setTimeout(() => URL.revokeObjectURL(url), 60000);
 }
 
-export default function NativeAlbum() {
+export type AlbumActivity = { previewOpen: boolean; downloading: boolean };
+
+type NativeAlbumProps = {
+  onPreviewPhotos?: (photos: string[]) => void;
+  onDownloadReady?: () => void;
+  onInteractionChange?: (activity: AlbumActivity) => void;
+};
+
+export default function NativeAlbum({ onDownloadReady, onInteractionChange, onPreviewPhotos }: NativeAlbumProps) {
   const [album, setAlbum] = useState<AlbumData | null>(null);
   const [error, setError] = useState('');
   const [attempt, setAttempt] = useState(0);
@@ -43,6 +52,7 @@ export default function NativeAlbum() {
   downloadingRef.current = downloading;
   const isFetchingRef = useRef(false);
   const photo = selected === null ? null : album?.photos[selected];
+  const photoId = photo?.id;
   const media = photo?.items[mediaIndex];
   const mediaCount = photo?.items.length ?? 0;
   const mediaCountRef = useRef(mediaCount);
@@ -82,7 +92,8 @@ export default function NativeAlbum() {
         }
       }
 
-      setAlbum(freshAlbum);
+      // Unchanged polls should not rerender every thumbnail or reset the viewer.
+      if (JSON.stringify(curAlbum) !== JSON.stringify(freshAlbum)) setAlbum(freshAlbum);
       setError('');
     } catch {
       if (!isSilent) {
@@ -98,12 +109,14 @@ export default function NativeAlbum() {
   }, [attempt, fetchAlbumData]);
 
   useEffect(() => {
+    // Poll every 3 seconds while tab is active for ultra-fast sync
     const pollInterval = window.setInterval(() => {
       if (document.visibilityState === 'visible' && !downloadingRef.current) {
         fetchAlbumData(true);
       }
     }, 3000);
 
+    // Instant sync when switching back to tab or focusing window
     const handleSync = () => {
       if (document.visibilityState === 'visible' && !downloadingRef.current) {
         fetchAlbumData(true);
@@ -120,21 +133,34 @@ export default function NativeAlbum() {
     };
   }, [fetchAlbumData]);
 
+
   useEffect(() => () => downloadController.current?.abort(), []);
 
   useEffect(() => {
+    // Closing the preview should not cancel files already being downloaded.
+    if (!photoId) return;
     downloadController.current?.abort();
     setDownloading(null);
     setDownloadProgress(null);
     setDownloadError('');
-    if (photo) triggerRef.current = gridRef.current?.querySelector<HTMLButtonElement>(`[data-session-id="${photo.id}"]`) ?? triggerRef.current;
-  }, [photo]);
+    if (photoId) triggerRef.current = gridRef.current?.querySelector<HTMLButtonElement>(`[data-session-id="${photoId}"]`) ?? triggerRef.current;
+    // Browsing files within the same session keeps its download running.
+    // Polling replaces photo objects; only a different session should reset downloads.
+  }, [photoId]);
 
   useEffect(() => {
     activeThumbRef.current?.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
   }, [selected, mediaIndex]);
 
   const previewOpen = selected !== null;
+  useEffect(() => {
+    if (album) onPreviewPhotos?.(album.photos.slice(0, 3).map((item) => item.thumbnail));
+  }, [album, onPreviewPhotos]);
+
+  useEffect(() => {
+    onInteractionChange?.({ previewOpen, downloading: downloading !== null });
+  }, [previewOpen, downloading, onInteractionChange]);
+
   useEffect(() => {
     if (!previewOpen) return;
     const previousOverflow = document.body.style.overflow;
@@ -183,7 +209,7 @@ export default function NativeAlbum() {
       const fallbackExt = item.type === 'video' ? 'mp4' : item.type === 'gif' ? 'gif' : 'jpg';
       let filename = response.headers.get('content-disposition')?.match(/filename="([^"]+)"/)?.[1];
       if (!filename) {
-        filename = `Komukuna-Nava-Akhsan-${photo.id}-${index + 1}.${fallbackExt}`;
+        filename = `Komukuna-${photo.id}-${index + 1}.${fallbackExt}`;
       } else if (!filename.includes('.')) {
         filename = `${filename}.${fallbackExt}`;
       }
@@ -226,11 +252,14 @@ export default function NativeAlbum() {
           throw new Error('Unduhan belum berhasil. Silakan coba lagi.');
         } else if (successCount < items.length) {
           setDownloadError(`${successCount} dari ${items.length} berkas berhasil diunduh. Beberapa berkas belum berhasil.`);
+        } else if (!controller.signal.aborted) {
+          onDownloadReady?.();
         }
       } else {
         const result = await fetchItemBlob(media, mediaIndex);
         if (controller.signal.aborted) return;
         triggerBlobDownload(result.blob, result.filename);
+        onDownloadReady?.();
       }
     } catch (error) {
       if (!controller.signal.aborted) setDownloadError(error instanceof Error ? error.message : 'Unduhan belum berhasil. Silakan coba lagi.');
@@ -263,6 +292,7 @@ export default function NativeAlbum() {
     </div>
     {!album && !error && <div className={styles.skeletons} data-columns={columns} aria-label="Memuat album" aria-busy="true">{Array.from({ length: 12 }, (_, index) => <div key={index} />)}<span className={styles.srOnly} role="status">Sedang memuat album…</span></div>}
     {error && <div className={styles.empty} role="alert"><Images size={32} /><h3>Momennya belum terbuka.</h3><p>{error}</p><button type="button" onClick={() => setAttempt((value) => value + 1)}><RefreshCw size={16} />Coba lagi</button></div>}
+    {error && <div className={styles.embedFallback}><iframe allow="web-share" src={ALBUM_EMBED_URL} style={{ width: '100%', height: '100%', border: 0 }} frameBorder="0" title="Album Fotoshare Nava & Akhsan" /></div>}
     {album && album.photos.length === 0 && <div className={styles.empty}><Images size={32} /><h3>Belum ada foto.</h3><p>Momen akan muncul di sini setelah tersedia di album.</p><button type="button" onClick={() => setAttempt((value) => value + 1)}><RefreshCw size={16} />Muat ulang</button></div>}
     {album && <>
       <div ref={gridRef} className={styles.grid} data-columns={columns}>
@@ -282,7 +312,7 @@ export default function NativeAlbum() {
         <header className={styles.previewHeader}><div><span className={styles.label}>SEMUA KENANGAN DALAM SESI INI</span><h3 id="photo-title">Sesi {selected + 1} <span>· {mediaCount} berkas</span></h3></div><button type="button" ref={closeRef} onClick={() => setSelected(null)} aria-label="Tutup sesi, kembali ke galeri"><X size={22} /></button></header>
         <div className={styles.sessionSwitch}><button type="button" disabled={!!downloading || selected === 0} onClick={() => changeSession(-1)}><ChevronLeft size={16} />Sesi sebelumnya</button><span>{selected + 1} / {album?.photos.length}</span><button type="button" disabled={!!downloading || selected === (album?.photos.length ?? 0) - 1} onClick={() => changeSession(1)}>Sesi berikutnya<ChevronRight size={16} /></button></div>
         <div className={styles.viewer} onTouchStart={(event) => { if (event.touches.length !== 1 || event.target instanceof HTMLVideoElement) { touchRef.current = null; return; } touchRef.current = { x: event.touches[0].clientX, y: event.touches[0].clientY }; }} onTouchEnd={(event) => { const start = touchRef.current; touchRef.current = null; if (!start || !event.changedTouches[0]) return; const dx = event.changedTouches[0].clientX - start.x; const dy = event.changedTouches[0].clientY - start.y; if (Math.abs(dx) > 70 && Math.abs(dy) < 50) move(dx < 0 ? 1 : -1); }}>
-          <MediaPreview media={media} label={`${media.label}, sesi ${selected + 1}`} onSize={setMediaSize} />
+          <MediaPreview key={`${photo.id}-${media.id}-${media.preview}-${media.original}`} media={media} label={`${media.label}, sesi ${selected + 1}, berkas ${mediaIndex + 1}`} onSize={setMediaSize} />
         </div>
         <div className={styles.previewNav}><button type="button" disabled={mediaIndex === 0} onClick={() => move(-1)} aria-label="Berkas sebelumnya dalam sesi ini"><ChevronLeft size={22} /></button><p id="photo-help" aria-live="polite"><strong>{media.label} · {mediaIndex + 1}/{mediaCount}</strong><span>{mediaIndex === mediaCount - 1 ? 'Berkas terakhir dalam sesi ini' : 'Geser untuk melihat isi sesi ini'}</span></p><button type="button" disabled={mediaIndex === mediaCount - 1} onClick={() => move(1)} aria-label="Berkas berikutnya dalam sesi ini"><ChevronRight size={22} /></button></div>
         <div className={styles.filmstrip} role="group" aria-label="Pilih berkas dalam sesi ini">

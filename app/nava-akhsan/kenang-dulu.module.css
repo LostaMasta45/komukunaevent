@@ -1,0 +1,68 @@
+.card { display: grid; grid-template-columns: .7fr 1.3fr; margin-top: 40px; overflow: hidden; border: 1px solid var(--color-border); border-radius: 24px; background: var(--color-surface); color: var(--color-text); }
+.cardArt { display: grid; place-items: center; min-height: 280px; background: var(--color-welcome-bg); }
+.cardContent { padding: 36px; }
+.eyebrow { display: block; color: var(--color-detail); font-size: 10px; font-weight: 600; letter-spacing: .2em; }
+.card h2, .panel h2 { margin: 12px 0 14px; font: 500 38px/1.08 var(--font-display); letter-spacing: -.025em; text-wrap: balance; }
+.card h2 em, .panel h2 em { color: var(--color-heading-accent); font-weight: 400; }
+.card p, .panel p { margin: 0; color: var(--color-text-muted); font-size: 14px; line-height: 1.75; }
+.formats { display: flex; flex-wrap: wrap; gap: 10px 18px; padding: 0; margin: 20px 0 24px; list-style: none; color: var(--color-text-secondary); }
+.formats li { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; }
+.formats svg { color: var(--color-detail); }
+.cta { display: inline-flex; align-items: center; justify-content: center; gap: 14px; min-height: 50px; padding: 14px 22px; border: 1px solid var(--color-primary); border-radius: 14px; background: var(--color-primary); color: var(--color-hero-text); font: 600 14px/1.4 var(--font-ui); text-decoration: none; }
+.cta:active { background: var(--color-primary-pressed); }
+.memoryMark { position: relative; width: 226px; height: 148px; color: #2A2B0F; }
+.photoTile, .heartTile, .voiceTile { position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border: 1px solid #D7C5AB; background: #EBE6D9; border-radius: 14px; }
+.photoTile { top: 33px; left: 10px; width: 70px; height: 88px; transform: rotate(-13deg); }
+.voiceTile { top: 33px; right: 10px; width: 70px; height: 88px; transform: rotate(13deg); }
+.heartTile { z-index: 1; top: 8px; left: 65px; width: 96px; height: 124px; background: #FAF4E8; box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
+.heartTile > svg { color: #560B14; }
+.heartTile > span { font: 500 25px/1 var(--font-display); }
+.heartTile i { color: #686D42; font-size: .75em; }
+.dialog { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; overflow: hidden; background: transparent; color: var(--color-text); font-family: var(--font-ui); }
+.dialog::backdrop { background: transparent; }
+.dialogLayout { position: relative; display: grid; place-items: center; width: 100%; height: 100%; padding: 24px; }
+.backdrop { position: absolute; inset: 0; background: var(--color-overlay); }
+.frame { position: relative; width: min(100%, 440px); min-width: 0; }
+.panel { position: relative; overflow: hidden; border: 1px solid var(--color-border); border-radius: 28px; background: var(--color-surface); box-shadow: 0 24px 80px rgba(0, 0, 0, .2); }
+.panelScroll { max-height: calc(100dvh - 48px); overflow-y: auto; overscroll-behavior: contain; }
+.cover { display: flex; flex-direction: column; align-items: center; padding: 26px 24px 22px; background: var(--color-welcome-bg); color: #FAF4E8; }
+.coverLabel { color: #D7C5AB; font-size: 8px; letter-spacing: .24em; }
+.cover .memoryMark { margin-top: 14px; }
+.coverNames { font: 400 19px/1.2 var(--font-display); letter-spacing: .02em; }
+.panelContent { padding: 28px 32px 20px; }
+.panelContent .cta { display: flex; width: 100%; }
+.panelContent .formats { margin-block: 18px 24px; }
+.panel h2 { font-size: 39px; }
+.close { position: absolute; z-index: 2; top: 12px; right: 12px; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid rgba(215, 197, 171, .35); border-radius: 50%; background: var(--color-welcome-bg); color: #FAF4E8; cursor: pointer; }
+.later { display: block; width: 100%; min-height: 44px; margin-top: 8px; padding: 10px; border: 0; background: transparent; color: var(--color-text-muted); font: 400 12px/1.4 var(--font-ui); cursor: pointer; }
+.dragHandle { display: none; }
+.card :is(a, button):focus-visible, .panel :is(a, button):focus-visible { outline: 2px solid var(--color-secondary-hover); outline-offset: 4px; }
+.panel .close:focus-visible, .panel .dragHandle:focus-visible { outline-color: #D7C5AB; outline-offset: -4px; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover { background: var(--color-primary-hover); border-color: var(--color-primary-hover); }
+  .later:hover { color: var(--color-text); }
+  .close:hover { background: #38371C; border-color: #D7C5AB; }
+}
+@media (max-width: 767px) {
+  .card { grid-template-columns: 1fr; margin-top: 28px; }
+  .cardArt { min-height: 190px; }
+  .cardContent { padding: 28px 24px; }
+  .card h2 { font-size: clamp(29px, 7.5vw, 36px); }
+  .card .cta { display: flex; width: 100%; }
+  .dialogLayout { align-items: end; padding: 0; }
+  .frame { width: 100%; }
+  .panel { border-radius: 28px 28px 0 0; border-bottom: 0; }
+  .panelScroll { max-height: calc(85dvh - 30px); }
+  .dragHandle { display: grid; place-items: center; width: 100%; height: 30px; padding: 0; border: 0; background: var(--color-welcome-bg); cursor: grab; touch-action: none; }
+  .dragHandle > span { width: 36px; height: 4px; border-radius: 4px; background: rgba(215, 197, 171, .55); }
+  .close { top: 30px; }
+  .cover { padding: 12px 24px 20px; }
+  .cover .memoryMark { margin-top: 10px; }
+  .panelContent { padding: 26px 24px calc(12px + env(safe-area-inset-bottom)); }
+  .panel h2 { font-size: clamp(30px, 8.5vw, 38px); }
+}
+@media (max-height: 700px) {
+  .cover .memoryMark { display: none; }
+  .coverNames { margin-top: 14px; }
+}

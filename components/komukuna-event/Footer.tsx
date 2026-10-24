@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from 'next/image';
+import BrandLogo from '@/components/branding/BrandLogo';
 import { Camera, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 
 export default function Footer() {
@@ -9,14 +9,7 @@ export default function Footer() {
                 <div className="grid md:grid-cols-4 gap-12 md:gap-8 mb-12">
 
                     <div className="md:col-span-1">
-                        <div className="relative h-16 w-40 mb-4">
-                            <Image
-                                src="/komukuna-event/logo.png"
-                                alt="Komukuna Studio"
-                                fill
-                                className="object-contain object-left"
-                            />
-                        </div>
+                        <Link href="/komukunaevent" aria-label="Komukuna Studio, beranda" className="inline-block mb-4 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-komukuna-pink"><BrandLogo surface="dark" className="!h-28 !w-36" sizes="144px" /></Link>
                         <p className="text-gray-400 text-sm leading-relaxed">
                             #MomenSempurna BersamaKomukuna. <br />
                             Kami membantu mengabadikan momen terindah Anda menjadi kenangan fisik dan digital yang abadi.

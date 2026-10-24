@@ -22,7 +22,7 @@ export function createSessionZip(files: { name: string; data: Buffer }[]): Buffe
     header.writeUInt32LE(0x04034b50, 0);
     header.writeUInt16LE(20, 4);
     header.writeUInt16LE(0x0800, 6);
-    header.writeUInt16LE(0x0021, 12);
+    header.writeUInt16LE(0x0021, 12); // Valid DOS date: 1980-01-01; no invented capture date.
     header.writeUInt32LE(checksum, 14);
     header.writeUInt32LE(file.data.length, 18);
     header.writeUInt32LE(file.data.length, 22);

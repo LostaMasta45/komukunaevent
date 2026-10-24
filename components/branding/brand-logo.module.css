@@ -1,5 +1,5 @@
 .logo { position: relative; display: block; flex-shrink: 0; width: 112px; height: 80px; overflow: hidden; }
-.image, .light, .dark { object-fit: contain; object-position: center; transform: scale(1.14); }
+.image, .light, .dark { object-fit: contain; object-position: center; }
 .dark { visibility: hidden; }
 :global(html.dark) .logo[data-logo-surface='auto'] .light { visibility: hidden; }
 :global(html.dark) .logo[data-logo-surface='auto'] .dark { visibility: visible; }

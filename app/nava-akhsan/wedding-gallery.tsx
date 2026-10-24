@@ -1,21 +1,33 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowUpRight, Bookmark, Camera, Check, Copy, Download, Heart, House, Image as ImageIcon, Maximize2, MessageCircle, Minimize2, Share2, Sparkles, X } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Bookmark, Camera, Check, Copy, Download, Heart, House, Image as ImageIcon, Maximize2, MessageCircle, Minimize2, Moon, Share2, Sparkles, Sun, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import NativeAlbum from './native-album';
+import NativeAlbum, { type AlbumActivity } from './native-album';
+import KenangDulu from './kenang-dulu';
 import WeddingWelcome from './wedding-welcome';
 import BrandLogo from '@/components/branding/BrandLogo';
+import BrandFavicon from '@/components/branding/BrandFavicon';
 import { WEDDING_EVENT } from './event-config';
-import { EMBED_IFRAME } from './album-config';
 import styles from './wedding-gallery.module.css';
 
 const STUDIO_PATH = '/komukunaevent';
+const THEME_STORAGE_KEY = 'nava-akhsan-color-mode';
+
+function ThemeToggle({ dark, onToggle }: { dark: boolean; onToggle: () => void }) {
+  const label = dark ? 'Aktifkan mode terang' : 'Aktifkan mode gelap';
+  return <button type="button" className={styles.themeToggle} onClick={onToggle} aria-label={label} title={label}>
+    {dark ? <Sun size={18} strokeWidth={1.5} aria-hidden="true" /> : <Moon size={18} strokeWidth={1.5} aria-hidden="true" />}
+  </button>;
+}
 const BOOKING_URL = `https://wa.me/6283122866975?text=${encodeURIComponent('Halo Komukuna Studio! Saya melihat album Nava & Akhsan dan tertarik booking photobooth atau videobooth untuk acara saya. Boleh minta pilihan paket dan info ketersediaan jadwal?')}`;
 
 export default function WeddingGallery() {
+  const [colorMode, setColorMode] = useState<'light' | 'dark'>('light');
+  const darkMode = colorMode === 'dark';
   const [welcomeOpen, setWelcomeOpen] = useState(true);
+  const [welcomePhotos, setWelcomePhotos] = useState<string[]>([]);
   const [albumRevealing, setAlbumRevealing] = useState(false);
   const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const galleryRef = useRef<HTMLElement>(null);
@@ -28,7 +40,33 @@ export default function WeddingGallery() {
   const [shareUrl, setShareUrl] = useState('');
   const [copied, setCopied] = useState(false);
   const [notice, setNotice] = useState('');
-  const [viewMode, setViewMode] = useState<'native' | 'embed'>('native');
+  const [activeSection, setActiveSection] = useState<'album' | 'galeri' | null>('album');
+  const [albumActivity, setAlbumActivity] = useState<AlbumActivity>({ previewOpen: false, downloading: false });
+  const [kenangReady, setKenangReady] = useState(false);
+  const handleDownloadReady = useCallback(() => setKenangReady(true), []);
+  const handleAlbumActivity = useCallback((activity: AlbumActivity) => {
+    setAlbumActivity(activity);
+    if (activity.downloading) setKenangReady(false);
+  }, []);
+
+  useEffect(() => {
+    try {
+      if (window.localStorage.getItem(THEME_STORAGE_KEY) === 'dark') setColorMode('dark');
+    } catch { /* Keep the default light theme when storage is unavailable. */ }
+  }, []);
+
+  useEffect(() => {
+    const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    const previous = meta?.content;
+    if (meta) meta.content = darkMode ? '#150F03' : '#FAF4E8';
+    return () => { if (meta && previous !== undefined) meta.content = previous; };
+  }, [darkMode]);
+
+  function toggleColorMode() {
+    const nextMode = darkMode ? 'light' : 'dark';
+    setColorMode(nextMode);
+    try { window.localStorage.setItem(THEME_STORAGE_KEY, nextMode); } catch { /* The toggle also works without storage. */ }
+  }
 
   useEffect(() => {
     if (!welcomeOpen) return;
@@ -52,25 +90,79 @@ export default function WeddingGallery() {
   }, []);
 
   useEffect(() => {
-    setCanFullscreen(Boolean(document.fullscreenEnabled));
-    const handleFullscreenChange = () => setFullscreen(Boolean(document.fullscreenElement));
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleSync);
-    function handleSync() {
-      setFullscreen(Boolean(document.fullscreenElement));
-    }
+    const gallery = galleryRef.current;
+    const hero = heroTitleRef.current?.closest('section');
+    if (!gallery || !hero) return;
+    let heroVisible = true;
+    let galleryVisible = false;
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.target === gallery) galleryVisible = entry.isIntersecting;
+        if (entry.target === hero) heroVisible = entry.isIntersecting;
+      }
+      setActiveSection(galleryVisible ? 'galeri' : heroVisible ? 'album' : null);
+    }, { rootMargin: '-15% 0px -35% 0px' });
+    observer.observe(gallery);
+    observer.observe(hero);
+    return () => observer.disconnect();
   }, []);
 
-  function shareAlbum() {
+  useEffect(() => {
+    setCanFullscreen(Boolean(document.fullscreenEnabled));
+    const update = () => setFullscreen(document.fullscreenElement === galleryRef.current);
+    document.addEventListener('fullscreenchange', update);
+    return () => document.removeEventListener('fullscreenchange', update);
+  }, []);
+
+  useEffect(() => {
+    if (!notice) return;
+    const timer = window.setTimeout(() => setNotice(''), 5000);
+    return () => window.clearTimeout(timer);
+  }, [notice]);
+
+  useEffect(() => {
+    if (!shareOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    shareInputRef.current?.focus();
+    shareInputRef.current?.select();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setShareOpen(false);
+      if (event.key === 'Tab') {
+        const elements = document.querySelectorAll<HTMLElement>('[data-share-dialog] button, [data-share-dialog] input, [data-share-dialog] a[href]');
+        const first = elements[0];
+        const last = elements[elements.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', onKeyDown);
+      dialogTriggerRef.current?.focus();
+    };
+  }, [shareOpen]);
+
+  async function shareAlbum() {
     dialogTriggerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     setSavingStudio(false);
-    const url = window.location.href;
+    const url = window.location.href.split('#')[0];
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'Nava & Akhsan — Our Happy Moments', text: `Kenangan pernikahan Nava & Akhsan, ${WEDDING_EVENT.dateLabel}. Temukan dan simpan fotomu. ${WEDDING_EVENT.hashtag}`, url });
+        return;
+      } catch (error) {
+        if (error instanceof Error && error.name === 'AbortError') return;
+      }
+    }
     setShareUrl(url);
     setCopied(false);
-    if (navigator.share) {
-      navigator.share({ title: `Nava & Akhsan — ${WEDDING_EVENT.hashtag}`, url }).catch(() => setShareOpen(true));
-      return;
-    }
     setShareOpen(true);
   }
 
@@ -103,160 +195,129 @@ export default function WeddingGallery() {
   }
 
   return (
-    <div className={styles.page} data-gallery-theme="nava-akhsan" id="album-top">
-      {welcomeOpen && <WeddingWelcome onEnter={enterAlbum} onReveal={revealAlbum} />}
+    <div className={styles.page} data-gallery-theme="nava-akhsan" data-color-mode={colorMode} id="album-top">
+      <BrandFavicon mode={colorMode} />
+      {welcomeOpen && <WeddingWelcome photos={welcomePhotos} onEnter={enterAlbum} onReveal={revealAlbum} />}
+      {welcomeOpen && <div className={styles.welcomeThemeToggle}><ThemeToggle dark={darkMode} onToggle={toggleColorMode} /></div>}
       <div className={styles.albumContent} data-visible={!welcomeOpen || albumRevealing} inert={welcomeOpen} aria-hidden={welcomeOpen || undefined}>
-        <a className={styles.skipLink} href="#galeri">Langsung ke galeri foto</a>
-        <header className={styles.header}>
-          <Link href="/komukunaevent" className={styles.brand} aria-label="Komukuna Event, beranda">
-            <BrandLogo surface="dark" priority className={styles.headerLogo} sizes="96px" />
-          </Link>
-          <span className={styles.headerNote}>{WEDDING_EVENT.hashtag}</span>
-          <button type="button" className={styles.shareButton} onClick={shareAlbum}>
-            <Share2 size={15} /><span>Bagikan album</span>
-          </button>
-        </header>
+      <a className={styles.skipLink} href="#galeri">Langsung ke galeri foto</a>
+      <header className={styles.header}>
+        <Link href="/komukunaevent" className={styles.brand} aria-label="Komukuna Event, beranda">
+          <BrandLogo surface={darkMode ? 'dark' : 'light'} priority className={styles.headerLogo} sizes="96px" />
+        </Link>
+        <span className={styles.headerNote}>{WEDDING_EVENT.hashtag}</span>
+        <div className={styles.headerActions}>
+        <ThemeToggle dark={darkMode} onToggle={toggleColorMode} />
+        <button type="button" className={styles.shareButton} onClick={shareAlbum}>
+          <Share2 size={15} /><span>Bagikan album</span>
+        </button>
+        </div>
+      </header>
 
-        <main>
-          <section id="cerita" className={styles.hero} aria-labelledby="couple-title">
-            <span className={styles.cornerTop} aria-hidden="true" />
-            <span className={styles.cornerBottom} aria-hidden="true" />
-            <span className={styles.railLeft} aria-hidden="true" />
-            <span className={styles.railRight} aria-hidden="true" />
-            <div className={styles.heroContent}>
-              <div className={styles.eyebrow}><span />THE WEDDING OF<span /></div>
-              <h1 id="couple-title" className={styles.names} ref={heroTitleRef} tabIndex={-1}>Nava <i>&</i> Akhsan</h1>
-              <span className={styles.heroDivider} aria-hidden="true" />
-              <div className={styles.eventDetails}><time dateTime={WEDDING_EVENT.date}>{WEDDING_EVENT.dateLabel}</time><span aria-hidden="true">·</span><span>{WEDDING_EVENT.hashtag}</span></div>
-              <p className={styles.heroCaption}>Satu hari istimewa,<br />seribu kenangan yang tersimpan.</p>
-              <a href="#galeri" className={styles.primaryButton} onClick={() => galleryRef.current?.focus({ preventScroll: true })}>Temukan Fotomu<ArrowDown size={16} aria-hidden="true" /></a>
-              <div className={styles.heroFootnote}><Heart size={14} aria-hidden="true" />Terima kasih sudah menjadi bagian dari cerita kami.</div>
-              <Link href={STUDIO_PATH} className={styles.heroStudioLink}>Di balik senyum ini, ada Komukuna Booth.<span>Kenalan, yuk<ArrowUpRight size={13} aria-hidden="true" /></span></Link>
+      <main>
+        <section id="cerita" className={styles.hero} aria-labelledby="couple-title">
+          <span className={styles.cornerTop} aria-hidden="true" />
+          <span className={styles.cornerBottom} aria-hidden="true" />
+          <span className={styles.railLeft} aria-hidden="true" />
+          <span className={styles.railRight} aria-hidden="true" />
+          <div className={styles.heroContent}>
+            <div className={styles.eyebrow}><span />THE WEDDING OF<span /></div>
+            <h1 id="couple-title" className={styles.names} ref={heroTitleRef} tabIndex={-1}>Nava <i>&</i> Akhsan</h1>
+            <span className={styles.heroDivider} aria-hidden="true" />
+            <div className={styles.eventDetails}><time dateTime={WEDDING_EVENT.date}>{WEDDING_EVENT.dateLabel}</time><span aria-hidden="true">·</span><span>{WEDDING_EVENT.hashtag}</span></div>
+            <p className={styles.heroCaption}>Satu hari istimewa,<br />seribu kenangan yang tersimpan.</p>
+            <a href="#galeri" className={styles.primaryButton} onClick={() => galleryRef.current?.focus({ preventScroll: true })}>Temukan Fotomu<ArrowDown size={16} aria-hidden="true" /></a>
+            <div className={styles.heroFootnote}><Heart size={14} aria-hidden="true" />Terima kasih sudah menjadi bagian dari cerita kami.</div>
+            <Link href={STUDIO_PATH} className={styles.heroStudioLink}>Di balik senyum ini, ada Komukuna Booth.<span>Kenalan, yuk<ArrowUpRight size={13} aria-hidden="true" /></span></Link>
+          </div>
+          <span className={styles.heroNumber}>01 / OUR HAPPY MOMENTS</span>
+        </section>
+
+        <div className={styles.content}>
+          <div className={styles.sectionDivider} aria-hidden="true" />
+          <section id="galeri" className={styles.gallerySection} aria-labelledby="gallery-title" ref={galleryRef} tabIndex={-1}>
+            <div className={styles.galleryHeading}>
+              <div><span className={styles.sectionEyebrow}>OUR LITTLE GALLERY</span><h2 id="gallery-title">Kenangan yang <em>tersimpan.</em></h2><p>Semua momen photobooth dalam satu album.<br />Temukan, lihat, dan simpan fotomu.</p></div>
+              <div className={styles.galleryActions}>
+                {canFullscreen && <button type="button" onClick={toggleFullscreen} className={styles.iconButton} aria-label={fullscreen ? 'Keluar layar penuh' : 'Tampilkan galeri layar penuh'} title={fullscreen ? 'Keluar layar penuh' : 'Layar penuh'}>{fullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}</button>}
+              </div>
             </div>
-            <span className={styles.heroNumber}>01 / OUR HAPPY MOMENTS</span>
+            <NativeAlbum onPreviewPhotos={setWelcomePhotos} onDownloadReady={handleDownloadReady} onInteractionChange={handleAlbumActivity} />
+            <KenangDulu ready={kenangReady} blocked={welcomeOpen || shareOpen || albumActivity.previewOpen || albumActivity.downloading} />
           </section>
 
-          <div className={styles.content}>
-            <div className={styles.sectionDivider} aria-hidden="true" />
-            <section id="galeri" className={styles.gallerySection} aria-labelledby="gallery-title" ref={galleryRef} tabIndex={-1}>
-              <div className={styles.galleryHeading}>
-                <div>
-                  <span className={styles.sectionEyebrow}>OUR LITTLE GALLERY</span>
-                  <h2 id="gallery-title">Kenangan yang <em>tersimpan.</em></h2>
-                  <p>Semua momen photobooth dalam satu album.<br />Temukan, lihat, dan simpan fotomu.</p>
-                </div>
-                <div className={styles.galleryActions}>
-                  <div className={styles.viewToggle} role="group" aria-label="Pilihan tampilan galeri">
-                    <button type="button" aria-pressed={viewMode === 'native'} onClick={() => setViewMode('native')}>Galeri Komukuna</button>
-                    <button type="button" aria-pressed={viewMode === 'embed'} onClick={() => setViewMode('embed')}>Tampilan Embed</button>
-                  </div>
-                  {canFullscreen && (
-                    <button type="button" onClick={toggleFullscreen} className={styles.iconButton} aria-label={fullscreen ? 'Keluar layar penuh' : 'Tampilkan galeri layar penuh'} title={fullscreen ? 'Keluar layar penuh' : 'Layar penuh'}>
-                      {fullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              {viewMode === 'native' ? (
-                <NativeAlbum />
-              ) : (
-                <div className={styles.embedFrameWrapper}>
-                  <iframe
-                    allow="web-share"
-                    src="https://fotoshare.co/e/gEp5wvu4yxZnqaxPYpZA-?embed=1"
-                    style={{ width: '100%', height: '80vh', minHeight: '650px', border: 0 }}
-                    title="Nava & Akhsan Photobooth Embed"
-                  />
-                </div>
-              )}
-            </section>
-
-            <aside className={styles.discoveryCard} aria-labelledby="discovery-title">
-              <div className={styles.discoveryVisual} aria-hidden="true">
-                <span className={styles.discoveryVisualLabel}>GOOD PEOPLE. GREAT MEMORIES.</span>
-                <div className={styles.discoveryCrowd}><Image src="/komukuna-event/process/exp-crowd.JPG" alt="" fill sizes="(max-width: 767px) 280px, 360px" /></div>
-                <div className={styles.discoveryPrint}><div><Image src="/komukuna-event/process/exp-print.jpg" alt="" fill sizes="(max-width: 767px) 140px, 180px" /></div><span>A LITTLE JOY TO KEEP.</span></div>
-                <span className={styles.discoveryVisualNote}><Camera size={14} />Cuplikan portofolio Komukuna</span>
-                <Sparkles className={styles.discoverySparkle} size={28} strokeWidth={1} />
-              </div>
-              <div className={styles.discoveryStory}>
-                <span className={styles.sectionEyebrow}>KENANGAN INI, BERSAMA KOMUKUNA BOOTH</span>
-                <h2 id="discovery-title">Keseruan hari ini,<br /><em>bisa hadir di acaramu.</em></h2>
-                <p>Dari pose spontan sampai foto yang dibawa pulang. Kalau kamu suka momen hari ini, temukan inspirasi untuk perayaanmu berikutnya bersama Komukuna Booth.</p>
-                <div className={styles.discoveryLinks}>
-                  <Link href="/komukunaevent/portofolio" className={styles.discoveryPortfolio}><Camera size={21} strokeWidth={1.5} aria-hidden="true" /><span><strong>Lihat cerita acara lainnya</strong><small>Jelajahi foto, suasana, dan hasil booth kami.</small></span><ArrowUpRight size={20} aria-hidden="true" /></Link>
-                  <Link href={STUDIO_PATH} className={styles.discoveryHome}><Sparkles size={21} strokeWidth={1.5} aria-hidden="true" /><span><strong>Temukan booth yang cocok</strong><small>Kenali layanan dan pilihan Komukuna Booth.</small></span><ArrowUpRight size={20} aria-hidden="true" /></Link>
-                </div>
-                <span className={styles.discoverySignoff}>Boleh cari inspirasi dulu. Siapa tahu, berikutnya acaramu.</span>
-              </div>
-            </aside>
-
-            <section className={styles.guide} aria-label="Cara menikmati album">
-              <div className={styles.guideIntro}><span className={styles.sectionEyebrow}>MAKE IT YOURS</span><h2>Momennya milik kita.<br /><em>Kenangannya milikmu.</em></h2></div>
-              <ol className={styles.steps}>
-                <li><span className={styles.stepNumber}>01</span><div><h3>Temukan senyummu</h3><p>Buka sesi fotomu, lalu geser untuk melihat seluruh isinya.</p></div></li>
-                <li><span className={styles.stepNumber}>02</span><div><h3>Simpan kenangannya</h3><p>Pilih “Unduh semua sesi ini” untuk mengunduh semua berkas langsung, atau unduh berkas favoritmu saja.</p></div></li>
-                <li><span className={styles.stepNumber}>03</span><div><h3>Bagikan bahagianya</h3><p>Kirim tautan album ke teman dan orang tersayang.</p></div></li>
-              </ol>
-            </section>
-            <div className={styles.closing}><Heart size={19} strokeWidth={1.2} /><p>Foto boleh sederhana.<br /><em>Kenangannya luar biasa.</em></p><span>WITH LOVE, NAVA & AKHSAN</span></div>
-
-            <section className={styles.studioCard} aria-labelledby="studio-title">
-              <div className={styles.studioStory}>
-                <span className={styles.sectionEyebrow}><Sparkles size={13} aria-hidden="true" /> DARI TAMU, JADI TUAN RUMAH</span>
-                <h2 id="studio-title">Hari ini ikut merayakan.<br /><em>Besok, kamu yang punya cerita.</em></h2>
-                <p>Pernikahan, ulang tahun, atau acara kantor—bawa keseruan photobooth & videobooth ke perayaanmu. Pilih gaya yang kamu suka, lalu ceritakan rencanamu ke Komukuna Booth.</p>
-                <Link href={STUDIO_PATH} className={styles.studioHome}>Lihat pilihan untuk acaramu<ArrowUpRight size={15} aria-hidden="true" /></Link>
-              </div>
-              <div className={styles.studioActions}>
-                <span className={styles.studioPrompt}>Punya rencana acara?</span>
-                <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className={styles.primaryButton}><MessageCircle size={17} aria-hidden="true" />Tanya paket & jadwal<ArrowUpRight size={15} aria-hidden="true" /><span className={styles.srOnly}> via WhatsApp di tab baru</span></a>
-                <p className={styles.bookingNote}>Ceritakan idemu lewat WhatsApp.<br />Boleh tanya dulu sebelum memutuskan.</p>
-                <button type="button" className={styles.saveStudioButton} onClick={saveStudio} aria-haspopup="dialog"><Bookmark size={15} aria-hidden="true" />Simpan untuk nanti</button>
-              </div>
-            </section>
-          </div>
-        </main>
-
-        <footer className={styles.footer}>
-          <div className={styles.footerContent}>
-            <div className={styles.footerBrand}>
-              <Link href="/komukunaevent" aria-label="Komukuna Event, beranda">
-                <BrandLogo surface="dark" priority className={styles.footerLogo} sizes="88px" />
-              </Link>
-              <span>Diabadikan dengan Komukuna Photobooth.</span>
+          <aside className={styles.discoveryCard} aria-labelledby="discovery-title">
+            <div className={styles.discoveryVisual} aria-hidden="true">
+              <span className={styles.discoveryVisualLabel}>GOOD PEOPLE. GREAT MEMORIES.</span>
+              <div className={styles.discoveryCrowd}><Image src="/komukuna-event/process/exp-crowd.JPG" alt="" fill sizes="(max-width: 767px) 280px, 360px" /></div>
+              <div className={styles.discoveryPrint}><div><Image src="/komukuna-event/process/exp-print.jpg" alt="" fill sizes="(max-width: 767px) 140px, 180px" /></div><span>A LITTLE JOY TO KEEP.</span></div>
+              <span className={styles.discoveryVisualNote}><Camera size={14} />Cuplikan portofolio Komukuna</span>
+              <Sparkles className={styles.discoverySparkle} size={28} strokeWidth={1} />
             </div>
-            <div className={styles.footerLinks}>
-              <Link href={STUDIO_PATH}>Kenali Komukuna Booth</Link>
-              <Link href="/komukunaevent/portofolio">Cerita Acara Lainnya</Link>
-              <a href="#album-top">Kembali ke atas</a>
+            <div className={styles.discoveryStory}>
+              <span className={styles.sectionEyebrow}>KENANGAN INI, BERSAMA KOMUKUNA BOOTH</span>
+              <h2 id="discovery-title">Keseruan hari ini,<br /><em>bisa hadir di acaramu.</em></h2>
+              <p>Dari pose spontan sampai foto yang dibawa pulang. Kalau kamu suka momen hari ini, temukan inspirasi untuk perayaanmu berikutnya bersama Komukuna Booth.</p>
+              <div className={styles.discoveryLinks}>
+                <Link href="/komukunaevent/portofolio" className={styles.discoveryPortfolio}><Camera size={21} strokeWidth={1.5} aria-hidden="true" /><span><strong>Lihat cerita acara lainnya</strong><small>Jelajahi foto, suasana, dan hasil booth kami.</small></span><ArrowUpRight size={20} aria-hidden="true" /></Link>
+                <Link href={STUDIO_PATH} className={styles.discoveryHome}><Sparkles size={21} strokeWidth={1.5} aria-hidden="true" /><span><strong>Temukan booth yang cocok</strong><small>Kenali layanan dan pilihan Komukuna Booth.</small></span><ArrowUpRight size={20} aria-hidden="true" /></Link>
+              </div>
+              <span className={styles.discoverySignoff}>Boleh cari inspirasi dulu. Siapa tahu, berikutnya acaramu.</span>
             </div>
-          </div>
-        </footer>
+          </aside>
 
-        {shareOpen && (
-          <div className={styles.shareOverlay} onClick={(event) => { if (event.target === event.currentTarget) setShareOpen(false); }}>
-            <div className={styles.shareDialog} role="dialog" aria-modal="true" aria-labelledby="share-dialog-title">
-              <div className={styles.shareHeading}>
-                <h3 id="share-dialog-title">{savingStudio ? 'Simpan Kontak Komukuna Studio' : 'Bagikan Album Nava & Akhsan'}</h3>
-                <button type="button" onClick={() => setShareOpen(false)} aria-label="Tutup dialog bagikan"><X size={18} /></button>
-              </div>
-              <p>{savingStudio ? 'Simpan tautan studio atau unduh kartu kontak untuk acaramu berikutnya.' : 'Kirim tautan ini ke keluarga dan teman agar mereka juga bisa menyimpan momennya.'}</p>
-              <div className={styles.shareInput}>
-                <input ref={shareInputRef} type="text" readOnly value={shareUrl} aria-label="Tautan untuk disalin" />
-                <button type="button" onClick={copyLink} className={copied ? styles.copied : undefined}>{copied ? <Check size={16} /> : <Copy size={16} />}{copied ? 'Tersalin' : 'Salin'}</button>
-              </div>
-              {notice && <p className={styles.shareNotice} role="status">{notice}</p>}
-              {savingStudio && (
-                <>
-                  <a href="/komukuna-studio.vcf" download="Komukuna-Studio.vcf" className={styles.contactDownload}><Download size={16} aria-hidden="true" />Unduh kontak studio (.vcf)</a>
-                  <p className={styles.contactHelp}>Buka file .vcf yang diunduh, lalu pilih simpan atau impor kontak di perangkatmu.</p>
-                </>
-              )}
+          <section className={styles.guide} aria-label="Cara menikmati album">
+            <div className={styles.guideIntro}><span className={styles.sectionEyebrow}>MAKE IT YOURS</span><h2>Momennya milik kita.<br /><em>Kenangannya milikmu.</em></h2></div>
+            <ol className={styles.steps}>
+              <li><span className={styles.stepNumber}>01</span><div><h3>Temukan senyummu</h3><p>Buka sesi fotomu, lalu geser untuk melihat seluruh isinya.</p></div></li>
+              <li><span className={styles.stepNumber}>02</span><div><h3>Simpan kenangannya</h3><p>Pilih “Unduh semua sesi ini” untuk mengunduh semua berkas langsung, atau unduh berkas favoritmu saja.</p></div></li>
+              <li><span className={styles.stepNumber}>03</span><div><h3>Bagikan bahagianya</h3><p>Kirim tautan album ke teman dan orang tersayang.</p></div></li>
+            </ol>
+          </section>
+          <div className={styles.closing}><Heart size={19} strokeWidth={1.2} /><p>Foto boleh sederhana.<br /><em>Kenangannya luar biasa.</em></p><span>WITH LOVE, NAVA & AKHSAN</span></div>
+
+          <section className={styles.studioCard} aria-labelledby="studio-title">
+            <div className={styles.studioStory}>
+              <span className={styles.sectionEyebrow}><Sparkles size={13} aria-hidden="true" /> DARI TAMU, JADI TUAN RUMAH</span>
+              <h2 id="studio-title">Hari ini ikut merayakan.<br /><em>Besok, kamu yang punya cerita.</em></h2>
+              <p>Pernikahan, ulang tahun, atau acara kantor—bawa keseruan photobooth & videobooth ke perayaanmu. Pilih gaya yang kamu suka, lalu ceritakan rencanamu ke Komukuna Booth.</p>
+              <Link href={STUDIO_PATH} className={styles.studioHome}>Lihat pilihan untuk acaramu<ArrowUpRight size={15} aria-hidden="true" /></Link>
             </div>
-          </div>
-        )}
+            <div className={styles.studioActions}>
+              <span className={styles.studioPrompt}>Punya rencana acara?</span>
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className={styles.primaryButton}><MessageCircle size={17} aria-hidden="true" />Tanya paket & jadwal<ArrowUpRight size={15} aria-hidden="true" /><span className={styles.srOnly}> via WhatsApp di tab baru</span></a>
+              <p className={styles.bookingNote}>Ceritakan idemu lewat WhatsApp.<br />Boleh tanya dulu sebelum memutuskan.</p>
+              <button type="button" className={styles.saveStudioButton} onClick={saveStudio} aria-haspopup="dialog"><Bookmark size={15} aria-hidden="true" />Simpan untuk nanti</button>
+              <span className={styles.saveHint}>Belum ada tanggal? Simpan dulu kontaknya.</span>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer className={styles.footer}><span>{WEDDING_EVENT.hashtag}<span aria-hidden="true">♡</span><time dateTime={WEDDING_EVENT.date}>{WEDDING_EVENT.dateLabel}</time></span><Link href="/komukunaevent" className={styles.footerBrand} aria-label="Captured with love by Komukuna Studio, kunjungi beranda"><span>Captured with love by</span><BrandLogo surface={darkMode ? 'dark' : 'light'} className={styles.footerLogo} sizes="88px" /><ArrowUpRight size={15} aria-hidden="true" /></Link></footer>
+
+      <nav className={styles.mobileNav} aria-label="Navigasi cepat album">
+        <a href="#cerita" className={styles.dockItem} data-active={activeSection === 'album' || undefined} aria-current={activeSection === 'album' ? 'location' : undefined} aria-label="Album, kembali ke cerita Nava dan Akhsan" onClick={() => heroTitleRef.current?.focus({ preventScroll: true })}><span className={styles.dockIcon}><Heart size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Album</span></a>
+        <a href="#galeri" className={styles.dockItem} data-active={activeSection === 'galeri' || undefined} aria-current={activeSection === 'galeri' ? 'location' : undefined} onClick={() => galleryRef.current?.focus({ preventScroll: true })}><span className={styles.dockIcon}><ImageIcon size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Galeri</span></a>
+        <Link href={STUDIO_PATH} prefetch={false} className={`${styles.dockItem} ${styles.dockStudio}`} aria-label="Komukuna, buka beranda Komukuna Booth"><span className={styles.dockIcon}><House size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Komukuna</span></Link>
+        <Link href="/komukunaevent/portofolio" prefetch={false} className={styles.dockItem} aria-label="Portofolio, lihat karya Komukuna Booth"><span className={styles.dockIcon}><Sparkles size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Portofolio</span></Link>
+        <button type="button" className={styles.dockItem} onClick={shareAlbum} aria-label="Bagikan album Nava dan Akhsan" aria-expanded={shareOpen && !savingStudio}><span className={styles.dockIcon}><Share2 size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Bagikan</span></button>
+      </nav>
+
+      {shareOpen && <div className={styles.modalBackdrop} onClick={(event) => { if (event.target === event.currentTarget) setShareOpen(false); }}>
+        <div className={styles.shareDialog} role="dialog" aria-modal="true" aria-labelledby="share-title" aria-describedby="share-description" data-share-dialog>
+          <button className={styles.closeButton} type="button" onClick={() => setShareOpen(false)} aria-label={savingStudio ? 'Tutup simpan studio' : 'Tutup bagikan album'}><X size={20} /></button>
+          {savingStudio ? <Bookmark size={24} /> : <Share2 size={24} />}
+          <h2 id="share-title">{savingStudio ? 'Simpan dulu. Rencanakan nanti.' : 'Bahagia lebih indah dibagi.'}</h2>
+          <p id="share-description">{savingStudio ? 'Salin tautan studio ke catatanmu atau unduh kontak Komukuna. Saat rencana acara mulai ada, kamu tahu harus menghubungi siapa.' : 'Kirim tautan ini agar semua bisa menemukan fotonya.'}</p>
+          <label htmlFor="share-link">{savingStudio ? 'Tautan Komukuna Studio' : 'Tautan album'}</label>
+          <input id="share-link" ref={shareInputRef} value={shareUrl} readOnly onFocus={(event) => event.currentTarget.select()} />
+          <button type="button" className={styles.primaryButton} onClick={copyLink}>{copied ? <Check size={16} /> : <Copy size={16} />}{copied ? 'Tautan tersalin' : 'Salin tautan'}</button>
+          {savingStudio && <><a href="/komukuna-studio.vcf" download="Komukuna-Studio.vcf" className={styles.contactDownload}><Download size={16} aria-hidden="true" />Unduh kontak studio (.vcf)</a><p className={styles.contactHelp}>Buka file .vcf yang diunduh, lalu pilih simpan atau impor kontak di perangkatmu.</p></>}
+          <span className={styles.srOnly} role="status">{copied ? 'Tautan berhasil disalin.' : ''}</span>
+        </div>
+      </div>}
+      <div className={notice ? styles.toast : styles.srOnly} role="status">{notice}</div>
       </div>
     </div>
   );

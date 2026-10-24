@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import BrandLogo from '@/components/branding/BrandLogo';
 import { Button } from './ui/Button';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -49,15 +49,8 @@ export default function Navbar() {
                 }`}
         >
             <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-                <Link href="/komukunaevent" className="relative h-10 w-32 md:h-12 md:w-40 transition-transform hover:scale-105">
-                    <Image
-                        src="/komukuna-event/logo.png"
-                        alt="Komukuna Event"
-                        fill
-                        className="object-contain object-left"
-                        priority
-                        sizes="(max-width: 768px) 128px, 160px"
-                    />
+                <Link href="/komukunaevent" aria-label="Komukuna Studio, beranda" className="inline-flex rounded-xl transition-transform hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-komukuna-pink">
+                    <BrandLogo surface="dark" priority className="!h-16 !w-24 md:!h-[72px] md:!w-28" sizes="(max-width: 768px) 96px, 112px" />
                 </Link>
 
                 {/* Desktop Nav */}

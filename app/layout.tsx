@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
+import { brandIcons } from '@/components/branding/brand-assets';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,9 +20,12 @@ export const metadata: Metadata = {
   title: "Komukuna Event - Premium Event Organizer",
   description: "Event organizer profesional untuk acara spesial Anda. Wedding, Birthday, Corporate Events, dan lainnya.",
   icons: {
-    icon: "/komukuna-event/logo-circle.png",
-    shortcut: "/komukuna-event/logo-circle.png",
-    apple: "/komukuna-event/logo-circle.png",
+    icon: [
+      { url: brandIcons.light, media: '(prefers-color-scheme: light)', type: 'image/png', sizes: '64x64' },
+      { url: brandIcons.dark, media: '(prefers-color-scheme: dark)', type: 'image/png', sizes: '64x64' },
+    ],
+    shortcut: brandIcons.light,
+    apple: { url: brandIcons.apple, sizes: '180x180', type: 'image/png' },
   },
 };
 
