@@ -27,7 +27,6 @@ export default function WeddingGallery() {
   const [colorMode, setColorMode] = useState<'light' | 'dark'>('light');
   const darkMode = colorMode === 'dark';
   const [welcomeOpen, setWelcomeOpen] = useState(true);
-  const [welcomePhotos, setWelcomePhotos] = useState<string[]>([]);
   const [albumRevealing, setAlbumRevealing] = useState(false);
   const heroTitleRef = useRef<HTMLHeadingElement>(null);
   const galleryRef = useRef<HTMLElement>(null);
@@ -197,8 +196,7 @@ export default function WeddingGallery() {
   return (
     <div className={styles.page} data-gallery-theme="nava-akhsan" data-color-mode={colorMode} id="album-top">
       <BrandFavicon mode={colorMode} />
-      {welcomeOpen && <WeddingWelcome photos={welcomePhotos} onEnter={enterAlbum} onReveal={revealAlbum} />}
-      {welcomeOpen && <div className={styles.welcomeThemeToggle}><ThemeToggle dark={darkMode} onToggle={toggleColorMode} /></div>}
+      {welcomeOpen && <WeddingWelcome onEnter={enterAlbum} onReveal={revealAlbum} colorMode={colorMode} themeControl={<ThemeToggle dark={darkMode} onToggle={toggleColorMode} />} />}
       <div className={styles.albumContent} data-visible={!welcomeOpen || albumRevealing} inert={welcomeOpen} aria-hidden={welcomeOpen || undefined}>
       <a className={styles.skipLink} href="#galeri">Langsung ke galeri foto</a>
       <header className={styles.header}>
@@ -227,8 +225,8 @@ export default function WeddingGallery() {
             <div className={styles.eventDetails}><time dateTime={WEDDING_EVENT.date}>{WEDDING_EVENT.dateLabel}</time><span aria-hidden="true">·</span><span>{WEDDING_EVENT.hashtag}</span></div>
             <p className={styles.heroCaption}>Satu hari istimewa,<br />seribu kenangan yang tersimpan.</p>
             <a href="#galeri" className={styles.primaryButton} onClick={() => galleryRef.current?.focus({ preventScroll: true })}>Temukan Fotomu<ArrowDown size={16} aria-hidden="true" /></a>
-            <div className={styles.heroFootnote}><Heart size={14} aria-hidden="true" />Terima kasih sudah menjadi bagian dari cerita kami.</div>
-            <Link href={STUDIO_PATH} className={styles.heroStudioLink}>Di balik senyum ini, ada Komukuna Booth.<span>Kenalan, yuk<ArrowUpRight size={13} aria-hidden="true" /></span></Link>
+            <div className={styles.heroFootnote}><Heart size={14} aria-hidden="true" />Terima kasih telah berbagi bahagia.</div>
+            <Link href={STUDIO_PATH} className={styles.heroStudioLink}>Diabadikan oleh Komukuna Booth.<span>Kenalan, yuk<ArrowUpRight size={13} aria-hidden="true" /></span></Link>
           </div>
           <span className={styles.heroNumber}>01 / OUR HAPPY MOMENTS</span>
         </section>
@@ -237,12 +235,12 @@ export default function WeddingGallery() {
           <div className={styles.sectionDivider} aria-hidden="true" />
           <section id="galeri" className={styles.gallerySection} aria-labelledby="gallery-title" ref={galleryRef} tabIndex={-1}>
             <div className={styles.galleryHeading}>
-              <div><span className={styles.sectionEyebrow}>OUR LITTLE GALLERY</span><h2 id="gallery-title">Kenangan yang <em>tersimpan.</em></h2><p>Semua momen photobooth dalam satu album.<br />Temukan, lihat, dan simpan fotomu.</p></div>
+              <div><span className={styles.sectionEyebrow}>OUR LITTLE GALLERY</span><h2 id="gallery-title">Temukan <em>senyummu.</em></h2><p>Pilih sesi, lihat fotomu, lalu unduh.</p></div>
               <div className={styles.galleryActions}>
                 {canFullscreen && <button type="button" onClick={toggleFullscreen} className={styles.iconButton} aria-label={fullscreen ? 'Keluar layar penuh' : 'Tampilkan galeri layar penuh'} title={fullscreen ? 'Keluar layar penuh' : 'Layar penuh'}>{fullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}</button>}
               </div>
             </div>
-            <NativeAlbum onPreviewPhotos={setWelcomePhotos} onDownloadReady={handleDownloadReady} onInteractionChange={handleAlbumActivity} />
+            <NativeAlbum onDownloadReady={handleDownloadReady} onInteractionChange={handleAlbumActivity} />
             <KenangDulu ready={kenangReady} blocked={welcomeOpen || shareOpen || albumActivity.previewOpen || albumActivity.downloading} />
           </section>
 
@@ -255,23 +253,23 @@ export default function WeddingGallery() {
               <Sparkles className={styles.discoverySparkle} size={28} strokeWidth={1} />
             </div>
             <div className={styles.discoveryStory}>
-              <span className={styles.sectionEyebrow}>KENANGAN INI, BERSAMA KOMUKUNA BOOTH</span>
-              <h2 id="discovery-title">Keseruan hari ini,<br /><em>bisa hadir di acaramu.</em></h2>
-              <p>Dari pose spontan sampai foto yang dibawa pulang. Kalau kamu suka momen hari ini, temukan inspirasi untuk perayaanmu berikutnya bersama Komukuna Booth.</p>
+              <span className={styles.sectionEyebrow}>BERSAMA KOMUKUNA BOOTH</span>
+              <h2 id="discovery-title">Bawa keseruannya<br /><em>ke acaramu.</em></h2>
+              <p>Photobooth untuk momen seru dan kenangan yang bisa dibawa pulang.</p>
               <div className={styles.discoveryLinks}>
-                <Link href="/komukunaevent/portofolio" className={styles.discoveryPortfolio}><Camera size={21} strokeWidth={1.5} aria-hidden="true" /><span><strong>Lihat cerita acara lainnya</strong><small>Jelajahi foto, suasana, dan hasil booth kami.</small></span><ArrowUpRight size={20} aria-hidden="true" /></Link>
-                <Link href={STUDIO_PATH} className={styles.discoveryHome}><Sparkles size={21} strokeWidth={1.5} aria-hidden="true" /><span><strong>Temukan booth yang cocok</strong><small>Kenali layanan dan pilihan Komukuna Booth.</small></span><ArrowUpRight size={20} aria-hidden="true" /></Link>
+                <Link href="/komukunaevent/portofolio" className={styles.discoveryPortfolio}><Camera size={21} strokeWidth={1.5} aria-hidden="true" /><span><strong>Lihat portofolio</strong><small>Inspirasi dari acara sebelumnya.</small></span><ArrowUpRight size={20} aria-hidden="true" /></Link>
+                <Link href={STUDIO_PATH} className={styles.discoveryHome}><Sparkles size={21} strokeWidth={1.5} aria-hidden="true" /><span><strong>Pilihan layanan</strong><small>Temukan booth untuk acaramu.</small></span><ArrowUpRight size={20} aria-hidden="true" /></Link>
               </div>
-              <span className={styles.discoverySignoff}>Boleh cari inspirasi dulu. Siapa tahu, berikutnya acaramu.</span>
+              <span className={styles.discoverySignoff}>Acara berikutnya, ceritamu.</span>
             </div>
           </aside>
 
           <section className={styles.guide} aria-label="Cara menikmati album">
             <div className={styles.guideIntro}><span className={styles.sectionEyebrow}>MAKE IT YOURS</span><h2>Momennya milik kita.<br /><em>Kenangannya milikmu.</em></h2></div>
             <ol className={styles.steps}>
-              <li><span className={styles.stepNumber}>01</span><div><h3>Temukan senyummu</h3><p>Buka sesi fotomu, lalu geser untuk melihat seluruh isinya.</p></div></li>
-              <li><span className={styles.stepNumber}>02</span><div><h3>Simpan kenangannya</h3><p>Pilih “Unduh semua sesi ini” untuk mengunduh semua berkas langsung, atau unduh berkas favoritmu saja.</p></div></li>
-              <li><span className={styles.stepNumber}>03</span><div><h3>Bagikan bahagianya</h3><p>Kirim tautan album ke teman dan orang tersayang.</p></div></li>
+              <li><span className={styles.stepNumber}>01</span><div><h3>Temukan senyummu</h3><p>Pilih sesi dan geser untuk melihat foto.</p></div></li>
+              <li><span className={styles.stepNumber}>02</span><div><h3>Simpan kenangannya</h3><p>Unduh satu foto atau semua berkas dalam sesimu.</p></div></li>
+              <li><span className={styles.stepNumber}>03</span><div><h3>Bagikan bahagianya</h3><p>Kirim tautan album ke temanmu.</p></div></li>
             </ol>
           </section>
           <div className={styles.closing}><Heart size={19} strokeWidth={1.2} /><p>Foto boleh sederhana.<br /><em>Kenangannya luar biasa.</em></p><span>WITH LOVE, NAVA & AKHSAN</span></div>
@@ -279,16 +277,16 @@ export default function WeddingGallery() {
           <section className={styles.studioCard} aria-labelledby="studio-title">
             <div className={styles.studioStory}>
               <span className={styles.sectionEyebrow}><Sparkles size={13} aria-hidden="true" /> DARI TAMU, JADI TUAN RUMAH</span>
-              <h2 id="studio-title">Hari ini ikut merayakan.<br /><em>Besok, kamu yang punya cerita.</em></h2>
-              <p>Pernikahan, ulang tahun, atau acara kantor—bawa keseruan photobooth & videobooth ke perayaanmu. Pilih gaya yang kamu suka, lalu ceritakan rencanamu ke Komukuna Booth.</p>
+              <h2 id="studio-title">Acara spesialmu,<br /><em>kami abadikan.</em></h2>
+              <p>Photobooth dan videobooth untuk pernikahan, ulang tahun, dan acara kantor. Pilih paket sesuai rencanamu.</p>
               <Link href={STUDIO_PATH} className={styles.studioHome}>Lihat pilihan untuk acaramu<ArrowUpRight size={15} aria-hidden="true" /></Link>
             </div>
             <div className={styles.studioActions}>
               <span className={styles.studioPrompt}>Punya rencana acara?</span>
               <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className={styles.primaryButton}><MessageCircle size={17} aria-hidden="true" />Tanya paket & jadwal<ArrowUpRight size={15} aria-hidden="true" /><span className={styles.srOnly}> via WhatsApp di tab baru</span></a>
-              <p className={styles.bookingNote}>Ceritakan idemu lewat WhatsApp.<br />Boleh tanya dulu sebelum memutuskan.</p>
+              <p className={styles.bookingNote}>Konsultasikan acaramu lewat WhatsApp.</p>
               <button type="button" className={styles.saveStudioButton} onClick={saveStudio} aria-haspopup="dialog"><Bookmark size={15} aria-hidden="true" />Simpan untuk nanti</button>
-              <span className={styles.saveHint}>Belum ada tanggal? Simpan dulu kontaknya.</span>
+              <span className={styles.saveHint}>Simpan kontak untuk rencana berikutnya.</span>
             </div>
           </section>
         </div>
@@ -309,7 +307,7 @@ export default function WeddingGallery() {
           <button className={styles.closeButton} type="button" onClick={() => setShareOpen(false)} aria-label={savingStudio ? 'Tutup simpan studio' : 'Tutup bagikan album'}><X size={20} /></button>
           {savingStudio ? <Bookmark size={24} /> : <Share2 size={24} />}
           <h2 id="share-title">{savingStudio ? 'Simpan dulu. Rencanakan nanti.' : 'Bahagia lebih indah dibagi.'}</h2>
-          <p id="share-description">{savingStudio ? 'Salin tautan studio ke catatanmu atau unduh kontak Komukuna. Saat rencana acara mulai ada, kamu tahu harus menghubungi siapa.' : 'Kirim tautan ini agar semua bisa menemukan fotonya.'}</p>
+          <p id="share-description">{savingStudio ? 'Salin tautan atau simpan kontak Komukuna.' : 'Kirim tautan ini agar semua bisa menemukan fotonya.'}</p>
           <label htmlFor="share-link">{savingStudio ? 'Tautan Komukuna Studio' : 'Tautan album'}</label>
           <input id="share-link" ref={shareInputRef} value={shareUrl} readOnly onFocus={(event) => event.currentTarget.select()} />
           <button type="button" className={styles.primaryButton} onClick={copyLink}>{copied ? <Check size={16} /> : <Copy size={16} />}{copied ? 'Tautan tersalin' : 'Salin tautan'}</button>

@@ -59,21 +59,21 @@ function KenangDialog({ mobile, onDismiss, onVisit }: { mobile: boolean; onDismi
         initial={{ opacity: mobile && !reduceMotion ? 1 : 0, transform: closedTransform }}
         animate={{ opacity: 1, transform: openTransform }}
         exit={{ opacity: mobile && !reduceMotion ? 1 : 0, transform: closedTransform, transition: { duration: reduceMotion ? .12 : .2 } }}
-        transition={{ duration: reduceMotion ? .12 : .28, ease: mobile ? [.32, .72, 0, 1] : [.23, 1, .32, 1] }}>
+        transition={{ duration: reduceMotion ? .12 : .3, ease: mobile ? [.32, .72, 0, 1] : [.23, 1, .32, 1] }}>
         <motion.div className={styles.panel} drag={mobile && !reduceMotion ? 'y' : false} dragControls={controls} dragListener={false}
-          dragConstraints={{ top: 0, bottom: 0 }} dragElastic={{ top: 0, bottom: .5 }}
+          dragConstraints={{ top: 0, bottom: 0 }} dragElastic={{ top: 0, bottom: .25 }} dragMomentum={false} dragTransition={{ bounceStiffness: 400, bounceDamping: 36 }}
           onDragStart={() => { draggedRef.current = true; }}
           onDragEnd={(_, info) => { if (info.offset.y > 80 || info.velocity.y > 600) onDismiss(); }}>
           <button type="button" className={styles.dragHandle} aria-label="Tutup panel ucapan" onPointerDown={(event) => { draggedRef.current = false; if (!reduceMotion) controls.start(event); }} onClick={(event) => { if (event.detail === 0 || !draggedRef.current) onDismiss(); }}><span /></button>
           <button ref={closeRef} type="button" className={styles.close} onClick={onDismiss} aria-label="Tutup ajakan Kenang Dulu"><X size={20} strokeWidth={1.5} /></button>
           <div className={styles.panelScroll}>
-            <div className={styles.cover}><span className={styles.coverLabel}>A LITTLE LOVE TO LEAVE</span><MemoryMark /><span className={styles.coverNames}>{WEDDING_EVENT.names}</span></div>
+            <div className={styles.cover}><span className={styles.coverLabel}>SEPATAH PESAN, BANYAK MAKNA</span><MemoryMark /><span className={styles.coverNames}>{WEDDING_EVENT.names}</span></div>
             <div className={styles.panelContent}>
               <span className={styles.eyebrow}>KENANG DULU</span>
-              <h2 id="kenang-title">Sudah menyimpan<br /><em>kenanganmu?</em></h2>
-              <p id="kenang-description">Sekarang, titipkan kenangan untuk {WEDDING_EVENT.names}. Kirim ucapan lewat foto, video, atau pesan suara.</p>
+              <h2 id="kenang-title">Titipkan <em>doa baikmu.</em></h2>
+              <p id="kenang-description">Kirim ucapan untuk {WEDDING_EVENT.names} lewat foto, video, atau suara.</p>
               <MessageFormats />
-              <a className={styles.cta} href={WEDDING_EVENT.kenangDuluUrl} target="_blank" rel="noopener noreferrer" onClick={onVisit}>Titipkan Ucapan<ArrowUpRight size={18} aria-hidden="true" /><span className={styles.srOnly}> di tab baru</span></a>
+              <a className={styles.cta} href={WEDDING_EVENT.kenangDuluUrl} target="_blank" rel="noopener noreferrer" onClick={onVisit}>Kirim Ucapan<ArrowUpRight size={18} aria-hidden="true" /><span className={styles.srOnly}> di tab baru</span></a>
               <button type="button" className={styles.later} onClick={onDismiss}>Nanti saja</button>
             </div>
           </div>
@@ -130,10 +130,10 @@ export default function KenangDulu({ ready, blocked }: { ready: boolean; blocked
       <div className={styles.cardArt}><MemoryMark /></div>
       <div className={styles.cardContent}>
         <span className={styles.eyebrow}>KENANG DULU</span>
-        <h2 id="kenang-card-title">Titipkan ucapan untuk<br /><em>{WEDDING_EVENT.names}.</em></h2>
-        <p>Foto sudah jadi kenangan. Sekarang, lengkapi hari bahagia mereka dengan ucapan darimu.</p>
+        <h2 id="kenang-card-title">Untuk <em>{WEDDING_EVENT.names}.</em></h2>
+        <p>Lengkapi kenangan mereka dengan ucapan darimu.</p>
         <MessageFormats />
-        <a className={styles.cta} href={WEDDING_EVENT.kenangDuluUrl} target="_blank" rel="noopener noreferrer" onClick={visit}>Titipkan Ucapan<ArrowUpRight size={18} aria-hidden="true" /><span className={styles.srOnly}> di tab baru</span></a>
+        <a className={styles.cta} href={WEDDING_EVENT.kenangDuluUrl} target="_blank" rel="noopener noreferrer" onClick={visit}>Kirim Ucapan<ArrowUpRight size={18} aria-hidden="true" /><span className={styles.srOnly}> di tab baru</span></a>
       </div>
     </aside>
     <AnimatePresence>{open && !blocked && <KenangDialog key="kenang-dialog" mobile={mobile} onDismiss={dismiss} onVisit={visit} />}</AnimatePresence>
