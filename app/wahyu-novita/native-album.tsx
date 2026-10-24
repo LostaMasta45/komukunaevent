@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from 're
 import { ChevronLeft, ChevronRight, Download, Images, LoaderCircle, Play, RefreshCw, X } from 'lucide-react';
 import type { AlbumData, SessionMedia } from './album-config';
 import styles from './native-album.module.css';
+import MediaPreview from './media-preview';
 
 function triggerBlobDownload(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob);
@@ -25,8 +26,6 @@ export default function NativeAlbum() {
   const [limit, setLimit] = useState(36);
   const [selected, setSelected] = useState<number | null>(null);
   const [mediaIndex, setMediaIndex] = useState(0);
-  const [imageState, setImageState] = useState<'loading' | 'ready' | 'error'>('loading');
-  const [mediaAttempt, setMediaAttempt] = useState(0);
   const [mediaSize, setMediaSize] = useState<{ id: string; ratio: number } | null>(null);
   const [downloading, setDownloading] = useState<'file' | 'session' | null>(null);
   const [downloadProgress, setDownloadProgress] = useState<{ current: number; total: number } | null>(null);
@@ -44,6 +43,7 @@ export default function NativeAlbum() {
   downloadingRef.current = downloading;
   const isFetchingRef = useRef(false);
   const photo = selected === null ? null : album?.photos[selected];
+  const photoId = photo?.id;
   const media = photo?.items[mediaIndex];
   const mediaCount = photo?.items.length ?? 0;
   const mediaCountRef = useRef(mediaCount);
@@ -83,7 +83,8 @@ export default function NativeAlbum() {
         }
       }
 
-      setAlbum(freshAlbum);
+      // Unchanged polls should not rerender every thumbnail or reset the viewer.
+      if (JSON.stringify(curAlbum) !== JSON.stringify(freshAlbum)) setAlbum(freshAlbum);
       setError('');
     } catch {
       if (!isSilent) {
@@ -130,14 +131,13 @@ export default function NativeAlbum() {
     downloadController.current?.abort();
     setDownloading(null);
     setDownloadProgress(null);
-    setImageState('loading');
     setDownloadError('');
-    if (photo) triggerRef.current = gridRef.current?.querySelector<HTMLButtonElement>(`[data-session-id="${photo.id}"]`) ?? triggerRef.current;
+    if (photoId) triggerRef.current = gridRef.current?.querySelector<HTMLButtonElement>(`[data-session-id="${photoId}"]`) ?? triggerRef.current;
     // Browsing files within the same session keeps its download running.
-  }, [photo]);
+    // Polling replaces photo objects; only a different session should reset downloads.
+  }, [photoId]);
 
   useEffect(() => {
-    setImageState('loading');
     activeThumbRef.current?.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
   }, [selected, mediaIndex]);
 
@@ -289,10 +289,7 @@ export default function NativeAlbum() {
         <header className={styles.previewHeader}><div><span className={styles.label}>SEMUA KENANGAN DALAM SESI INI</span><h3 id="photo-title">Sesi {selected + 1} <span>· {mediaCount} berkas</span></h3></div><button type="button" ref={closeRef} onClick={() => setSelected(null)} aria-label="Tutup sesi, kembali ke galeri"><X size={22} /></button></header>
         <div className={styles.sessionSwitch}><button type="button" disabled={!!downloading || selected === 0} onClick={() => changeSession(-1)}><ChevronLeft size={16} />Sesi sebelumnya</button><span>{selected + 1} / {album?.photos.length}</span><button type="button" disabled={!!downloading || selected === (album?.photos.length ?? 0) - 1} onClick={() => changeSession(1)}>Sesi berikutnya<ChevronRight size={16} /></button></div>
         <div className={styles.viewer} onTouchStart={(event) => { if (event.touches.length !== 1 || event.target instanceof HTMLVideoElement) { touchRef.current = null; return; } touchRef.current = { x: event.touches[0].clientX, y: event.touches[0].clientY }; }} onTouchEnd={(event) => { const start = touchRef.current; touchRef.current = null; if (!start || !event.changedTouches[0]) return; const dx = event.changedTouches[0].clientX - start.x; const dy = event.changedTouches[0].clientY - start.y; if (Math.abs(dx) > 70 && Math.abs(dy) < 50) move(dx < 0 ? 1 : -1); }}>
-          {imageState === 'loading' && <span className={styles.imageStatus} role="status"><LoaderCircle size={24} className={styles.spinner} /><span>Memuat berkas…</span></span>}
-          {imageState === 'error' && <span className={styles.imageStatus} role="alert">Berkas belum dapat ditampilkan.<button type="button" onClick={() => { setImageState('loading'); setMediaAttempt((value) => value + 1); }}><RefreshCw size={16} />Muat ulang berkas</button></span>}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          {media.type === 'video' ? <video key={`${media.id}-${mediaAttempt}`} src={media.original} controls playsInline loop preload="metadata" onLoadedMetadata={(event) => { const video = event.currentTarget; if (video.videoWidth && video.videoHeight) setMediaSize({ id: media.id, ratio: video.videoWidth / video.videoHeight }); setImageState('ready'); }} onError={() => setImageState('error')} aria-label={`${media.label}, sesi ${selected + 1}`} style={{ opacity: imageState === 'ready' ? 1 : 0 }} /> : <img key={`${media.id}-${mediaAttempt}`} src={media.preview} alt={`${media.label}, sesi ${selected + 1}, berkas ${mediaIndex + 1}`} onLoad={(event) => { const image = event.currentTarget; if (image.naturalWidth && image.naturalHeight) setMediaSize({ id: media.id, ratio: image.naturalWidth / image.naturalHeight }); setImageState('ready'); }} onError={() => setImageState('error')} style={{ opacity: imageState === 'ready' ? 1 : 0 }} />}
+          <MediaPreview key={`${photo.id}-${media.id}-${media.preview}-${media.original}`} media={media} label={`${media.label}, sesi ${selected + 1}, berkas ${mediaIndex + 1}`} onSize={setMediaSize} />
         </div>
         <div className={styles.previewNav}><button type="button" disabled={mediaIndex === 0} onClick={() => move(-1)} aria-label="Berkas sebelumnya dalam sesi ini"><ChevronLeft size={22} /></button><p id="photo-help" aria-live="polite"><strong>{media.label} · {mediaIndex + 1}/{mediaCount}</strong><span>{mediaIndex === mediaCount - 1 ? 'Berkas terakhir dalam sesi ini' : 'Geser untuk melihat isi sesi ini'}</span></p><button type="button" disabled={mediaIndex === mediaCount - 1} onClick={() => move(1)} aria-label="Berkas berikutnya dalam sesi ini"><ChevronRight size={22} /></button></div>
         <div className={styles.filmstrip} role="group" aria-label="Pilih berkas dalam sesi ini">

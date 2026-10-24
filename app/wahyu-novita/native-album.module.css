@@ -37,6 +37,7 @@
 .previewHeader button, .previewNav button { display: grid; place-items: center; width: 44px; height: 44px; flex-shrink: 0; border: 1px solid var(--color-border); border-radius: 50%; background: var(--color-surface); color: var(--color-primary); }
 .viewer { position: relative; flex: 0 0 auto; min-height: 80px; display: grid; place-items: center; padding: 4px 8px; background: var(--color-bg); }
 .viewer > img, .viewer > video { display: block; width: 100%; height: auto; max-height: var(--media-height); object-fit: contain; }
+.viewer > .previewPlaceholder { min-height: 160px; }
 .imageStatus { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 24px; text-align: center; color: var(--color-primary); font-size: 14px; }
 .imageStatus button { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 16px; border: 1px solid var(--color-border); border-radius: 14px; background: var(--color-surface); color: var(--color-primary); }
 .previewNav { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 24px; }
