@@ -1,0 +1,84 @@
+.welcome { position: fixed; inset: 0; z-index: 150; isolation: isolate; display: grid; place-items: center; overflow: auto; overscroll-behavior: contain; min-height: 100svh; padding: 90px 24px 72px; background: var(--color-wine-deep); color: var(--color-hero-text); font-family: var(--font-ui); --ease-out: cubic-bezier(.23, 1, .32, 1); --ease-in-out: cubic-bezier(.77, 0, .175, 1); opacity: 1; transition: opacity 1000ms var(--ease-in-out); }
+.welcome *, .welcome *::before, .welcome *::after { box-sizing: border-box; }
+.welcome::after { content: ''; position: fixed; inset: 16px; z-index: -1; border: 1px solid var(--color-decoration); opacity: .22; pointer-events: none; }
+.backdrop { position: absolute; inset: 0; z-index: -3; background: url('/nava-akhsan/patterns/maroon-grain.svg') repeat, radial-gradient(ellipse at 50% 42%, var(--color-hero-highlight), var(--color-wine-deep) 78%); }
+.ambient { position: absolute; inset: 0; overflow: hidden; z-index: -2; pointer-events: none; }
+.ambient::before { content: ''; position: absolute; width: 80vw; height: 80vw; left: 10%; top: 0; border-radius: 50%; background: radial-gradient(ellipse, rgba(215, 197, 171, .08), transparent 65%); animation: lightDrift 12s ease-in-out infinite alternate; }
+.ambient > span { position: absolute; width: 10px; height: 19px; border: 1px solid var(--color-decoration); border-radius: 90% 10% 90% 10%; opacity: .25; animation: petalDrift 10s ease-in-out infinite alternate; }
+.ambient > span:nth-child(1) { left: 12%; top: 28%; }
+.ambient > span:nth-child(2) { left: 24%; top: 70%; animation-delay: -3s; width: 7px; height: 13px; }
+.ambient > span:nth-child(3) { right: 15%; top: 34%; animation-delay: -6s; }
+.ambient > span:nth-child(4) { right: 27%; top: 77%; animation-delay: -2s; width: 8px; height: 15px; }
+.ambient > span:nth-child(5) { left: 38%; top: 13%; animation-delay: -7s; width: 6px; height: 11px; }
+.ambient > span:nth-child(6) { right: 8%; top: 60%; animation-delay: -4s; }
+.cornerTop, .cornerBottom { position: absolute; z-index: -1; width: min(32vw, 380px); aspect-ratio: 350 / 220; background: url('/nava-akhsan/patterns/filigree-corner.svg') center / contain no-repeat; opacity: .5; pointer-events: none; }
+.cornerTop { top: 35px; left: 35px; }
+.cornerBottom { bottom: 35px; right: 35px; transform: rotate(180deg); }
+.topline, .bottomline { position: absolute; left: 44px; right: 44px; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 9px; letter-spacing: .22em; color: var(--color-decoration); }
+.topline { top: 38px; right: auto; gap: 18px; }
+.bottomline { bottom: 34px; }
+.skip { position: absolute; top: 24px; right: 32px; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 10px 12px; border: 0; background: transparent; color: var(--color-hero-text); font: inherit; font-size: 11px; cursor: pointer; }
+.composition { width: min(100%, 660px); text-align: center; }
+.heading { animation: fadeIn 700ms var(--ease-out) both; transition: opacity 300ms var(--ease-out); }
+.eyebrow { margin: 0; font-size: 10px; letter-spacing: .34em; color: var(--color-decoration); }
+.heading h1 { margin: 14px 0 10px; font-family: var(--font-display); font-size: clamp(48px, 7vw, 82px); font-weight: 500; letter-spacing: -.045em; line-height: 1.05; }
+.heading em { color: var(--color-decoration); font-size: .78em; }
+.subtitle { margin: 0; font-family: var(--font-display); font-size: 21px; font-style: italic; }
+.eventDetails { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 5px 10px; margin: 12px 0 0; font-size: 11px; line-height: 1.5; color: var(--color-hero-text); }
+.eventDetails > span:last-child { color: var(--color-decoration); font-weight: 500; letter-spacing: .02em; }
+.eventDetails time { white-space: nowrap; }
+.letterHashtag { color: var(--color-primary); font-weight: 600; }
+.envelopeScene { position: relative; width: min(80vw, 410px); margin: 68px auto 34px; }
+.envelopeFloat { animation: envelopeLift 5.6s ease-in-out infinite; }
+.envelopeDrift { animation: envelopeDrift 5.6s -1.4s ease-in-out infinite; }
+.envelope { position: relative; width: 100%; aspect-ratio: 1.6; }
+.shell { display: contents; }
+.envelopeBack { position: absolute; inset: 0; border-radius: 5px; background: var(--color-border); box-shadow: 0 20px 50px rgba(0, 0, 0, .45); }
+.flapInner { position: absolute; inset: 0; z-index: 1; background: var(--color-surface-alt); clip-path: polygon(0 0, 100% 0, 50% 58%); transform-origin: top center; transform: perspective(1200px) rotateX(0deg); transition: transform 850ms 180ms var(--ease-in-out); }
+.envelopeFront { position: absolute; inset: 0; z-index: 3; border-radius: 4px; background: linear-gradient(32deg, var(--color-border), var(--color-bg)); clip-path: polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%); }
+.envelopeFront::after { content: ''; position: absolute; inset: 0; background: var(--color-surface-alt); clip-path: polygon(0 100%, 50% 42%, 100% 100%); }
+.envelopeFront::before { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 20%, rgba(250, 244, 232, .18) 48%, transparent 75%); animation: paperLight 3.8s -1.9s linear infinite; }
+.flap { position: absolute; inset: 0; z-index: 4; background: linear-gradient(175deg, var(--color-bg), var(--color-border)); clip-path: polygon(0 0, 100% 0, 50% 58%); transform-origin: top center; backface-visibility: hidden; transform: perspective(1200px) rotateX(0deg); transition: transform 850ms 180ms var(--ease-in-out); }
+.letter { position: absolute; inset: 7% 6% 4%; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 16px; background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-border); border-radius: 3px; opacity: 0; transition: transform 1000ms 650ms var(--ease-in-out), opacity 200ms 650ms var(--ease-out); }
+.letter::before { content: ''; position: absolute; inset: 7px; border: 1px solid var(--color-border); pointer-events: none; }
+.letter > svg { color: var(--color-primary); flex-shrink: 0; }
+.letterEyebrow { font-size: 10px; font-weight: 600; letter-spacing: .25em; color: var(--color-primary); }
+.letterNames { font-family: var(--font-display); font-size: clamp(29px, 6vw, 39px); font-weight: 500; line-height: 1.05; }
+.letterNames i { color: var(--color-primary); }
+.divider { width: 110px; height: 14px; flex-shrink: 0; background: url('/nava-akhsan/patterns/ornamental-divider.svg') center / contain no-repeat; }
+.letter p { margin: 0; font-size: 12px; line-height: 1.6; color: var(--color-text); }
+.welcome .seal { position: absolute; z-index: 5; top: 40%; left: calc(50% - 32px); display: grid; place-items: center; width: 64px; height: 64px; padding: 0; border: 3px double var(--color-decoration-muted); border-radius: 46% 54% 49% 51%; background: var(--color-primary); color: var(--color-hero-text); box-shadow: 0 4px 12px rgba(0, 0, 0, .45), inset 0 0 0 4px var(--color-primary-deep); cursor: pointer; transition: transform 300ms var(--ease-out), opacity 250ms var(--ease-out); }
+.welcome .seal span { font-family: var(--font-display); font-size: 25px; font-weight: 500; letter-spacing: -1px; }
+.seal::before, .seal::after { content: ''; position: absolute; inset: -7px; border: 1px solid var(--color-decoration-muted); border-radius: 50%; pointer-events: none; opacity: 0; animation: sealRipple 3.2s linear infinite; }
+.seal::after { animation-delay: -1.6s; }
+.seal i { font-size: 17px; margin-inline: 2px; color: var(--color-decoration); }
+.action { position: relative; min-height: 80px; }
+.buttonPrompt { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; letter-spacing: .08em; color: var(--color-hero-text); }
+.buttonPrompt span { text-decoration: underline; text-underline-offset: 4px; }
+.progress { width: min(80vw, 340px); margin: 0 auto; }
+.progressHeading { display: flex; justify-content: space-between; align-items: center; font-size: 9px; letter-spacing: .2em; color: var(--color-decoration); margin-bottom: 8px; }
+.percentage { font-variant-numeric: tabular-nums; }
+.progressTrack { width: 100%; height: 3px; background: rgba(250, 244, 232, .18); border-radius: 3px; overflow: hidden; }
+.progressFill { display: block; width: 100%; height: 100%; transform-origin: left center; transform: scaleX(0); background: linear-gradient(90deg, var(--color-decoration), var(--color-secondary-hover)); transition: transform 28ms linear; }
+.enter { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 12px 28px; border: 1px solid var(--color-decoration); border-radius: 999px; background: var(--color-primary); color: var(--color-hero-text); font-size: 13px; font-weight: 600; letter-spacing: .12em; cursor: pointer; box-shadow: 0 8px 24px rgba(0, 0, 0, .45); animation: enterPulse 1.8s ease-in-out infinite alternate; }
+.enter:hover { background: var(--color-primary-hover); }
+.footnote { margin: 18px 0 0; font-size: 11px; opacity: .72; letter-spacing: .04em; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes lightDrift { from { transform: translate(-5%, -5%) scale(1); } to { transform: translate(5%, 5%) scale(1.15); } }
+@keyframes petalDrift { from { transform: translateY(0) rotate(0deg); } to { transform: translateY(-24px) rotate(16deg); } }
+@keyframes paperLight { 0% { transform: translateX(-100%); } 100% { transform: translateX(200%); } }
+@keyframes sealRipple { 0% { transform: scale(.95); opacity: .7; } 100% { transform: scale(1.35); opacity: 0; } }
+@keyframes enterPulse { from { transform: scale(1); } to { transform: scale(1.03); } }
+@keyframes envelopeLift { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes envelopeDrift { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
+@media (max-width: 640px) {
+  .welcome { padding: 72px 16px 54px; }
+  .topline, .bottomline { left: 20px; right: 20px; }
+  .topline { top: 20px; }
+  .bottomline { bottom: 18px; }
+  .cornerTop { top: 18px; left: 18px; }
+  .cornerBottom { bottom: 18px; right: 18px; }
+  .envelopeScene { margin: 44px auto 26px; }
+  .welcome .seal { width: 56px; height: 56px; left: calc(50% - 28px); }
+  .welcome .seal span { font-size: 21px; }
+}

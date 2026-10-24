@@ -1,0 +1,51 @@
+[data-gallery-theme='dark-olive-burgundy'],
+[data-gallery-theme='nava-akhsan'] {
+  /* Backgrounds */
+  --color-bg: #150F03;
+  --color-background: #150F03;
+  --color-background-secondary: #1B1C06;
+  --color-surface: #2A2B0F;
+  --color-surface-alt: #38371C;
+  --color-surface-elevated: #38371C;
+
+  /* Typography */
+  --color-text: #FAF4E8;
+  --color-text-primary: #FAF4E8;
+  --color-text-secondary: #EBE6D9;
+  --color-text-muted: #C4C0A7;
+
+  /* Brand / Primary (Curtain Burgundy) */
+  --color-primary: #560B14;
+  --color-primary-hover: #6F1621;
+  --color-primary-pressed: #41050A;
+  --color-primary-deep: #270202;
+
+  /* Olive Accents & Borders */
+  --color-secondary: #686D42;
+  --color-secondary-hover: #97A069;
+  --color-border: #4C4A2C;
+
+  /* Hero Section */
+  --color-hero-bg: #150F03;
+  --color-hero-highlight: #2A2B0F;
+  --color-hero-text: #FAF4E8;
+  --color-wine-deep: #270202;
+
+  /* Decorative Accents */
+  --color-decoration: #D7C5AB;
+  --color-decoration-muted: #97A069;
+  --color-accent-warm: #D7C5AB;
+  --color-accent-floral: #662117;
+  --color-overlay: rgba(21, 15, 3, 0.95);
+
+  /* Status */
+  --color-success: #686D42;
+  --color-danger: #662117;
+
+  /* Shadows */
+  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.45);
+
+  /* Fonts */
+  --font-display: var(--font-wedding-display), Georgia, serif;
+  --font-ui: var(--font-wedding-ui), system-ui, sans-serif;
+}
