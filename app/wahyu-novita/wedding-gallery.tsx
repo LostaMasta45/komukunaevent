@@ -225,7 +225,7 @@ export default function WeddingGallery() {
             <div className={styles.guideIntro}><span className={styles.sectionEyebrow}>MAKE IT YOURS</span><h2>Momennya milik kita.<br /><em>Kenangannya milikmu.</em></h2></div>
             <ol className={styles.steps}>
               <li><span className={styles.stepNumber}>01</span><div><h3>Temukan senyummu</h3><p>Buka sesi fotomu, lalu geser untuk melihat seluruh isinya.</p></div></li>
-              <li><span className={styles.stepNumber}>02</span><div><h3>Simpan kenangannya</h3><p>Pilih “Unduh semua sesi ini” untuk satu ZIP, atau unduh berkas favoritmu saja.</p></div></li>
+              <li><span className={styles.stepNumber}>02</span><div><h3>Simpan kenangannya</h3><p>Pilih “Unduh semua sesi ini” untuk mengunduh semua berkas langsung, atau unduh berkas favoritmu saja.</p></div></li>
               <li><span className={styles.stepNumber}>03</span><div><h3>Bagikan bahagianya</h3><p>Kirim tautan album ke teman dan orang tersayang.</p></div></li>
             </ol>
           </section>

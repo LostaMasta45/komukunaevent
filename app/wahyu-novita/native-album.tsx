@@ -1,9 +1,21 @@
 'use client';
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
-import { ChevronLeft, ChevronRight, Download, FileArchive, Images, LoaderCircle, Play, RefreshCw, X } from 'lucide-react';
-import type { AlbumData } from './album-config';
+import { ChevronLeft, ChevronRight, Download, Images, LoaderCircle, Play, RefreshCw, X } from 'lucide-react';
+import type { AlbumData, SessionMedia } from './album-config';
 import styles from './native-album.module.css';
+
+function triggerBlobDownload(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement('a');
+  anchor.href = url;
+  anchor.download = filename;
+  anchor.style.display = 'none';
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+}
 
 export default function NativeAlbum() {
   const [album, setAlbum] = useState<AlbumData | null>(null);
@@ -17,6 +29,7 @@ export default function NativeAlbum() {
   const [mediaAttempt, setMediaAttempt] = useState(0);
   const [mediaSize, setMediaSize] = useState<{ id: string; ratio: number } | null>(null);
   const [downloading, setDownloading] = useState<'file' | 'session' | null>(null);
+  const [downloadProgress, setDownloadProgress] = useState<{ current: number; total: number } | null>(null);
   const [downloadError, setDownloadError] = useState('');
   const closeRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
@@ -47,6 +60,7 @@ export default function NativeAlbum() {
   useEffect(() => {
     downloadController.current?.abort();
     setDownloading(null);
+    setDownloadProgress(null);
     setImageState('loading');
     setDownloadError('');
     if (photo) triggerRef.current = gridRef.current?.querySelector<HTMLButtonElement>(`[data-session-id="${photo.id}"]`) ?? triggerRef.current;
@@ -90,29 +104,79 @@ export default function NativeAlbum() {
   async function downloadPhoto(all = false) {
     if (!photo || !media || downloading) return;
     setDownloading(all ? 'session' : 'file');
+    setDownloadProgress(null);
     setDownloadError('');
     const controller = new AbortController();
     downloadController.current = controller;
-    try {
-      const query = all ? 'all=1' : `item=${encodeURIComponent(media.id)}`;
-      const response = await fetch(`/api/wahyu-novita/download?id=${encodeURIComponent(photo.id)}&${query}`, { signal: controller.signal });
+
+    const fetchItemBlob = async (item: SessionMedia, index: number) => {
+      const response = await fetch(`/api/wahyu-novita/download?id=${encodeURIComponent(photo.id)}&item=${encodeURIComponent(item.id)}`, {
+        signal: controller.signal,
+      });
       if (!response.ok) {
         const failure = await response.json().catch(() => null);
-        throw new Error(failure?.error ?? 'Unduhan belum berhasil. Silakan coba lagi.');
+        throw new Error(failure?.error ?? `Gagal mengunduh berkas ${index + 1}.`);
       }
       const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement('a');
-      anchor.href = url;
-      anchor.download = response.headers.get('content-disposition')?.match(/filename="([^"]+)"/)?.[1] ?? `Komukuna-${photo.id}.${all ? 'zip' : 'jpg'}`;
-      document.body.appendChild(anchor);
-      anchor.click();
-      anchor.remove();
-      window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+      const fallbackExt = item.type === 'video' ? 'mp4' : item.type === 'gif' ? 'gif' : 'jpg';
+      let filename = response.headers.get('content-disposition')?.match(/filename="([^"]+)"/)?.[1];
+      if (!filename) {
+        filename = `Komukuna-${photo.id}-${index + 1}.${fallbackExt}`;
+      } else if (!filename.includes('.')) {
+        filename = `${filename}.${fallbackExt}`;
+      }
+      return { blob, filename };
+    };
+
+    try {
+      if (all) {
+        const items = photo.items;
+        if (!items.length) return;
+        setDownloadProgress({ current: 0, total: items.length });
+
+        const results = await Promise.allSettled(
+          items.map(async (item, index) => {
+            const result = await fetchItemBlob(item, index);
+            setDownloadProgress((prev) => ({
+              current: (prev?.current ?? 0) + 1,
+              total: items.length,
+            }));
+            return result;
+          })
+        );
+
+        if (controller.signal.aborted) return;
+
+        let successCount = 0;
+        for (let i = 0; i < results.length; i++) {
+          if (controller.signal.aborted) break;
+          const res = results[i];
+          if (res.status === 'fulfilled') {
+            successCount++;
+            triggerBlobDownload(res.value.blob, res.value.filename);
+            if (i < results.length - 1) {
+              await new Promise((resolve) => setTimeout(resolve, 250));
+            }
+          }
+        }
+
+        if (successCount === 0) {
+          throw new Error('Unduhan belum berhasil. Silakan coba lagi.');
+        } else if (successCount < items.length) {
+          setDownloadError(`${successCount} dari ${items.length} berkas berhasil diunduh. Beberapa berkas belum berhasil.`);
+        }
+      } else {
+        const result = await fetchItemBlob(media, mediaIndex);
+        if (controller.signal.aborted) return;
+        triggerBlobDownload(result.blob, result.filename);
+      }
     } catch (error) {
       if (!controller.signal.aborted) setDownloadError(error instanceof Error ? error.message : 'Unduhan belum berhasil. Silakan coba lagi.');
     } finally {
-      if (downloadController.current === controller) setDownloading(null);
+      if (downloadController.current === controller) {
+        setDownloading(null);
+        setDownloadProgress(null);
+      }
     }
   }
 
@@ -169,9 +233,23 @@ export default function NativeAlbum() {
           </button>)}
         </div>
         <footer className={styles.previewFooter}>
-          <button className={styles.download} type="button" disabled={!!downloading || !photo.sessionComplete} onClick={() => downloadPhoto(true)}>{downloading === 'session' ? <LoaderCircle size={18} className={styles.spinner} /> : <FileArchive size={18} />}{downloading === 'session' ? 'Menyiapkan ZIP sesi ini…' : `Unduh semua sesi ini (${mediaCount})`}</button>
-          <div className={styles.fileActions}><button type="button" disabled={!!downloading} onClick={() => downloadPhoto()}>{downloading === 'file' ? <LoaderCircle size={15} className={styles.spinner} /> : <Download size={15} />}{downloading === 'file' ? 'Menyiapkan…' : 'Unduh berkas ini'}</button></div>
-          <p className={styles.zipHint} role="status">{downloading === 'session' ? 'Mengumpulkan semua berkas asli. Tunggu sebentar, ya.' : photo.sessionComplete ? 'Semua berkas asli sesi ini dalam satu ZIP.' : 'Sebagian berkas belum tersedia. Kamu masih bisa mengunduh berkas yang sudah tampil.'}</p>
+          <button className={styles.download} type="button" disabled={!!downloading || mediaCount === 0} onClick={() => downloadPhoto(true)}>
+            {downloading === 'session' ? <LoaderCircle size={18} className={styles.spinner} /> : <Download size={18} />}
+            {downloading === 'session' ? (downloadProgress ? `Mengunduh (${downloadProgress.current}/${downloadProgress.total})…` : 'Mengunduh semua…') : `Unduh semua sesi ini (${mediaCount})`}
+          </button>
+          <div className={styles.fileActions}>
+            <button type="button" disabled={!!downloading} onClick={() => downloadPhoto()}>
+              {downloading === 'file' ? <LoaderCircle size={15} className={styles.spinner} /> : <Download size={15} />}
+              {downloading === 'file' ? 'Menyiapkan…' : 'Unduh berkas ini'}
+            </button>
+          </div>
+          <p className={styles.zipHint} role="status">
+            {downloading === 'session'
+              ? 'Mengunduh semua berkas satu per satu. Tunggu sebentar, ya…'
+              : photo.sessionComplete
+              ? 'Semua berkas asli sesi ini akan diunduh satu per satu secara bersamaan.'
+              : 'Sebagian berkas belum lengkap. Berkas yang sudah tampil akan diunduh bersamaan.'}
+          </p>
           {downloadError && <p className={styles.downloadError} role="alert">{downloadError}</p>}
         </footer>
       </div>
