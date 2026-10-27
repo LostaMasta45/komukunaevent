@@ -1,130 +1,43 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
+import { Menu, X } from 'lucide-react';
 import BrandLogo from '@/components/branding/BrandLogo';
 import { Button } from './ui/Button';
-import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { eventNavigation, bookingHref } from './navigation';
 
 export default function Navbar() {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+    const [open, setOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('');
-
+    const toggle = useRef<HTMLButtonElement>(null);
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', handleScroll);
-
-        // Scroll Spy Logic
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setActiveSection(entry.target.id);
-                }
-            });
-        }, { rootMargin: "-20% 0px -60% 0px" });
-
-        const sections = document.querySelectorAll('section[id]');
-        sections.forEach(section => observer.observe(section));
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-            sections.forEach(section => observer.unobserve(section));
-        };
+        const scroll = () => setScrolled(window.scrollY > 50);
+        scroll();
+        window.addEventListener('scroll', scroll, { passive: true });
+        const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) setActiveSection(entry.target.id); }), { rootMargin: '-20% 0px -60% 0px' });
+        document.querySelectorAll('section[id]').forEach(section => observer.observe(section));
+        const resize = () => { if (window.matchMedia('(min-width: 768px)').matches) setOpen(false); };
+        window.addEventListener('resize', resize);
+        return () => { observer.disconnect(); window.removeEventListener('scroll', scroll); window.removeEventListener('resize', resize); };
     }, []);
-
-    const navLinks = [
-        { name: 'Layanan', href: '#services' },
-        { name: 'Keunggulan', href: '#usp' },
-        // { name: 'Testimoni', href: '#testimonials' },
-        { name: 'Harga', href: '#pricing' },
-    ];
-
-    return (
-        <nav
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-komukuna-dark/80 backdrop-blur-md py-3 shadow-lg border-b border-white/5' : 'bg-transparent py-5'
-                }`}
-        >
-            <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-                <Link href="/komukunaevent" aria-label="Komukuna Studio, beranda" className="inline-flex rounded-xl transition-transform hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-komukuna-pink">
-                    <BrandLogo surface="dark" priority className="!h-16 !w-24 md:!h-[72px] md:!w-28" sizes="(max-width: 768px) 96px, 112px" />
-                </Link>
-
-                {/* Desktop Nav */}
-                <div className="hidden md:flex items-center gap-8">
-                    {navLinks.map((link) => {
-                        const isActive = activeSection === link.href.substring(1);
-                        return (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                className={`relative font-medium text-sm tracking-wide transition-colors ${isActive ? 'text-komukuna-pink' : 'text-gray-300 hover:text-white'}`}
-                            >
-                                {link.name}
-                                {isActive && (
-                                    <motion.div
-                                        layoutId="activeNavIndicator"
-                                        className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-komukuna-pink rounded-full"
-                                    />
-                                )}
-                            </Link>
-                        );
-                    })}
-                    <Button variant="gradient" size="sm" asChild className="ml-4 hover:scale-105 transition-transform">
-                        <Link href="#pricing">Pesan Sekarang</Link>
-                    </Button>
-                </div>
-
-                {/* Mobile Toggle */}
-                <button
-                    className="md:hidden text-white"
-                    aria-label={isMobileMenuOpen ? "Tutup Menu Navigasi" : "Buka Menu Navigasi"}
-                    aria-expanded={isMobileMenuOpen}
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                >
-                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
+    return <nav aria-label="Navigasi utama" onKeyDown={event => { if (event.key === 'Escape' && open) { setOpen(false); toggle.current?.focus(); } }}
+        className={`fixed top-0 left-0 right-0 z-50 ${scrolled || open ? 'bg-komukuna-dark border-b border-white/10' : 'bg-transparent'} py-3`}>
+        <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
+            <a href="/komukunaevent" aria-label="Komukuna Studio, beranda" className="inline-flex rounded-xl"><BrandLogo surface="dark" className="!h-16 !w-24 md:!h-[72px] md:!w-28" sizes="(max-width: 768px) 96px, 112px" priority /></a>
+            <div className="hidden md:flex items-center gap-8">
+                {eventNavigation.map(link => <a key={link.id} href={link.href} aria-current={activeSection === link.id ? 'location' : undefined} className={`font-medium text-sm ${activeSection === link.id ? 'text-pink-300 underline underline-offset-8' : 'text-gray-200'}`}>{link.name}</a>)}
+                <Button variant="gradient" asChild><a href={bookingHref}>Pesan Sekarang</a></Button>
             </div>
-
-            {/* Mobile Menu */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-komukuna-dark border-t border-white/10"
-                    >
-                        <div className="flex flex-col p-6 gap-4">
-                            {navLinks.map((link) => {
-                                const isActive = activeSection === link.href.substring(1);
-                                return (
-                                    <Link
-                                        key={link.name}
-                                        href={link.href}
-                                        className={`flex items-center justify-between text-lg font-medium transition-colors ${isActive ? 'text-komukuna-pink' : 'text-gray-300 hover:text-white'}`}
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                    >
-                                        {link.name}
-                                        {isActive && (
-                                            <motion.div
-                                                layoutId="activeNavMobile"
-                                                className="w-2 h-2 rounded-full bg-komukuna-pink"
-                                            />
-                                        )}
-                                    </Link>
-                                );
-                            })}
-                            <Button variant="gradient" className="w-full mt-4" asChild>
-                                <Link href="#pricing" onClick={() => setIsMobileMenuOpen(false)}>Pesan Sekarang</Link>
-                            </Button>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </nav>
-    );
+            <button ref={toggle} type="button" onClick={() => setOpen(value => !value)} aria-expanded={open} aria-controls="event-mobile-navigation" aria-label={open ? 'Tutup Menu Navigasi' : 'Buka Menu Navigasi'} className="md:hidden min-h-11 min-w-11 flex items-center justify-center text-white">
+                {open ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
+            </button>
+        </div>
+        <div id="event-mobile-navigation" hidden={!open} className="md:hidden bg-komukuna-dark border-t border-white/10">
+            <div className="container mx-auto p-4 flex flex-col gap-2">
+                {eventNavigation.map(link => <a key={link.id} href={link.href} onClick={() => setOpen(false)} className="min-h-11 py-3 text-gray-100 font-medium">{link.name}</a>)}
+                <Button variant="gradient" asChild><a href={bookingHref} onClick={() => setOpen(false)}>Pesan Sekarang</a></Button>
+            </div>
+        </div>
+    </nav>;
 }

@@ -1,0 +1,738 @@
+{
+  "buildId": "KCw_UmEb38CZv86i3L5yh",
+  "gitHead": "d6bbd08e1d44f3858124db73def3d1f4fea20766",
+  "startedAt": "2026-10-27T09:04:42.398Z",
+  "baseUrl": "http://127.0.0.1:4318",
+  "browserCache": "Fresh Chrome profile for every run",
+  "optimizerCache": "Persistent server image cache; no prewarming by this runner",
+  "entries": [
+    {
+      "profile": "homepage-mobile",
+      "run": 1,
+      "file": "homepage-mobile-1",
+      "fetchTime": "2026-10-27T09:04:44.815Z",
+      "lighthouseVersion": "12.8.2",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "scores": {
+        "performance": 97,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 1115.056,
+        "largest-contentful-paint": 2440.112,
+        "speed-index": 1115.056,
+        "total-blocking-time": 70,
+        "cumulative-layout-shift": 0,
+        "total-byte-weight": 213109
+      },
+      "failedAudits": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "score": 0.99,
+          "display": "1.1 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.91,
+          "display": "2.4 s"
+        },
+        {
+          "id": "total-blocking-time",
+          "title": "Total Blocking Time",
+          "score": 0.99,
+          "display": "70 ms"
+        },
+        {
+          "id": "max-potential-fid",
+          "title": "Max Potential First Input Delay",
+          "score": 0.92,
+          "display": "120 ms"
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.98,
+          "display": "2.4 s"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "display": "Est savings of 41 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "display": "Est savings of 11 KiB"
+        },
+        {
+          "id": "legacy-javascript-insight",
+          "title": "Legacy JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 12 KiB"
+        }
+      ]
+    },
+    {
+      "profile": "homepage-mobile",
+      "run": 2,
+      "file": "homepage-mobile-2",
+      "fetchTime": "2026-10-27T09:04:55.030Z",
+      "lighthouseVersion": "12.8.2",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "scores": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 1078.15945,
+        "largest-contentful-paint": 2394.3189,
+        "speed-index": 1078.15945,
+        "total-blocking-time": 80,
+        "cumulative-layout-shift": 0,
+        "total-byte-weight": 213109
+      },
+      "failedAudits": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "score": 0.99,
+          "display": "1.1 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.92,
+          "display": "2.4 s"
+        },
+        {
+          "id": "total-blocking-time",
+          "title": "Total Blocking Time",
+          "score": 0.99,
+          "display": "80 ms"
+        },
+        {
+          "id": "max-potential-fid",
+          "title": "Max Potential First Input Delay",
+          "score": 0.9,
+          "display": "130 ms"
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.98,
+          "display": "2.4 s"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "display": "Est savings of 41 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "display": "Est savings of 11 KiB"
+        },
+        {
+          "id": "legacy-javascript-insight",
+          "title": "Legacy JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 12 KiB"
+        }
+      ]
+    },
+    {
+      "profile": "homepage-mobile",
+      "run": 3,
+      "file": "homepage-mobile-3",
+      "fetchTime": "2026-10-27T09:05:04.690Z",
+      "lighthouseVersion": "12.8.2",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "scores": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 1083.8878,
+        "largest-contentful-paint": 2382.7756,
+        "speed-index": 1083.8878,
+        "total-blocking-time": 71,
+        "cumulative-layout-shift": 0,
+        "total-byte-weight": 213109
+      },
+      "failedAudits": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "score": 0.99,
+          "display": "1.1 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.92,
+          "display": "2.4 s"
+        },
+        {
+          "id": "total-blocking-time",
+          "title": "Total Blocking Time",
+          "score": 0.99,
+          "display": "70 ms"
+        },
+        {
+          "id": "max-potential-fid",
+          "title": "Max Potential First Input Delay",
+          "score": 0.92,
+          "display": "120 ms"
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.98,
+          "display": "2.4 s"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "display": "Est savings of 41 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "display": "Est savings of 11 KiB"
+        },
+        {
+          "id": "legacy-javascript-insight",
+          "title": "Legacy JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 12 KiB"
+        }
+      ]
+    },
+    {
+      "profile": "homepage-desktop",
+      "run": 1,
+      "file": "homepage-desktop-1",
+      "fetchTime": "2026-10-27T09:05:14.553Z",
+      "lighthouseVersion": "12.8.2",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 288.1912,
+        "largest-contentful-paint": 558.3824,
+        "speed-index": 299.5596811985301,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "total-byte-weight": 212005
+      },
+      "failedAudits": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "display": "Est savings of 41 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "display": "Est savings of 11 KiB"
+        },
+        {
+          "id": "forced-reflow-insight",
+          "title": "Forced reflow",
+          "score": 0
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0,
+          "display": "Est savings of 4 KiB"
+        },
+        {
+          "id": "legacy-javascript-insight",
+          "title": "Legacy JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 12 KiB"
+        }
+      ]
+    },
+    {
+      "profile": "homepage-desktop",
+      "run": 2,
+      "file": "homepage-desktop-2",
+      "fetchTime": "2026-10-27T09:05:24.306Z",
+      "lighthouseVersion": "12.8.2",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 293.97095,
+        "largest-contentful-paint": 533.9419,
+        "speed-index": 329.0114652861088,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "total-byte-weight": 212005
+      },
+      "failedAudits": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "display": "Est savings of 41 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "display": "Est savings of 11 KiB"
+        },
+        {
+          "id": "forced-reflow-insight",
+          "title": "Forced reflow",
+          "score": 0
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0.5,
+          "display": "Est savings of 4 KiB"
+        },
+        {
+          "id": "legacy-javascript-insight",
+          "title": "Legacy JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 12 KiB"
+        }
+      ]
+    },
+    {
+      "profile": "homepage-desktop",
+      "run": 3,
+      "file": "homepage-desktop-3",
+      "fetchTime": "2026-10-27T09:05:34.370Z",
+      "lighthouseVersion": "12.8.2",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 289.8749,
+        "largest-contentful-paint": 558.7498,
+        "speed-index": 304.17531604109945,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "total-byte-weight": 212005
+      },
+      "failedAudits": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "display": "Est savings of 41 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "display": "Est savings of 11 KiB"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0.5,
+          "display": "Est savings of 4 KiB"
+        },
+        {
+          "id": "legacy-javascript-insight",
+          "title": "Legacy JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 12 KiB"
+        }
+      ]
+    },
+    {
+      "profile": "portfolio-mobile",
+      "run": 1,
+      "file": "portfolio-mobile-1",
+      "fetchTime": "2026-10-27T09:05:44.704Z",
+      "lighthouseVersion": "12.8.2",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 888.83895,
+        "largest-contentful-paint": 2212.6778999999997,
+        "speed-index": 888.83895,
+        "total-blocking-time": 49,
+        "cumulative-layout-shift": 0,
+        "total-byte-weight": 192937
+      },
+      "failedAudits": [
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.94,
+          "display": "2.2 s"
+        },
+        {
+          "id": "max-potential-fid",
+          "title": "Max Potential First Input Delay",
+          "score": 0.96,
+          "display": "100 ms"
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.99,
+          "display": "2.2 s"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "display": "Est savings of 41 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "display": "Est savings of 11 KiB"
+        },
+        {
+          "id": "legacy-javascript-insight",
+          "title": "Legacy JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 12 KiB"
+        }
+      ]
+    },
+    {
+      "profile": "portfolio-mobile",
+      "run": 2,
+      "file": "portfolio-mobile-2",
+      "fetchTime": "2026-10-27T09:05:53.446Z",
+      "lighthouseVersion": "12.8.2",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "scores": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 887.8933,
+        "largest-contentful-paint": 2223.7866,
+        "speed-index": 887.8933,
+        "total-blocking-time": 66,
+        "cumulative-layout-shift": 0,
+        "total-byte-weight": 192937
+      },
+      "failedAudits": [
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.94,
+          "display": "2.2 s"
+        },
+        {
+          "id": "total-blocking-time",
+          "title": "Total Blocking Time",
+          "score": 0.99,
+          "display": "70 ms"
+        },
+        {
+          "id": "max-potential-fid",
+          "title": "Max Potential First Input Delay",
+          "score": 0.93,
+          "display": "120 ms"
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.99,
+          "display": "2.2 s"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "display": "Est savings of 41 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "display": "Est savings of 11 KiB"
+        },
+        {
+          "id": "forced-reflow-insight",
+          "title": "Forced reflow",
+          "score": 0
+        },
+        {
+          "id": "legacy-javascript-insight",
+          "title": "Legacy JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 12 KiB"
+        }
+      ]
+    },
+    {
+      "profile": "portfolio-mobile",
+      "run": 3,
+      "file": "portfolio-mobile-3",
+      "fetchTime": "2026-10-27T09:06:02.034Z",
+      "lighthouseVersion": "12.8.2",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "scores": {
+        "performance": 98,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 887.24835,
+        "largest-contentful-paint": 2245.4966999999997,
+        "speed-index": 887.24835,
+        "total-blocking-time": 87,
+        "cumulative-layout-shift": 0,
+        "total-byte-weight": 192937
+      },
+      "failedAudits": [
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "score": 0.94,
+          "display": "2.2 s"
+        },
+        {
+          "id": "total-blocking-time",
+          "title": "Total Blocking Time",
+          "score": 0.99,
+          "display": "90 ms"
+        },
+        {
+          "id": "max-potential-fid",
+          "title": "Max Potential First Input Delay",
+          "score": 0.88,
+          "display": "140 ms"
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.99,
+          "display": "2.2 s"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0,
+          "display": "Est savings of 41 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "display": "Est savings of 11 KiB"
+        },
+        {
+          "id": "forced-reflow-insight",
+          "title": "Forced reflow",
+          "score": 0
+        },
+        {
+          "id": "legacy-javascript-insight",
+          "title": "Legacy JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 12 KiB"
+        }
+      ]
+    },
+    {
+      "profile": "portfolio-desktop",
+      "run": 1,
+      "file": "portfolio-desktop-1",
+      "fetchTime": "2026-10-27T09:06:10.662Z",
+      "lighthouseVersion": "12.8.2",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 241.7544,
+        "largest-contentful-paint": 527.2632,
+        "speed-index": 251.4201532493382,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "total-byte-weight": 288006
+      },
+      "failedAudits": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 20 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "display": "Est savings of 11 KiB"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0.5,
+          "display": "Est savings of 4 KiB"
+        },
+        {
+          "id": "legacy-javascript-insight",
+          "title": "Legacy JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 12 KiB"
+        }
+      ]
+    },
+    {
+      "profile": "portfolio-desktop",
+      "run": 2,
+      "file": "portfolio-desktop-2",
+      "fetchTime": "2026-10-27T09:06:19.821Z",
+      "lighthouseVersion": "12.8.2",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 252.9023,
+        "largest-contentful-paint": 491.2557499999999,
+        "speed-index": 280.256936249144,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "total-byte-weight": 288006
+      },
+      "failedAudits": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 20 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "display": "Est savings of 11 KiB"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0.5,
+          "display": "Est savings of 4 KiB"
+        },
+        {
+          "id": "legacy-javascript-insight",
+          "title": "Legacy JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 12 KiB"
+        }
+      ]
+    },
+    {
+      "profile": "portfolio-desktop",
+      "run": 3,
+      "file": "portfolio-desktop-3",
+      "fetchTime": "2026-10-27T09:06:29.385Z",
+      "lighthouseVersion": "12.8.2",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+      "warnings": [],
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 252.23805,
+        "largest-contentful-paint": 544.4761,
+        "speed-index": 252.23805,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0,
+        "total-byte-weight": 288006
+      },
+      "failedAudits": [
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 20 KiB"
+        },
+        {
+          "id": "legacy-javascript",
+          "title": "Avoid serving legacy JavaScript to modern browsers",
+          "score": 0.5,
+          "display": "Est savings of 11 KiB"
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0.5,
+          "display": "Est savings of 4 KiB"
+        },
+        {
+          "id": "legacy-javascript-insight",
+          "title": "Legacy JavaScript",
+          "score": 0.5,
+          "display": "Est savings of 12 KiB"
+        }
+      ]
+    }
+  ]
+}

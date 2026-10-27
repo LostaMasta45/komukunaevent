@@ -1,33 +1,17 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
+import { Play } from 'lucide-react';
+import { cloudinaryProcessVideos } from '@/lib/cloudinary-videos';
+
+const VideoPlayerModal = lazy(() => import('./VideoPlayerModal'));
 
 export default function HeroVideoBackground() {
-    const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
-
-    useEffect(() => {
-        // Defer video loading until after initial page paint on desktop
-        const isMobile = window.innerWidth < 768;
-        if (!isMobile) {
-            const timer = setTimeout(() => {
-                setShouldLoadVideo(true);
-            }, 1500);
-            return () => clearTimeout(timer);
-        }
-    }, []);
-
-    if (!shouldLoadVideo) return null;
-
-    return (
-        <video
-            className="absolute inset-0 w-full h-full object-cover opacity-60 transition-opacity duration-1000"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-        >
-            <source src="https://res.cloudinary.com/rezanurhamami/video/upload/f_auto,q_auto:eco,w_1280,c_limit/komukuna/process/video-bts1.mp4" type="video/mp4" />
-        </video>
-    );
+    const [open, setOpen] = useState(false);
+    return <>
+        <button type="button" onClick={() => setOpen(true)} aria-haspopup="dialog" className="min-h-11 inline-flex items-center justify-center gap-2 rounded-full border border-white/50 px-5 py-3 text-white bg-black/60">
+            <Play size={18} aria-hidden="true" />Putar video pengalaman Komukuna
+        </button>
+        {open && <Suspense fallback={<p role="status" className="text-white">Memuat pemutar video…</p>}><VideoPlayerModal isOpen videoSrc={cloudinaryProcessVideos['video-bts1']} videoTitle="Pengalaman Komukuna" onClose={() => setOpen(false)} /></Suspense>}
+    </>;
 }

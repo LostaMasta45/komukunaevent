@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from 'framer-motion';
 import { MessageCircle, FileCheck, Palette, Camera } from 'lucide-react';
 
 const steps = [
@@ -38,12 +35,8 @@ export default function HowItWorksSection() {
 
                 <div className="grid md:grid-cols-4 gap-8">
                     {steps.map((step, i) => (
-                        <motion.div
+                        <div
                             key={i}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.2 }}
                             className="relative flex flex-col items-center text-center group"
                         >
                             {/* Connector Line (Desktop) */}
@@ -57,7 +50,7 @@ export default function HowItWorksSection() {
 
                             <h3 className="text-xl font-bold text-white mb-3">{step.title}</h3>
                             <p className="text-gray-400 text-sm leading-relaxed max-w-[200px]">{step.desc}</p>
-                        </motion.div>
+                        </div>
                     ))}
                 </div>
 

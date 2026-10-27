@@ -1,0 +1,170 @@
+{
+  "homepage-mobile": {
+    "performance": {
+      "min": 97,
+      "median": 98,
+      "max": 98,
+      "values": [
+        97,
+        98,
+        98
+      ]
+    },
+    "accessibility": {
+      "min": 100,
+      "median": 100,
+      "max": 100,
+      "values": [
+        100,
+        100,
+        100
+      ]
+    },
+    "best-practices": {
+      "min": 100,
+      "median": 100,
+      "max": 100,
+      "values": [
+        100,
+        100,
+        100
+      ]
+    },
+    "seo": {
+      "min": 100,
+      "median": 100,
+      "max": 100,
+      "values": [
+        100,
+        100,
+        100
+      ]
+    }
+  },
+  "homepage-desktop": {
+    "performance": {
+      "min": 100,
+      "median": 100,
+      "max": 100,
+      "values": [
+        100,
+        100,
+        100
+      ]
+    },
+    "accessibility": {
+      "min": 100,
+      "median": 100,
+      "max": 100,
+      "values": [
+        100,
+        100,
+        100
+      ]
+    },
+    "best-practices": {
+      "min": 100,
+      "median": 100,
+      "max": 100,
+      "values": [
+        100,
+        100,
+        100
+      ]
+    },
+    "seo": {
+      "min": 100,
+      "median": 100,
+      "max": 100,
+      "values": [
+        100,
+        100,
+        100
+      ]
+    }
+  },
+  "portfolio-mobile": {
+    "performance": {
+      "min": 98,
+      "median": 98,
+      "max": 99,
+      "values": [
+        98,
+        98,
+        99
+      ]
+    },
+    "accessibility": {
+      "min": 100,
+      "median": 100,
+      "max": 100,
+      "values": [
+        100,
+        100,
+        100
+      ]
+    },
+    "best-practices": {
+      "min": 100,
+      "median": 100,
+      "max": 100,
+      "values": [
+        100,
+        100,
+        100
+      ]
+    },
+    "seo": {
+      "min": 100,
+      "median": 100,
+      "max": 100,
+      "values": [
+        100,
+        100,
+        100
+      ]
+    }
+  },
+  "portfolio-desktop": {
+    "performance": {
+      "min": 100,
+      "median": 100,
+      "max": 100,
+      "values": [
+        100,
+        100,
+        100
+      ]
+    },
+    "accessibility": {
+      "min": 100,
+      "median": 100,
+      "max": 100,
+      "values": [
+        100,
+        100,
+        100
+      ]
+    },
+    "best-practices": {
+      "min": 100,
+      "median": 100,
+      "max": 100,
+      "values": [
+        100,
+        100,
+        100
+      ]
+    },
+    "seo": {
+      "min": 100,
+      "median": 100,
+      "max": 100,
+      "values": [
+        100,
+        100,
+        100
+      ]
+    }
+  }
+}

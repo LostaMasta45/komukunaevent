@@ -1,0 +1,405 @@
+
+
+import { Check, Star, ShieldCheck, Camera, Aperture } from 'lucide-react';
+
+interface PricingTier {
+    name: string;
+    price: string;
+    originalPrice?: string;
+    savings?: string;
+    description: string;
+    unlimitedHeader?: string;
+    features: string[];
+    cta: string;
+    isPopular: boolean;
+    theme: string;
+}
+
+const photoboothTiers: PricingTier[] = [
+    {
+        name: 'SILVER',
+        price: 'Rp 1.250.000',
+        originalPrice: 'Rp 1.750.000',
+        savings: 'Hemat Rp 500.000',
+        description: 'Paket hemat untuk dokumentasi event yang seru dan berkesan.',
+        unlimitedHeader: '♾️ UNLIMITED SESI FOTO',
+        features: [
+            'Durasi Sewa Selama 2 Jam',
+            'Unlimited Sesi Foto',
+            'Free 1x Cetak 4R atau Photostrip per Sesi',
+            'Request Desain Frame Sesuai Event',
+            'Premium Backdrop Glitter Gold atau Silver',
+            'Fun Property',
+            'Free All Soft File Foto'
+        ],
+        cta: 'Booking Silver Photobooth',
+        isPopular: false,
+        theme: 'silver',
+    },
+    {
+        name: 'GOLD',
+        price: 'Rp 1.750.000',
+        originalPrice: 'Rp 2.250.000',
+        savings: 'Hemat Rp 500.000',
+        description: 'Paket favorit dengan durasi lebih lama dan pengalaman yang lebih lengkap.',
+        unlimitedHeader: '♾️ UNLIMITED SESI FOTO',
+        features: [
+            'Durasi Sewa Selama 3 Jam',
+            'Unlimited Sesi Foto',
+            'Free 1x Cetak 4R atau Photostrip per Sesi',
+            'Request Desain Frame Sesuai Event',
+            'Premium Backdrop Glitter Gold atau Silver',
+            'Special Property',
+            '3 Kostum Karakter',
+            'Free All Soft File Foto',
+            'Request Background Full Custom'
+        ],
+        cta: 'Booking Gold Photobooth',
+        isPopular: true,
+        theme: 'gold',
+    },
+];
+
+const videoboothTiers: PricingTier[] = [
+    {
+        name: 'SILVER 360',
+        price: 'Rp 1.250.000',
+        originalPrice: undefined,
+        savings: undefined,
+        description: 'Paket videobooth praktis untuk membuat event lebih seru dan interaktif.',
+        features: [
+            'Durasi 2 Jam',
+            'Lighting 4 Spot',
+            'RGB Lighting 2 Spot',
+            'QR Sharing System',
+            'Template Ready',
+            'Music Ready',
+            'Fun Property',
+            'Semua Video Dikirim Digital'
+        ],
+        cta: 'Booking Silver 360',
+        isPopular: false,
+        theme: 'silver',
+    },
+    {
+        name: 'GOLD 360',
+        price: 'Rp 1.500.000',
+        originalPrice: undefined,
+        savings: undefined,
+        description: 'Paket videobooth premium dengan hasil lebih personal dan profesional.',
+        features: [
+            'Durasi 3 Jam',
+            'Lighting 4 Spot',
+            'RGB Lighting 2 Spot',
+            'QR Sharing System',
+            'Template Custom',
+            'Music Custom',
+            'Fun Property',
+            'Semua Video Dikirim Digital'
+        ],
+        cta: 'Booking Gold 360',
+        isPopular: true,
+        theme: 'gold',
+    },
+];
+
+export default function PricingPreview() {
+    const activeTab = 'photobooth' as 'photobooth' | 'videobooth';
+    const currentTiers = activeTab === 'photobooth' ? photoboothTiers : videoboothTiers;
+
+    return (
+        <section id="pricing" className="py-24 bg-komukuna-dark relative overflow-hidden">
+
+            {/* Background Decor */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-gradient-to-r from-komukuna-pink/10 to-komukuna-purple/10 blur-[120px] rounded-full pointer-events-none" />
+
+            <div className="container mx-auto px-4 md:px-6 relative z-10">
+
+                <div className="text-center mb-12">
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Pricelist Spesial</h2>
+                    <p className="text-gray-400 mb-8 max-w-xl mx-auto">
+                        Paket Unlimited yang transparan dan bersahabat. Pilih layanan favoritmu.
+                    </p>
+
+                    {/* Toggle Switch */}
+                    <div className="inline-flex bg-white/5 p-1 rounded-full border border-white/10 backdrop-blur-md">
+                        <span
+                            className={`relative px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 flex items-center gap-2 ${activeTab === 'photobooth' ? 'bg-[#a92e60] text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                        >
+                            <Camera size={16} /> Photobooth
+                        </span>
+                        <span
+                            className={`relative px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 flex items-center gap-2 ${activeTab === 'videobooth' ? 'bg-komukuna-purple text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                        >
+                            <Aperture size={16} /> Video Booth 360
+                        </span>
+                    </div>
+                </div>
+
+                <noscript>
+                    <div className="max-w-4xl mx-auto mb-8 space-y-4">
+                        <h3 className="text-xl font-bold text-white">Paket Video Booth 360</h3>
+                        {videoboothTiers.map(tier => <div key={tier.name} className="rounded-xl border border-white/10 p-5 text-gray-200">
+                            <h4 className="font-bold text-white">{tier.name} — {tier.price}</h4>
+                            <p>{tier.description}</p>
+                            <ul className="list-disc pl-5 my-4">{tier.features.map(feature => <li key={feature}>{feature}</li>)}</ul>
+                            <a className="inline-flex min-h-11 items-center text-pink-300 underline" href={`https://wa.me/6283122866975?text=${encodeURIComponent(`Halo Komukuna, saya mau booking paket ${tier.name} Video 360.`)}`}>{tier.cta}</a>
+                        </div>)}
+                    </div>
+                </noscript>
+                {/* Pre-Pricing Value Anchor & Quick Contrast Strip */}
+                {activeTab === 'photobooth' && (
+                    <div
+                        className="max-w-4xl mx-auto mb-8 p-4 md:p-6 rounded-2xl md:rounded-3xl bg-gradient-to-r from-komukuna-pink/10 via-white/5 to-komukuna-purple/10 border border-komukuna-pink/30 backdrop-blur-xl shadow-[0_0_40px_rgba(232,92,144,0.15)] relative overflow-hidden"
+                    >
+                        {/* Top Header Row */}
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 pb-3 mb-3 border-b border-white/10 text-center sm:text-left">
+                            <div className="flex items-center gap-2">
+                                <span className="p-1 rounded-lg bg-komukuna-pink/20 text-komukuna-pink font-bold text-xs md:text-sm">
+                                    ⚡
+                                </span>
+                                <h3 className="text-white font-extrabold text-sm md:text-base tracking-wide">
+                                    100% True Unlimited Sesi & Cetak
+                                </h3>
+                            </div>
+
+                            <span className="px-3 py-1 rounded-full bg-komukuna-pink/20 text-komukuna-pink text-[10px] md:text-xs font-bold uppercase tracking-wider border border-komukuna-pink/40 shadow-sm shrink-0">
+                                🏆 Termurah se-Jombang & Mojokerto
+                            </span>
+                        </div>
+
+                        {/* Contrast Comparison Grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-left">
+                            {/* Vendor Lain */}
+                            <div className="flex items-center gap-2.5 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-200">
+                                <span className="w-5 h-5 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center font-bold text-[11px] shrink-0">✕</span>
+                                <span className="leading-snug">
+                                    <strong className="text-red-400">Vendor Lain:</strong> Dibatasi max 100 cetak (bayar ekstra jika lebih).
+                                </span>
+                            </div>
+
+                            {/* Komukuna */}
+                            <div className="flex items-center gap-2.5 p-3 rounded-xl bg-komukuna-pink/15 border border-komukuna-pink/30 text-white">
+                                <span className="w-5 h-5 rounded-full bg-komukuna-pink/30 text-komukuna-pink flex items-center justify-center font-bold text-[11px] shrink-0">✓</span>
+                                <span className="leading-snug">
+                                    <strong className="text-komukuna-pink">Komukuna:</strong> Bebas foto & cetak sepuasnya tanpa kuota!
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto min-h-[600px]">
+                    <>
+                        {currentTiers.map((tier, index) => (
+                            <div
+                                key={`${activeTab}-${tier.name}`}
+                                className={`relative rounded-[2rem] p-8 md:p-10 border flex flex-col transition-all duration-300 group
+                    ${tier.isPopular
+                                        ? 'bg-gradient-to-b from-white/10 to-white/5 border-komukuna-pink/50 shadow-[0_0_50px_rgba(232,92,144,0.3)] ring-1 ring-komukuna-pink/50 scale-105 z-10'
+                                        : 'bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/[0.07]'
+                                    }
+                  `}
+                            >
+                                {tier.isPopular && (
+                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-[#a92e60] to-komukuna-purple rounded-full text-white text-[10px] font-bold uppercase tracking-widest shadow-[0_4px_20px_rgba(232,92,144,0.5)] flex items-center gap-1.5 z-20 animate-pulse">
+                                        <Star size={12} fill="currentColor" /> Best Seller
+                                    </div>
+                                )}
+
+                                <div className="mb-8 text-center md:text-left">
+                                    <h3 className={`text-xl font-bold mb-2 tracking-wide ${tier.isPopular ? 'text-komukuna-pink' : 'text-gray-300'}`}>{tier.name}</h3>
+
+                                    {/* Unlimited Header Badge */}
+                                    {tier.unlimitedHeader && (
+                                        <div className="mb-3 py-1 px-3 rounded-full bg-komukuna-pink/10 border border-komukuna-pink/30 text-komukuna-pink text-xs font-semibold inline-flex items-center gap-1.5">
+                                            <span>{tier.unlimitedHeader}</span>
+                                        </div>
+                                    )}
+
+                                    {/* Updated Pricing Display */}
+                                    <div className="flex flex-col items-center md:items-start mb-4 relative min-h-[80px]">
+                                        {/* Original Price */}
+                                        {tier.originalPrice ? (
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-gray-400 text-lg font-medium line-through decoration-red-500/50 decoration-2">
+                                                    {tier.originalPrice}
+                                                </span>
+                                                {/* Savings Badge */}
+                                                {tier.savings && (
+                                                    <span className="bg-red-500/10 text-red-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-red-500/20">
+                                                        {tier.savings.toUpperCase()}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <div className="h-7"></div> // Placeholder to maintain alignment
+                                        )}
+
+                                        {/* Main Price */}
+                                        <div className="text-4xl md:text-5xl font-extrabold text-white tracking-tight flex items-baseline gap-1">
+                                            {tier.price}
+                                        </div>
+                                    </div>
+                                    <p className="text-gray-400 text-sm leading-relaxed">{tier.description}</p>
+                                </div>
+
+                                <div className="flex-1 mb-8">
+                                    <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-6" />
+                                    <ul className="space-y-4">
+                                        {tier.features.map((feature, i) => (
+                                            <li key={i} className="flex items-start text-sm text-gray-300 group-hover:text-white transition-colors">
+                                                <div className={`mt-0.5 mr-3 p-0.5 rounded-full shrink-0 ${tier.isPopular ? 'bg-komukuna-pink/20 text-komukuna-pink' : 'bg-gray-700 text-gray-400'}`}>
+                                                    <Check size={12} strokeWidth={3} />
+                                                </div>
+                                                <span className="leading-snug">{feature}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                <div className={`w-full h-14 flex items-center justify-center rounded-full border font-bold ${tier.isPopular ? "bg-komukuna-purple text-white" : "border-komukuna-pink text-pink-300"}`}>
+                                    <a
+                                        href={`https://wa.me/6283122866975?text=Halo Komukuna, saya mau booking paket *${tier.name} ${activeTab === 'photobooth' ? 'Photobooth' : 'Video 360'}*.`}
+                                        target="_blank"
+                                    >
+                                        {tier.cta}
+                                    </a>
+                                </div>
+
+                                {tier.isPopular && (
+                                    <div className="mt-4 flex items-center justify-center gap-2 text-[10px] text-pink-300 font-medium">
+                                        <ShieldCheck size={12} /> Unlimited Session Guaranteed
+                                    </div>
+                                )}
+
+                                {/* FOMO & Scarcity Trigger */}
+                                <div className="mt-6 pt-4 border-t border-white/5 text-center">
+                                    <p className="text-red-400 text-xs font-bold mb-1 animate-pulse">
+                                        🔥 Promo berakhir …
+                                    </p>
+                                    <p className="text-gray-400 text-[10px]">
+                                        Booking sekarang, <span className="text-white font-medium">kunci harga hemat ini</span> untuk event kapanpun!
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </>
+                </div>
+
+                {/* Streamlined Ketentuan & Sistem Foto Unlimited */}
+                {activeTab === 'photobooth' && (
+                    <div className="mt-12 max-w-4xl mx-auto">
+                        <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/10 rounded-2xl md:rounded-3xl p-5 md:p-8 backdrop-blur-md relative overflow-hidden">
+                            {/* Clean Header */}
+                            <div className="pb-5 mb-5 border-b border-white/10 text-center sm:text-left flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div className="space-y-1">
+                                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-komukuna-pink/20 text-komukuna-pink text-[11px] font-bold uppercase tracking-wider mb-1">
+                                        📸 Sistem & Ketentuan Foto
+                                    </div>
+                                    <h3 className="text-lg md:text-2xl font-extrabold text-white tracking-tight leading-tight">
+                                        100% Unlimited Sesi & Cetak
+                                    </h3>
+                                    <p className="text-xs text-gray-400">
+                                        Garansi Layanan Transparan • Tanpa Biaya Tersembunyi
+                                    </p>
+                                </div>
+
+                                <div className="shrink-0 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-komukuna-pink/15 border border-komukuna-pink/30 text-komukuna-pink text-xs font-bold self-center sm:self-auto shadow-sm">
+                                    <span>💡 Cetak Sepuasnya Selama Sewa</span>
+                                </div>
+                            </div>
+
+                            {/* 2 Cards Grid */}
+                            <div className="grid md:grid-cols-2 gap-4 text-xs md:text-sm text-gray-300">
+                                {/* Point 1: Sesi & Antrean */}
+                                <div className="space-y-2.5 bg-black/30 p-4 rounded-xl md:rounded-2xl border border-white/5">
+                                    <h4 className="text-white font-bold text-xs md:text-sm uppercase tracking-wider flex items-center gap-2">
+                                        <Check size={14} className="text-komukuna-pink" strokeWidth={3} /> Sesi & Antrean Foto
+                                    </h4>
+                                    <ul className="space-y-2 text-xs text-gray-300">
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-komukuna-pink font-bold">•</span>
+                                            <span><strong>Tanpa Batasan Sesi:</strong> Tamu bebas kembali foto berkali-kali selama sewa.</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-komukuna-pink font-bold">•</span>
+                                            <span><strong>Sistem Antrean:</strong> Jika kosong bisa langsung foto lagi, jika ramai bergantian secara adil.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                {/* Point 2: Hasil Cetak & Soft File */}
+                                <div className="space-y-2.5 bg-black/30 p-4 rounded-xl md:rounded-2xl border border-white/5">
+                                    <h4 className="text-white font-bold text-xs md:text-sm uppercase tracking-wider flex items-center gap-2">
+                                        <Check size={14} className="text-komukuna-pink" strokeWidth={3} /> Hasil Cetak & Soft File
+                                    </h4>
+                                    <ul className="space-y-2 text-xs text-gray-300">
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-komukuna-pink font-bold">•</span>
+                                            <span><strong>1 Sesi = 1x Cetak 4R atau Photostrip</strong> (jumlah foto sesuai frame).</span>
+                                        </li>
+                                        <li className="flex items-start gap-2">
+                                            <span className="text-komukuna-pink font-bold">•</span>
+                                            <span><strong>Free Soft File:</strong> Semua foto digital siap download via QR code / link.</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* Add-ons Section */}
+                <div className="mt-20 max-w-4xl mx-auto">
+                    <div className="text-center mb-10">
+                        <h3 className="text-2xl font-bold text-white mb-3">🖼️ Add-On Favorit Customer</h3>
+                        <p className="text-gray-400 text-sm">Tambahkan sentuhan premium untuk membuat hasil foto lebih berkesan.</p>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-6">
+                        {/* Add-on 1 */}
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors flex flex-col justify-between">
+                            <div>
+                                <div className="text-3xl mb-4">🖼️</div>
+                                <h4 className="text-white font-bold mb-1">Premium Photo Frame</h4>
+                                <div className="text-komukuna-pink font-bold text-lg mb-3">+ Rp 200.000</div>
+                                <p className="text-gray-400 text-xs mb-4">Jadikan hasil foto lebih eksklusif dan siap menjadi kenang-kenangan spesial.</p>
+                                <ul className="space-y-2">
+                                    <li className="text-xs text-gray-300 flex items-start gap-2"><Check size={12} className="mt-0.5 text-komukuna-pink shrink-0" /> Tampilan lebih premium</li>
+                                    <li className="text-xs text-gray-300 flex items-start gap-2"><Check size={12} className="mt-0.5 text-komukuna-pink shrink-0" /> Cocok sebagai pajangan / souvenir</li>
+                                    <li className="text-xs text-gray-300 flex items-start gap-2"><Check size={12} className="mt-0.5 text-komukuna-pink shrink-0" /> Ideal untuk Wedding, Anniversary & Event Spesial</li>
+                                </ul>
+                            </div>
+                        </div>
+                        {/* Add-on 2 */}
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors flex flex-col justify-between">
+                            <div>
+                                <div className="text-3xl mb-4">⏰</div>
+                                <h4 className="text-white font-bold mb-1">Tambah Durasi</h4>
+                                <div className="text-white font-bold text-lg mb-3">By Request</div>
+                                <p className="text-xs text-gray-400">Cocok untuk event dengan jumlah tamu lebih banyak.</p>
+                            </div>
+                        </div>
+                        {/* Add-on 3 */}
+                        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors flex flex-col justify-between">
+                            <div>
+                                <div className="text-3xl mb-4">🎨</div>
+                                <h4 className="text-white font-bold mb-1">Custom Request</h4>
+                                <div className="text-white font-bold text-lg mb-3">By Request</div>
+                                <p className="text-xs text-gray-400">Untuk kebutuhan branding perusahaan atau konsep acara khusus.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="mt-16 flex justify-center">
+                    <p className="text-gray-300 text-sm bg-white/5 inline-flex items-center gap-2 px-6 py-3 rounded-full backdrop-blur-sm border border-white/5 shadow-lg">
+                        💡 <span className="text-gray-300 font-medium">Butuh Paket Custom?</span> Hubungi kami di 0831-2286-6975
+                    </p>
+                </div>
+
+            </div>
+        </section>
+    );
+}

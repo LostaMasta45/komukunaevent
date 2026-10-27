@@ -13,11 +13,12 @@ export const cloudinaryProcessVideos = {
     'video-bts4': `${BASE_URL}/komukuna/process/video-bts4_pnpnzf.mp4`,
     'video-bts5': `${BASE_URL}/komukuna/process/video-bts5.mp4`,
     'video-bts6': `${BASE_URL}/komukuna/process/video-bts6.mp4`,
-    'video-bts7': `${BASE_URL}/komukuna/process/video-bts7.mov`,
-    'video-bts8': `${BASE_URL}/komukuna/process/video-bts8.mov`,
+    'video-bts7': `${BASE_URL}/komukuna/process/video-bts7.mp4`,
+    'video-bts8': `${BASE_URL}/komukuna/process/video-bts8.mp4`,
     'video-bts9': `${BASE_URL}/komukuna/process/video-bts9.mp4`,
     'video-bts10': `${BASE_URL}/komukuna/process/video-bts10.mp4`,
     'video-bts11': `${BASE_URL}/komukuna/process/video-bts11.mp4`,
+    'video-bts12': `${BASE_URL}/komukuna/process/video-bts12.mp4`,
 };
 
 // Videobooth Portfolio Videos
@@ -67,8 +68,8 @@ export const cloudinaryVideoboothVideos = {
 export function getVideoThumbnail(videoUrl: string): string {
     // Transform: start at 1s, resize to 200x356 (smaller for faster load), auto format, auto quality
     return videoUrl
-        .replace('/video/upload/', '/video/upload/so_auto,w_200,h_356,c_fill,f_auto,q_auto/')
-        .replace('.mp4', '.jpg');
+        .replace('/video/upload/', '/video/upload/so_1,w_480,h_854,c_fill,f_auto,q_auto:eco/')
+        .replace(/\.(mp4|mov|webm|m4v)$/i, '.jpg');
 }
 
 // Tiny blur placeholder for instant display while real thumbnail loads
@@ -76,14 +77,14 @@ export function getVideoThumbnailBlur(videoUrl: string): string {
     // Very small (20px) blurred placeholder
     return videoUrl
         .replace('/video/upload/', '/video/upload/so_1,w_20,h_36,c_fill,e_blur:500,f_auto,q_10/')
-        .replace('.mp4', '.jpg');
+        .replace(/\.(mp4|mov|webm|m4v)$/i, '.jpg');
 }
 
 // Higher quality thumbnail for when image is in view (lazy load this)
 export function getVideoThumbnailHQ(videoUrl: string): string {
     return videoUrl
         .replace('/video/upload/', '/video/upload/so_1,w_400,h_711,c_fill,f_auto,q_70/')
-        .replace('.mp4', '.jpg');
+        .replace(/\.(mp4|mov|webm|m4v)$/i, '.jpg');
 }
 
 // Optimized video URL for web playback (smaller size, auto format)

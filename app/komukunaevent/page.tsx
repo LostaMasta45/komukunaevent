@@ -1,53 +1,38 @@
-import Link from 'next/link';
+import { eventMetadata } from '@/lib/event-site';
 import Navbar from '@/components/komukuna-event/Navbar';
 import HeroSection from '@/components/komukuna-event/HeroSection';
-import dynamic from 'next/dynamic';
-import fs from 'fs';
-import path from 'path';
+import { partnerAssets } from '@/components/komukuna-event/partner-assets';
 
-// Lazy Load components below the fold to reduce initial bundle size (LCP optimization)
-const TrustBar = dynamic(() => import('@/components/komukuna-event/TrustBar'));
-const PartnerLogos = dynamic(() => import('@/components/komukuna-event/PartnerLogos'));
-const ServicesSection = dynamic(() => import('@/components/komukuna-event/ServicesSection'));
-const USPSection = dynamic(() => import('@/components/komukuna-event/USPSection'));
-const VideoboothSpotlight = dynamic(() => import('@/components/komukuna-event/VideoboothSpotlight'));
-const GallerySection = dynamic(() => import('@/components/komukuna-event/GallerySection'));
-const TestimonialSection = dynamic(() => import('@/components/komukuna-event/TestimonialSection'));
-const PricingSection = dynamic(() => import('@/components/komukuna-event/PricingSection'));
-const HowItWorksSection = dynamic(() => import('@/components/komukuna-event/HowItWorksSection'));
-const FAQSection = dynamic(() => import('@/components/komukuna-event/FAQSection'));
-const Footer = dynamic(() => import('@/components/komukuna-event/Footer'));
-const FloatingCTA = dynamic(() => import('@/components/komukuna-event/FloatingCTA'));
+import TrustBar from '@/components/komukuna-event/TrustBar';
+import PartnerLogos from '@/components/komukuna-event/PartnerLogos';
+import ServicesSection from '@/components/komukuna-event/ServicesSection';
+import USPSection from '@/components/komukuna-event/USPSection';
+import VideoboothSpotlight from '@/components/komukuna-event/VideoboothSpotlight';
+import GalleryPreview from '@/components/komukuna-event/GalleryPreview';
+import DeferredFeature from '@/components/komukuna-event/DeferredFeature';
+
+import PricingPreview from '@/components/komukuna-event/PricingPreview';
+import HowItWorksSection from '@/components/komukuna-event/HowItWorksSection';
+import FAQSection from '@/components/komukuna-event/FAQSection';
+import Footer from '@/components/komukuna-event/Footer';
+import FloatingCTA from '@/components/komukuna-event/FloatingCTA';
 
 
-function getLogos() {
-    const logoDir = path.join(process.cwd(), 'public', 'komukuna-event', 'logo');
-    try {
-        const files = fs.readdirSync(logoDir);
-        return files
-            .filter(file => /\.(png|jpe?g|svg)$/i.test(file)) // Filter images
-            .map(file => `/komukuna-event/logo/${file}`);
-    } catch (error) {
-        console.error("Error reading logo directory:", error);
-        return [];
-    }
-}
+export const metadata = eventMetadata('/komukunaevent', 'Komukuna Booth | Photobooth & Videobooth Jombang dan Mojokerto', 'Photobooth unlimited cetak dan videobooth 360 untuk wedding, corporate gathering, dan party di Jombang dan Mojokerto. Konsultasikan paket dan jadwal acara Anda.');
 
 export default function KomukunaEventPage() {
-    const logos = getLogos();
 
     return (
-        <main className="relative w-full overflow-hidden">
+        <main className="event-home relative w-full overflow-hidden">
             <Navbar />
             <HeroSection />
             <TrustBar />
-            <PartnerLogos logos={logos} />
+            <PartnerLogos partners={partnerAssets} />
             <ServicesSection />
             <VideoboothSpotlight />
             <USPSection />
-            <GallerySection />
-            {/* <TestimonialSection /> */}
-            <PricingSection />
+            <DeferredFeature feature="gallery"><GalleryPreview /></DeferredFeature>
+            <DeferredFeature feature="pricing"><PricingPreview /></DeferredFeature>
             <HowItWorksSection />
             <FAQSection />
             <Footer />

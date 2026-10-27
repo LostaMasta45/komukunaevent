@@ -1,4 +1,4 @@
-import { PhotoboothItemProps } from '@/components/komukuna-event/BentoGridSpotlight';
+import type { PhotoboothItemProps } from '@/components/komukuna-event/BentoGridSpotlight';
 import { cloudinaryProcessVideos, cloudinaryVideoboothVideos } from '@/lib/cloudinary-videos';
 
 // Photobooth Data
@@ -9,6 +9,7 @@ export const portfolioItems: PhotoboothItemProps[] = [
         title: "Fitrah & Okta<br />Wedding",
         subtitle: "Live 360° Videobooth Experience",
         videoSrc: cloudinaryProcessVideos['video-bts1'],
+        posterImage: '/komukuna-event/posters/album-1.webp',
         templateImage: "/komukuna-event/process/hasil-template1.jpg",
         printImage: "/komukuna-event/process/hasil-cetak1.jpg",
         rawImage: "/komukuna-event/process/hasil-raw1.jpg",
@@ -105,7 +106,7 @@ export const portfolioItems: PhotoboothItemProps[] = [
     },
     {
         id: 10,
-        badge: "New Release",
+        badge: "Highlight",
         title: "Photobooth<br />Event",
         subtitle: "Photobooth & 360° Videobooth",
         videoSrc: cloudinaryProcessVideos['video-bts10'],
@@ -113,6 +114,28 @@ export const portfolioItems: PhotoboothItemProps[] = [
         printImage: "/komukuna-event/process/hasil-cetak10.jpeg",
         rawImage: "/komukuna-event/process/hasil-raw10.jpg",
         btsImage: "/komukuna-event/process/fotobts10.png",
+    },
+    {
+        id: 11,
+        badge: "School Event",
+        title: "SMPIT Permata<br />Mojokerto",
+        subtitle: "Haflatul Ikhtitam Photobooth",
+        videoSrc: cloudinaryProcessVideos['video-bts11'],
+        templateImage: "/komukuna-event/process/hasil-template11.jpg",
+        printImage: "/komukuna-event/process/hasil-cetak11.jpeg",
+        rawImage: "/komukuna-event/process/hasil-raw11.jpg",
+        btsImage: "/komukuna-event/process/fotobts11.png",
+    },
+    {
+        id: 12,
+        badge: "New Release",
+        title: "Pambudi & Atikah<br />Wedding",
+        subtitle: "Photobooth & Videobooth Experience",
+        videoSrc: cloudinaryProcessVideos['video-bts12'],
+        templateImage: "/komukuna-event/process/hasil-template12.png",
+        printImage: "/komukuna-event/process/hasil-cetak12.jpeg",
+        rawImage: "/komukuna-event/process/hasil-raw12.jpg",
+        btsImage: "/komukuna-event/process/fotobts12.png",
     }
 ];
 

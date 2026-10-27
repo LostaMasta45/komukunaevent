@@ -1,13 +1,11 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { ChevronRight, Play } from 'lucide-react';
+import Image from '@/components/OptimizedImage';
 import HeroRotatingText from './HeroRotatingText';
 import HeroButtons from './HeroButtons';
 import HeroVideoBackground from './HeroVideoBackground';
 
 export default function HeroSection() {
     return (
-        <section className="relative h-screen min-h-[800px] flex items-center justify-center overflow-hidden">
+        <section className="relative min-h-[800px] min-h-svh py-36 flex items-center justify-center overflow-hidden">
 
             {/* Optimized Media Background */}
             <div className="absolute inset-0 overflow-hidden bg-komukuna-dark">
@@ -17,14 +15,13 @@ export default function HeroSection() {
                     alt="Komukuna Photobooth Experience"
                     fill
                     priority
-                    fetchPriority="high"
                     sizes="(max-width: 768px) 100vw, 100vw"
-                    quality={70}
+                    quality={40}
                     className="object-cover opacity-60 pointer-events-none"
                 />
 
                 {/* Deferred Video Background */}
-                <HeroVideoBackground />
+
 
                 {/* 2. Gradient Overlay to ensure text readability */}
                 <div className="absolute inset-0 bg-gradient-to-b from-komukuna-dark/80 via-komukuna-dark/50 to-komukuna-dark" />
@@ -80,6 +77,7 @@ export default function HeroSection() {
 
                     {/* Client Component for Interactive Buttons */}
                     <HeroButtons />
+                    <HeroVideoBackground />
 
                 </div>
             </div>

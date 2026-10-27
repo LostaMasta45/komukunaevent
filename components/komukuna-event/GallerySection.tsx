@@ -1,9 +1,7 @@
 "use client";
 
 import { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
 import { Camera, Aperture, ArrowRight, Play, Layers, Maximize2 } from 'lucide-react';
-import Link from 'next/link';
 import BentoGridSpotlight, { PhotoboothItemProps } from '@/components/komukuna-event/BentoGridSpotlight';
 import VideoPlayerModal from '@/components/komukuna-event/VideoPlayerModal';
 import VideoPreviewCard from '@/components/komukuna-event/VideoPreviewCard';
@@ -41,7 +39,7 @@ export default function GallerySection() {
                             </div>
                             <h3 className="text-2xl font-bold text-white">Featured Event</h3>
                         </div>
-                        <Link
+                        <a
                             href="/komukunaevent/portofolio"
                             className="group flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors"
                         >
@@ -49,13 +47,14 @@ export default function GallerySection() {
                             <span className="bg-white/10 p-1.5 rounded-full group-hover:bg-white/20 transition-colors">
                                 <ArrowRight size={14} />
                             </span>
-                        </Link>
+                        </a>
                     </div>
 
                     {/* Show only the FIRST item as Featured */}
                     <div className="border border-white/5 rounded-[2.5rem] bg-white/[0.02] overflow-hidden">
                         <BentoGridSpotlight
                             item={portfolioItems[0]}
+                            headingLevel={4}
                             onMaximizeVideo={handleMaximizeVideo}
                         />
                     </div>
@@ -70,7 +69,7 @@ export default function GallerySection() {
                             </div>
                             <h3 className="text-2xl font-bold text-white">Videobooth 360</h3>
                         </div>
-                        <Link
+                        <a
                             href="/komukunaevent/portofolio"
                             className="group flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors"
                         >
@@ -78,7 +77,7 @@ export default function GallerySection() {
                             <span className="bg-white/10 p-1.5 rounded-full group-hover:bg-white/20 transition-colors">
                                 <Layers size={14} />
                             </span>
-                        </Link>
+                        </a>
                     </div>
 
                     {/* Display only first 4 videos */}
@@ -95,13 +94,13 @@ export default function GallerySection() {
 
                 {/* Call to Action for Archive */}
                 <div className="text-center mt-12 md:mt-16">
-                    <Link
+                    <a
                         href="/komukunaevent/portofolio"
                         className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-komukuna-pink to-komukuna-purple text-white font-bold text-lg shadow-lg hover:shadow-komukuna-pink/25 hover:scale-105 transition-all duration-300"
                     >
                         <span>Jelajahi Semua Portfolio</span>
                         <GridIcon />
-                    </Link>
+                    </a>
                 </div>
 
             </div>

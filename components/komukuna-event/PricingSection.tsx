@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import PromoDate from './PromoDate';
 import { Check, Star, ShieldCheck, Camera, Aperture } from 'lucide-react';
 import { Button } from './ui/Button';
-import Link from 'next/link';
 
 interface PricingTier {
     name: string;
@@ -109,15 +108,6 @@ const videoboothTiers: PricingTier[] = [
 
 export default function PricingSection() {
     const [activeTab, setActiveTab] = useState<'photobooth' | 'videobooth'>('photobooth');
-    const [promoDate, setPromoDate] = useState('');
-
-    useEffect(() => {
-        // Set promo date to 3 days from now for urgency
-        const date = new Date();
-        date.setDate(date.getDate() + 3);
-        setPromoDate(date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }));
-    }, []);
-
     const currentTiers = activeTab === 'photobooth' ? photoboothTiers : videoboothTiers;
 
     return (
@@ -138,7 +128,7 @@ export default function PricingSection() {
                     <div className="inline-flex bg-white/5 p-1 rounded-full border border-white/10 backdrop-blur-md">
                         <button
                             onClick={() => setActiveTab('photobooth')}
-                            className={`relative px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 flex items-center gap-2 ${activeTab === 'photobooth' ? 'bg-komukuna-pink text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
+                            className={`relative px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 flex items-center gap-2 ${activeTab === 'photobooth' ? 'bg-[#a92e60] text-white shadow-lg' : 'text-gray-400 hover:text-white'}`}
                         >
                             <Camera size={16} /> Photobooth
                         </button>
@@ -153,9 +143,7 @@ export default function PricingSection() {
 
                 {/* Pre-Pricing Value Anchor & Quick Contrast Strip */}
                 {activeTab === 'photobooth' && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
+                    <div
                         className="max-w-4xl mx-auto mb-8 p-4 md:p-6 rounded-2xl md:rounded-3xl bg-gradient-to-r from-komukuna-pink/10 via-white/5 to-komukuna-purple/10 border border-komukuna-pink/30 backdrop-blur-xl shadow-[0_0_40px_rgba(232,92,144,0.15)] relative overflow-hidden"
                     >
                         {/* Top Header Row */}
@@ -164,9 +152,9 @@ export default function PricingSection() {
                                 <span className="p-1 rounded-lg bg-komukuna-pink/20 text-komukuna-pink font-bold text-xs md:text-sm">
                                     ⚡
                                 </span>
-                                <h4 className="text-white font-extrabold text-sm md:text-base tracking-wide">
+                                <h3 className="text-white font-extrabold text-sm md:text-base tracking-wide">
                                     100% True Unlimited Sesi & Cetak
-                                </h4>
+                                </h3>
                             </div>
 
                             <span className="px-3 py-1 rounded-full bg-komukuna-pink/20 text-komukuna-pink text-[10px] md:text-xs font-bold uppercase tracking-wider border border-komukuna-pink/40 shadow-sm shrink-0">
@@ -192,18 +180,14 @@ export default function PricingSection() {
                                 </span>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
                 )}
 
                 <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto min-h-[600px]">
-                    <AnimatePresence mode="wait">
+                    <>
                         {currentTiers.map((tier, index) => (
-                            <motion.div
+                            <div
                                 key={`${activeTab}-${tier.name}`}
-                                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                                animate={{ opacity: 1, y: 0, scale: 1 }}
-                                exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                                transition={{ duration: 0.3, delay: index * 0.1 }}
                                 className={`relative rounded-[2rem] p-8 md:p-10 border flex flex-col transition-all duration-300 group
                     ${tier.isPopular
                                         ? 'bg-gradient-to-b from-white/10 to-white/5 border-komukuna-pink/50 shadow-[0_0_50px_rgba(232,92,144,0.3)] ring-1 ring-komukuna-pink/50 scale-105 z-10'
@@ -212,7 +196,7 @@ export default function PricingSection() {
                   `}
                             >
                                 {tier.isPopular && (
-                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-komukuna-pink to-komukuna-purple rounded-full text-white text-[10px] font-bold uppercase tracking-widest shadow-[0_4px_20px_rgba(232,92,144,0.5)] flex items-center gap-1.5 z-20 animate-pulse">
+                                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-gradient-to-r from-[#a92e60] to-komukuna-purple rounded-full text-white text-[10px] font-bold uppercase tracking-widest shadow-[0_4px_20px_rgba(232,92,144,0.5)] flex items-center gap-1.5 z-20 animate-pulse">
                                         <Star size={12} fill="currentColor" /> Best Seller
                                     </div>
                                 )}
@@ -270,19 +254,20 @@ export default function PricingSection() {
 
                                 <Button
                                     variant={tier.isPopular ? 'gradient' : 'outline'}
-                                    className="w-full h-14 text-base font-bold tracking-wide shadow-lg"
+                                    size="lg"
+                                    className="w-full font-bold tracking-wide shadow-lg"
                                     asChild
                                 >
-                                    <Link
+                                    <a
                                         href={`https://wa.me/6283122866975?text=Halo Komukuna, saya mau booking paket *${tier.name} ${activeTab === 'photobooth' ? 'Photobooth' : 'Video 360'}*.`}
                                         target="_blank"
                                     >
                                         {tier.cta}
-                                    </Link>
+                                    </a>
                                 </Button>
 
                                 {tier.isPopular && (
-                                    <div className="mt-4 flex items-center justify-center gap-2 text-[10px] text-komukuna-pink/80 font-medium opacity-80">
+                                    <div className="mt-4 flex items-center justify-center gap-2 text-[10px] text-pink-300 font-medium">
                                         <ShieldCheck size={12} /> Unlimited Session Guaranteed
                                     </div>
                                 )}
@@ -290,15 +275,15 @@ export default function PricingSection() {
                                 {/* FOMO & Scarcity Trigger */}
                                 <div className="mt-6 pt-4 border-t border-white/5 text-center">
                                     <p className="text-red-400 text-xs font-bold mb-1 animate-pulse">
-                                        🔥 Promo berakhir {promoDate}
+                                        🔥 Promo berakhir <PromoDate />
                                     </p>
                                     <p className="text-gray-400 text-[10px]">
                                         Booking sekarang, <span className="text-white font-medium">kunci harga hemat ini</span> untuk event kapanpun!
                                     </p>
                                 </div>
-                            </motion.div>
+                            </div>
                         ))}
-                    </AnimatePresence>
+                    </>
                 </div>
 
                 {/* Streamlined Ketentuan & Sistem Foto Unlimited */}
@@ -408,7 +393,7 @@ export default function PricingSection() {
                 </div>
 
                 <div className="mt-16 flex justify-center">
-                    <p className="text-gray-500 text-sm bg-white/5 inline-flex items-center gap-2 px-6 py-3 rounded-full backdrop-blur-sm border border-white/5 shadow-lg">
+                    <p className="text-gray-300 text-sm bg-white/5 inline-flex items-center gap-2 px-6 py-3 rounded-full backdrop-blur-sm border border-white/5 shadow-lg">
                         💡 <span className="text-gray-300 font-medium">Butuh Paket Custom?</span> Hubungi kami di 0831-2286-6975
                     </p>
                 </div>

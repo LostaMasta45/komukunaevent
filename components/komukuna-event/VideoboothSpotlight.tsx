@@ -1,99 +1,13 @@
-"use client";
 
-import { motion } from 'framer-motion';
+
+import OnDemandVideo from './OnDemandVideo';
 import { Aperture, Check, QrCode, Zap, Smartphone, Music, Play } from 'lucide-react';
-import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
-import { cloudinaryVideoboothVideos, getOptimizedVideoUrl } from '@/lib/cloudinary-videos';
+import { cloudinaryVideoboothVideos } from '@/lib/cloudinary-videos';
 
 function LazyVideo() {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const videoRef = useRef<HTMLVideoElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
-
-    const videoUrl = getOptimizedVideoUrl(cloudinaryVideoboothVideos['majapahit-run']);
-    // Generate poster from Cloudinary video transformation
-    const posterUrl = videoUrl
-        .replace('/video/upload/', '/video/upload/so_1,w_450,h_800,c_fill,f_auto,q_auto/')
-        .replace('.mp4', '.jpg');
-
-    useEffect(() => {
-        const el = containerRef.current;
-        if (!el) return;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.disconnect();
-                }
-            },
-            { rootMargin: '200px' }
-        );
-        observer.observe(el);
-        return () => observer.disconnect();
-    }, []);
-
-    const handlePlay = () => {
-        setIsPlaying(true);
-        // Small delay to let video element mount
-        setTimeout(() => {
-            videoRef.current?.play().catch(() => {});
-        }, 100);
-    };
-
-    // Auto-play on desktop when visible
-    useEffect(() => {
-        if (isVisible && typeof window !== 'undefined' && window.innerWidth >= 768) {
-            setIsPlaying(true);
-            setTimeout(() => {
-                videoRef.current?.play().catch(() => {});
-            }, 100);
-        }
-    }, [isVisible]);
-
-    return (
-        <div ref={containerRef} className="relative aspect-[9/16] rounded-[2rem] border-[6px] border-gray-900 bg-black shadow-2xl overflow-hidden ring-1 ring-white/10 z-10">
-            {/* Poster Image (always shown initially) */}
-            {!isPlaying && (
-                <>
-                    <Image
-                        src={posterUrl}
-                        alt="360 Videobooth Preview"
-                        fill
-                        sizes="320px"
-                        className="object-cover"
-                        loading="lazy"
-                    />
-                    {/* Play button overlay for mobile */}
-                    <button
-                        onClick={handlePlay}
-                        aria-label="Play video"
-                        className="absolute inset-0 flex items-center justify-center z-20 bg-black/20 group"
-                    >
-                        <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
-                            <Play size={24} fill="black" className="ml-1 text-black" />
-                        </div>
-                    </button>
-                </>
-            )}
-
-            {/* Video (only loads when visible and playing) */}
-            {isVisible && isPlaying && (
-                <video
-                    ref={videoRef}
-                    className="w-full h-full object-cover"
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                    poster={posterUrl}
-                >
-                    <source src={videoUrl} type="video/mp4" />
-                </video>
-            )}
-        </div>
-    );
+    return <div className="relative aspect-[9/16] rounded-[2rem] border-[6px] border-gray-900 bg-black shadow-xl overflow-hidden">
+        <OnDemandVideo src={cloudinaryVideoboothVideos['majapahit-run']} poster="/komukuna-event/hero-bg.jpg" title="360 Videobooth Komukuna" sizes="(max-width: 639px) 300px, 400px" />
+    </div>;
 }
 
 export default function VideoboothSpotlight() {
@@ -109,33 +23,22 @@ export default function VideoboothSpotlight() {
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
 
                     {/* Visual Side (Mockup) */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        transition={{ duration: 0.8 }}
+                    <div
                         className="flex-1 w-full max-w-[320px] lg:max-w-[400px] relative mx-auto lg:mx-0"
                     >
                         {/* Phone Frame with Lazy Video */}
                         <LazyVideo />
 
                         {/* Floating Badge */}
-                        <motion.div
-                            initial={{ scale: 0, rotate: -10 }}
-                            whileInView={{ scale: 1, rotate: 6 }}
-                            transition={{ delay: 0.5, type: "spring" }}
+                        <div
                             className="absolute -bottom-6 -right-6 bg-white text-black px-6 py-3 rounded-2xl shadow-xl border-2 border-komukuna-pink z-30 transform rotate-6"
                         >
                             <p className="font-bold font-heading text-sm">🔥 Viral Ready</p>
-                        </motion.div>
-                    </motion.div>
+                        </div>
+                    </div>
 
                     {/* Content Side */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
+                    <div
                         className="flex-1 text-center lg:text-left"
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
@@ -163,22 +66,18 @@ export default function VideoboothSpotlight() {
                                 { icon: QrCode, text: "Sharing Instan via QR Code & AirDrop" },
                                 { icon: Smartphone, text: "Lighting RGB Ring Light Besar" }
                             ].map((item, index) => (
-                                <motion.div
+                                <div
                                     key={index}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: 0.4 + (index * 0.1) }}
                                     className="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5 hover:border-komukuna-purple/50 transition-colors group"
                                 >
                                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-komukuna-pink/20 to-komukuna-purple/20 flex items-center justify-center group-hover:scale-110 transition-transform">
                                         <Check className="text-komukuna-pink w-5 h-5" />
                                     </div>
                                     <span className="text-gray-200 font-medium">{item.text}</span>
-                                </motion.div>
+                                </div>
                             ))}
                         </div>
-                    </motion.div>
+                    </div>
 
                 </div>
             </div>

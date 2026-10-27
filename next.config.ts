@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
+import { deviceSizes, imageSizes } from './lib/image-config';
 
 const nextConfig: NextConfig = {
+  // Keep an existing production server intact while measuring an audit build.
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   // Compression for better performance
   compress: true,
 
@@ -27,13 +30,17 @@ const nextConfig: NextConfig = {
     ],
     formats: ['image/avif', 'image/webp'],
     // Optimized device sizes for mobile-first approach
-    deviceSizes: [640, 750, 828, 1080, 1200],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    deviceSizes,
+    imageSizes,
     // Cache optimized images for 1 year
     minimumCacheTTL: 31536000,
   },
 
   experimental: {
+    // Avoid pulling unrelated wedding-album styles into the marketing routes.
+    cssChunking: false,
+    // With route CSS isolated, inline the small styles to paint before hydration.
+    inlineCss: true,
     optimizePackageImports: [
       'lucide-react',
       'framer-motion',
