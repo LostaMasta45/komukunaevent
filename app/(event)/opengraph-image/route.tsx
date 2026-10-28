@@ -3,11 +3,10 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
 export const runtime = 'nodejs';
-export const alt = 'Komukuna Booth — Photobooth dan Videobooth 360 di Jombang dan Mojokerto';
-export const size = { width: 1200, height: 630 };
-export const contentType = 'image/png';
+export const dynamic = 'force-static';
+const size = { width: 1200, height: 630 };
 
-export default async function OpenGraphImage() {
+export async function GET() {
     const logo = await readFile(path.join(process.cwd(), 'public/brand/komukuna-dark.png'));
     return new ImageResponse(<div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: '#0f0f0f', color: 'white', padding: 70 }}>
         {/* Local artwork avoids external requests during image generation. */}
