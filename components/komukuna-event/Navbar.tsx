@@ -24,7 +24,7 @@ export default function Navbar() {
     return <nav aria-label="Navigasi utama" onKeyDown={event => { if (event.key === 'Escape' && open) { setOpen(false); toggle.current?.focus(); } }}
         className={`fixed top-0 left-0 right-0 z-50 ${scrolled || open ? 'bg-komukuna-dark border-b border-white/10' : 'bg-transparent'} py-3`}>
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-            <a href="/komukunaevent" aria-label="Komukuna Studio, beranda" className="inline-flex rounded-xl"><BrandLogo surface="dark" className="!h-16 !w-24 md:!h-[72px] md:!w-28" sizes="(max-width: 768px) 96px, 112px" priority /></a>
+            <a href="/" aria-label="Komukuna Studio, beranda" className="inline-flex rounded-xl"><BrandLogo surface="dark" className="!h-16 !w-24 md:!h-[72px] md:!w-28" sizes="(max-width: 768px) 96px, 112px" priority /></a>
             <div className="hidden md:flex items-center gap-8">
                 {eventNavigation.map(link => <a key={link.id} href={link.href} aria-current={activeSection === link.id ? 'location' : undefined} className={`font-medium text-sm ${activeSection === link.id ? 'text-pink-300 underline underline-offset-8' : 'text-gray-200'}`}>{link.name}</a>)}
                 <Button variant="gradient" asChild><a href={bookingHref}>Pesan Sekarang</a></Button>

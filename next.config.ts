@@ -13,6 +13,13 @@ const nextConfig: NextConfig = {
   // Security
   poweredByHeader: false,
 
+  async redirects() {
+    return [
+      { source: '/komukunaevent', destination: '/', permanent: true },
+      { source: '/komukunaevent/:path+', destination: '/:path+', permanent: true },
+    ];
+  },
+
   images: {
     remotePatterns: [
       {

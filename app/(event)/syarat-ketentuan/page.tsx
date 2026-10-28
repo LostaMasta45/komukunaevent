@@ -1,7 +1,7 @@
 import PolicyPage from '@/components/komukuna-event/PolicyPage';
 import { eventMetadata } from '@/lib/event-site';
 
-export const metadata = eventMetadata('/komukunaevent/syarat-ketentuan', 'Syarat & Ketentuan | Komukuna Booth', 'Informasi penggunaan website, konsultasi paket, dan konfirmasi pemesanan layanan Komukuna Booth.');
+export const metadata = eventMetadata('/syarat-ketentuan', 'Syarat & Ketentuan | Komukuna Booth', 'Informasi penggunaan website, konsultasi paket, dan konfirmasi pemesanan layanan Komukuna Booth.');
 
 export default function TermsPage() {
     return <PolicyPage title="Syarat & Ketentuan">

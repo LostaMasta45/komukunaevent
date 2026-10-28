@@ -8,7 +8,7 @@ export default function Footer() {
                 <div className="grid md:grid-cols-4 gap-12 md:gap-8 mb-12">
 
                     <div className="md:col-span-1">
-                        <a href="/komukunaevent" aria-label="Komukuna Studio, beranda" className="inline-block mb-4 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-komukuna-pink"><BrandLogo surface="dark" className="!h-28 !w-36" sizes="144px" /></a>
+                        <a href="/" aria-label="Komukuna Studio, beranda" className="inline-block mb-4 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-komukuna-pink"><BrandLogo surface="dark" className="!h-28 !w-36" sizes="144px" /></a>
                         <p className="text-gray-400 text-sm leading-relaxed">
                             #MomenSempurna BersamaKomukuna. <br />
                             Kami membantu mengabadikan momen terindah Anda menjadi kenangan fisik dan digital yang abadi.
@@ -18,9 +18,9 @@ export default function Footer() {
                     <div>
                         <h2 className="text-white font-bold mb-4">Layanan</h2>
                         <ul className="space-y-2 text-sm text-gray-400">
-                            <li><a href="/komukunaevent#services" className="hover:text-komukuna-pink">Photobooth Unlimited</a></li>
-                            <li><a href="/komukunaevent#services" className="hover:text-komukuna-pink">Video Booth 360</a></li>
-                            <li><a href="/komukunaevent#usp" className="hover:text-komukuna-pink">Custom Template</a></li>
+                            <li><a href="/#services" className="hover:text-komukuna-pink">Photobooth Unlimited</a></li>
+                            <li><a href="/#services" className="hover:text-komukuna-pink">Video Booth 360</a></li>
+                            <li><a href="/#usp" className="hover:text-komukuna-pink">Custom Template</a></li>
                         </ul>
                     </div>
 
@@ -60,8 +60,8 @@ export default function Footer() {
                 <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
                     <p>&copy; {new Date().getFullYear()} Komukuna Studio. All rights reserved.</p>
                     <div className="flex gap-6 mt-4 md:mt-0">
-                        <a href="/komukunaevent/kebijakan-privasi" className="hover:text-gray-200">Kebijakan Privasi</a>
-                        <a href="/komukunaevent/syarat-ketentuan" className="hover:text-gray-200">Syarat & Ketentuan</a>
+                        <a href="/kebijakan-privasi" className="hover:text-gray-200">Kebijakan Privasi</a>
+                        <a href="/syarat-ketentuan" className="hover:text-gray-200">Syarat & Ketentuan</a>
                     </div>
                 </div>
             </div>

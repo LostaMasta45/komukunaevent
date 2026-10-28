@@ -40,7 +40,7 @@ export default function GallerySection() {
                             <h3 className="text-2xl font-bold text-white">Featured Event</h3>
                         </div>
                         <a
-                            href="/komukunaevent/portofolio"
+                            href="/portofolio"
                             className="group flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors"
                         >
                             View All Albums
@@ -70,7 +70,7 @@ export default function GallerySection() {
                             <h3 className="text-2xl font-bold text-white">Videobooth 360</h3>
                         </div>
                         <a
-                            href="/komukunaevent/portofolio"
+                            href="/portofolio"
                             className="group flex items-center gap-2 text-sm font-bold text-gray-400 hover:text-white transition-colors"
                         >
                             Open Video Archive
@@ -95,7 +95,7 @@ export default function GallerySection() {
                 {/* Call to Action for Archive */}
                 <div className="text-center mt-12 md:mt-16">
                     <a
-                        href="/komukunaevent/portofolio"
+                        href="/portofolio"
                         className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-komukuna-pink to-komukuna-purple text-white font-bold text-lg shadow-lg hover:shadow-komukuna-pink/25 hover:scale-105 transition-all duration-300"
                     >
                         <span>Jelajahi Semua Portfolio</span>

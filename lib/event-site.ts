@@ -13,8 +13,8 @@ export function eventMetadata(path: string, title: string, description: string):
         alternates: { canonical: url },
         openGraph: {
             type: 'website', locale: 'id_ID', siteName: 'Komukuna Booth', url, title, description,
-            images: [{ url: `${siteUrl}/komukunaevent/opengraph-image`, width: 1200, height: 630, alt: 'Komukuna Booth — Photobooth dan Videobooth 360 di Jombang dan Mojokerto' }],
+            images: [{ url: `${siteUrl}/opengraph-image`, width: 1200, height: 630, alt: 'Komukuna Booth — Photobooth dan Videobooth 360 di Jombang dan Mojokerto' }],
         },
-        twitter: { card: 'summary_large_image', title, description, images: [`${siteUrl}/komukunaevent/opengraph-image`] },
+        twitter: { card: 'summary_large_image', title, description, images: [`${siteUrl}/opengraph-image`] },
     };
 }

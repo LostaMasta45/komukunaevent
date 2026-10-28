@@ -1,7 +1,7 @@
 import PolicyPage from '@/components/komukuna-event/PolicyPage';
 import { eventMetadata } from '@/lib/event-site';
 
-export const metadata = eventMetadata('/komukunaevent/kebijakan-privasi', 'Kebijakan Privasi | Komukuna Booth', 'Informasi mengenai formulir kontak, pengalihan ke WhatsApp, dan layanan pihak ketiga pada website Komukuna Booth.');
+export const metadata = eventMetadata('/kebijakan-privasi', 'Kebijakan Privasi | Komukuna Booth', 'Informasi mengenai formulir kontak, pengalihan ke WhatsApp, dan layanan pihak ketiga pada website Komukuna Booth.');
 
 export default function PrivacyPage() {
     return <PolicyPage title="Kebijakan Privasi">

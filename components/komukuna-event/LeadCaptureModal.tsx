@@ -44,7 +44,7 @@ export default function LeadCaptureModal({ isOpen, onClose }: { isOpen: boolean;
             <input id="lead-customer-name" type="text" required autoComplete="given-name" value={customerName} onChange={event => setCustomerName(event.target.value)} className="w-full bg-gray-800 border border-gray-600 text-white rounded-xl p-3" />
             <button type="submit" disabled={!customerName.trim()} className="mt-6 min-h-11 w-full rounded-xl bg-[#25D366] text-gray-950 py-3 font-bold disabled:opacity-50">Hubungi WhatsApp</button>
             <button type="button" onClick={() => setStep(2)} className="mt-2 min-h-11 w-full text-gray-200">Kembali</button>
-            <p className="text-xs text-gray-300 mt-3">Detail event akan diteruskan ke WhatsApp. <a href="/komukunaevent/kebijakan-privasi" className="underline">Kebijakan privasi</a></p>
+            <p className="text-xs text-gray-300 mt-3">Detail event akan diteruskan ke WhatsApp. <a href="/kebijakan-privasi" className="underline">Kebijakan privasi</a></p>
         </form>}
     </AccessibleModal>;
 }

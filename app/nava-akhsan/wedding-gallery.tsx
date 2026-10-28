@@ -12,7 +12,7 @@ import BrandFavicon from '@/components/branding/BrandFavicon';
 import { WEDDING_EVENT } from './event-config';
 import styles from './wedding-gallery.module.css';
 
-const STUDIO_PATH = '/komukunaevent';
+const STUDIO_PATH = '/';
 const THEME_STORAGE_KEY = 'nava-akhsan-color-mode';
 
 function ThemeToggle({ dark, onToggle }: { dark: boolean; onToggle: () => void }) {
@@ -200,7 +200,7 @@ export default function WeddingGallery() {
       <div className={styles.albumContent} data-visible={!welcomeOpen || albumRevealing} inert={welcomeOpen} aria-hidden={welcomeOpen || undefined}>
       <a className={styles.skipLink} href="#galeri">Langsung ke galeri foto</a>
       <header className={styles.header}>
-        <Link href="/komukunaevent" className={styles.brand} aria-label="Komukuna Event, beranda">
+        <Link href="/" className={styles.brand} aria-label="Komukuna Event, beranda">
           <BrandLogo surface={darkMode ? 'dark' : 'light'} priority className={styles.headerLogo} sizes="96px" />
         </Link>
         <span className={styles.headerNote}>{WEDDING_EVENT.hashtag}</span>
@@ -257,7 +257,7 @@ export default function WeddingGallery() {
               <h2 id="discovery-title">Bawa keseruannya<br /><em>ke acaramu.</em></h2>
               <p>Photobooth untuk momen seru dan kenangan yang bisa dibawa pulang.</p>
               <div className={styles.discoveryLinks}>
-                <Link href="/komukunaevent/portofolio" className={styles.discoveryPortfolio}><Camera size={21} strokeWidth={1.5} aria-hidden="true" /><span><strong>Lihat portofolio</strong><small>Inspirasi dari acara sebelumnya.</small></span><ArrowUpRight size={20} aria-hidden="true" /></Link>
+                <Link href="/portofolio" className={styles.discoveryPortfolio}><Camera size={21} strokeWidth={1.5} aria-hidden="true" /><span><strong>Lihat portofolio</strong><small>Inspirasi dari acara sebelumnya.</small></span><ArrowUpRight size={20} aria-hidden="true" /></Link>
                 <Link href={STUDIO_PATH} className={styles.discoveryHome}><Sparkles size={21} strokeWidth={1.5} aria-hidden="true" /><span><strong>Pilihan layanan</strong><small>Temukan booth untuk acaramu.</small></span><ArrowUpRight size={20} aria-hidden="true" /></Link>
               </div>
               <span className={styles.discoverySignoff}>Acara berikutnya, ceritamu.</span>
@@ -292,13 +292,13 @@ export default function WeddingGallery() {
         </div>
       </main>
 
-      <footer className={styles.footer}><span>{WEDDING_EVENT.hashtag}<span aria-hidden="true">♡</span><time dateTime={WEDDING_EVENT.date}>{WEDDING_EVENT.dateLabel}</time></span><Link href="/komukunaevent" className={styles.footerBrand} aria-label="Captured with love by Komukuna Studio, kunjungi beranda"><span>Captured with love by</span><BrandLogo surface={darkMode ? 'dark' : 'light'} className={styles.footerLogo} sizes="88px" /><ArrowUpRight size={15} aria-hidden="true" /></Link></footer>
+      <footer className={styles.footer}><span>{WEDDING_EVENT.hashtag}<span aria-hidden="true">♡</span><time dateTime={WEDDING_EVENT.date}>{WEDDING_EVENT.dateLabel}</time></span><Link href="/" className={styles.footerBrand} aria-label="Captured with love by Komukuna Studio, kunjungi beranda"><span>Captured with love by</span><BrandLogo surface={darkMode ? 'dark' : 'light'} className={styles.footerLogo} sizes="88px" /><ArrowUpRight size={15} aria-hidden="true" /></Link></footer>
 
       <nav className={styles.mobileNav} aria-label="Navigasi cepat album">
         <a href="#cerita" className={styles.dockItem} data-active={activeSection === 'album' || undefined} aria-current={activeSection === 'album' ? 'location' : undefined} aria-label="Album, kembali ke cerita Nava dan Akhsan" onClick={() => heroTitleRef.current?.focus({ preventScroll: true })}><span className={styles.dockIcon}><Heart size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Album</span></a>
         <a href="#galeri" className={styles.dockItem} data-active={activeSection === 'galeri' || undefined} aria-current={activeSection === 'galeri' ? 'location' : undefined} onClick={() => galleryRef.current?.focus({ preventScroll: true })}><span className={styles.dockIcon}><ImageIcon size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Galeri</span></a>
         <Link href={STUDIO_PATH} prefetch={false} className={`${styles.dockItem} ${styles.dockStudio}`} aria-label="Komukuna, buka beranda Komukuna Booth"><span className={styles.dockIcon}><House size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Komukuna</span></Link>
-        <Link href="/komukunaevent/portofolio" prefetch={false} className={styles.dockItem} aria-label="Portofolio, lihat karya Komukuna Booth"><span className={styles.dockIcon}><Sparkles size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Portofolio</span></Link>
+        <Link href="/portofolio" prefetch={false} className={styles.dockItem} aria-label="Portofolio, lihat karya Komukuna Booth"><span className={styles.dockIcon}><Sparkles size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Portofolio</span></Link>
         <button type="button" className={styles.dockItem} onClick={shareAlbum} aria-label="Bagikan album Nava dan Akhsan" aria-expanded={shareOpen && !savingStudio}><span className={styles.dockIcon}><Share2 size={21} strokeWidth={1.7} aria-hidden="true" /></span><span>Bagikan</span></button>
       </nav>
 

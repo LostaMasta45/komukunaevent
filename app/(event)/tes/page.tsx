@@ -1,4 +1,7 @@
+import type { Metadata } from 'next';
 import ExperienceStoryTes from "@/components/komukuna-event/ExperienceStoryTes";
+
+export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 export default function ExperienceStoryTestPage() {
     return (
