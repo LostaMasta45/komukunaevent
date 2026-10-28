@@ -1,4 +1,5 @@
 import BrandLogo from '@/components/branding/BrandLogo';
+import Link from 'next/link';
 import { Camera, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 
 export default function Footer() {
@@ -8,7 +9,7 @@ export default function Footer() {
                 <div className="grid md:grid-cols-4 gap-12 md:gap-8 mb-12">
 
                     <div className="md:col-span-1">
-                        <a href="/" aria-label="Komukuna Studio, beranda" className="inline-block mb-4 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-komukuna-pink"><BrandLogo surface="dark" className="!h-28 !w-36" sizes="144px" /></a>
+                        <Link href="/" prefetch={false} aria-label="Komukuna Studio, beranda" className="inline-block mb-4 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-komukuna-pink"><BrandLogo surface="dark" className="!h-28 !w-36" sizes="144px" /></Link>
                         <p className="text-gray-400 text-sm leading-relaxed">
                             #MomenSempurna BersamaKomukuna. <br />
                             Kami membantu mengabadikan momen terindah Anda menjadi kenangan fisik dan digital yang abadi.
@@ -18,9 +19,9 @@ export default function Footer() {
                     <div>
                         <h2 className="text-white font-bold mb-4">Layanan</h2>
                         <ul className="space-y-2 text-sm text-gray-400">
-                            <li><a href="/#services" className="hover:text-komukuna-pink">Photobooth Unlimited</a></li>
-                            <li><a href="/#services" className="hover:text-komukuna-pink">Video Booth 360</a></li>
-                            <li><a href="/#usp" className="hover:text-komukuna-pink">Custom Template</a></li>
+                            <li><Link href="/#services" prefetch={false} className="hover:text-komukuna-pink">Photobooth Unlimited</Link></li>
+                            <li><Link href="/#services" prefetch={false} className="hover:text-komukuna-pink">Video Booth 360</Link></li>
+                            <li><Link href="/#usp" prefetch={false} className="hover:text-komukuna-pink">Custom Template</Link></li>
                         </ul>
                     </div>
 
